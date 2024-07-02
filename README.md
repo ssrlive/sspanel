@@ -9,6 +9,17 @@
 [![X (formerly Twitter)](https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FSSPanel_NeXT)](https://twitter.com/SSPanel_NeXT)
 [![Discord](https://img.shields.io/discord/1049692075085549600?color=5865F2&label=Discord&style=flat-square)](https://discord.gg/A7uFKCvf8V)
 
+## Installation
+
+[Chinese installation tutorial](./install.md)
+
+## PSA
+
+We are looking for a new co-maintainer for this project who is familiar with PHP
+and can speak Persian/Arabic/Russian/Vietnamese to help with NeXT Panel's I18n translation effort.
+
+If you are interested in helping out, please contact us on Discord or Twitter.
+
 ## TL;DR
 
 NeXT Panel is a multipurpose proxy service management system designed for Shadowsocks(2022) / Vmess / Trojan / TUIC protocol.
