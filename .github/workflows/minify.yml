@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'public/assets/css/**'
-      - 'public/assets/js/**'
       - 'public/theme/**'
 
 jobs:
@@ -26,10 +25,6 @@ jobs:
         uses: nizarmah/auto-minify@v3
         with:
           directory: 'public/assets/css'
-      - name: Auto minify asset JS file
-        uses: nizarmah/auto-minify@v3
-        with:
-          directory: 'public/assets/js'
       - name: Auto committing minified files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
