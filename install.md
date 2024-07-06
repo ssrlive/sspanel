@@ -10,44 +10,49 @@ sspanel installation tutorial
 - Nginx（HTTPS configured）
 - PHP 8.2+ （OPcache+JIT enabled）
 - PHP Redis extension 6.0+
-- MariaDB 10.11+（Disable strict mode）
+- MySQL 8.0+
 - Redis 7.0+
 
 請首先用 `sudo -i` 命令切換到 `root` 權限，再往下進行。
 
 ```bash
-apt update -y
-apt upgrade -y
+sudo ufw disable
 
-apt install ca-certificates apt-transport-https git
+sudo apt update -y
+sudo apt upgrade -y
+
+sudo apt install -y curl gnupg2 ca-certificates apt-transport-https git lsb-release ubuntu-keyring
 
 # 設置 php 官方版本的安裝源
-apt install software-properties-common
+sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ondrej/php
-apt remove apache2 -y
-apt autoremove -y
-apt update -y
 
-apt install -y nginx-extras mysql-server redis python3 python-is-python3 php-fpm
+sudo apt remove apache2 -y
+sudo apt autoremove -y
+sudo apt update -y
+
+sudo apt install -y nginx-extras mysql-server redis python3 python-is-python3 php-fpm
 sleep 2
-apt install -y php-fpm php-mysql php-curl php-gd php-mbstring php-xml php-yaml php-redis
-apt install -y php-xmlrpc php-zip php php-json php-bz2 php-bcmath
+sudo apt install -y php-xmlrpc php php-json
+sudo apt install -y php-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mysql,readline,redis,xml,yaml,zip}
 
-apt remove apache2 -y
-apt autoremove -y
+sudo apt remove apache2 -y
+sudo apt autoremove -y
+
+sudo systemctl restart php8.3-fpm
 ```
 
 參考文章： https://portal.databasemart.com/kb/a2136/how-to-install-php-8_1-for-nginx-on-ubuntu-20_04.aspx
 
 ## **部署 SSPanel**
 
-请自行将以下所有的 `sspanel` 替换为你想要的文件夹名称。
+请自行将以下所有的 `/var/www/sspanel` 替换为你想要的文件夹名称。
 
 ### **0x41 安装网站程序**
 
 ```bash
-mkdir /sspanel
-cd /sspanel
+mkdir -p /var/www/sspanel
+cd /var/www/sspanel
 chmod -R 755 ${PWD}
 chown -R www-data:www-data ${PWD}
 
@@ -73,16 +78,40 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 如果沒有，就新建一個文件，比如 `sspanel.conf`。
 在 `/etc/nginx/conf.d/sspanel.conf` 文件中写入以下参考配置：
 
+- 對於未配置 HTTPS 的網站，使用以下配置：
 ```nginx
     server {
-        listen 8080 ssl http2;
-        listen [::]:8080 ssl http2;
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name mysite.com www.mysite.com; # 改成你自己的域名
+        index index.php index.html index.htm index.nginx-debian.html;
+        root /var/www/sspanel/public;
+
+        location /.well-known/acme-challenge/ {
+        }
+
+        location ~ \\.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        }
+
+        location / {
+            try_files $uri /index.php$is_args$args;
+        }
+    }
+```
+
+- 對於已配置了 HTTPS 的網站， 可以如下設置。 注意 `ssl_certificate` 和 `ssl_certificate_key` 项。
+```nginx
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
         ssl_certificate       /fakesite_cert/chained_cert.pem; # 改成你自己的证书路径
         ssl_certificate_key   /fakesite_cert/private_key.pem; # 改成你自己的私鑰路径
         ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers           HIGH:!aNULL:!MD5;
         server_name sspanel.host;   # 改成你自己的域名
-        root /sspanel/public;       # 改成你自己的路径
+        root /var/www/sspanel/public;       # 改成你自己的路径
         index index.php index.html index.htm index.nginx-debian.html;
 
         location / {
@@ -123,7 +152,6 @@ mysql> exit
 ### **0x44 修改 sql 模式**
 
 > 這一步必須做，否則會出現 500 錯誤黑屏。
-> 
 
 給 `/etc/mysql/mysql.conf.d/mysqld.cnf` 文件末尾追加一行 `sql_mode = ""` ，使用下列命令：
 
@@ -140,11 +168,10 @@ systemctl restart mysql
 ### **0x45 配置网站程序**
 
 ```bash
-cd /sspanel/
+cd /var/www/sspanel/
 
 cp config/.config.example.php config/.config.php
 cp config/appprofile.example.php config/appprofile.php
-# mv db/migrations/20000101000000_init_database.php.new db/migrations/20000101000000_init_database.php
 
 vi config/.config.php
 ```
@@ -178,10 +205,10 @@ $_ENV['baseUrl']    = 'https://sspanel.host';   // 站点地址
 $_ENV['muKey']      = 'NimaQu';                 // 用于校验后端请求，可以随意修改，但保持前后端一致，否则节点不工作！
 ```
 
-导入表结构, 执行数据库迁移
+导入表结构
 
 ```bash
-vendor/bin/phinx migrate
+php xcat Migration new
 ```
 
 ### **0x46 创建管理员并同步用户**
@@ -189,14 +216,16 @@ vendor/bin/phinx migrate
 依次执行以下命令：
 
 ```bash
-php xcat Tool importAllSettings # 导入配置项目
+php xcat Tool importSetting # 导入配置项目
 php xcat Tool createAdmin # 创建管理员账户
-php xcat ClientDownload # 下載客戶端軟件
-bash update.sh
 ```
 
 > 如果创建管理员出错, 请检查 `config/.config.php` 中的数据库连接信息。
-> 
+
+下載各種客戶端
+```bash
+sudo -u www-data /usr/bin/php xcat ClientDownload
+```
 
 ### **0x47 配置定时任务**
 
