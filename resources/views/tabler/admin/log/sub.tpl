@@ -25,7 +25,7 @@
                                 <thead>
                                     <tr>
                                         {foreach $details['field'] as $key => $value}
-                                        <th>{$value}</th>
+                                            <th>{$value}</th>
                                         {/foreach}
                                     </tr>
                                 </thead>
@@ -49,12 +49,10 @@
         tableConfig.order = [
             [0, 'desc']
         ];
-        tableConfig.columnDefs = [
-            {
-                orderable: false,
-                targets: [4]
-            },
-        ];
+        tableConfig.columnDefs = [{
+            orderable: false,
+            targets: [4]
+        }, ];
 
         let table = new DataTable('#data-table', tableConfig);
 
@@ -65,4 +63,4 @@
         loadTable();
     </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

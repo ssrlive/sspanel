@@ -46,4 +46,4 @@
         </div>
     </div>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

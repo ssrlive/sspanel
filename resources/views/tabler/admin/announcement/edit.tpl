@@ -68,18 +68,18 @@
 {include file='tinymce.tpl'}
 
 <script>
-    $("#save").click(function () {
+    $("#save").click(function() {
         $.ajax({
             url: '/admin/announcement/' + {$ann->id},
             type: 'PUT',
             dataType: "json",
             data: {
                 {foreach $update_field as $key}
-                {$key}: $('#{$key}').val(),
+                    {$key}: $('#{$key}').val(),
                 {/foreach}
                 content: tinyMCE.activeEditor.getContent(),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');

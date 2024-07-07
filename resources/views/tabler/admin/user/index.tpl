@@ -16,8 +16,7 @@
                 </div>
                 <div class="col-auto">
                     <div class="btn-list">
-                        <button href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#create-dialog">
+                        <button href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-dialog">
                             <i class="icon ti ti-plus"></i>
                             创建
                         </button>
@@ -34,11 +33,11 @@
                         <div class="table-responsive">
                             <table id="data-table" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    {foreach $details['field'] as $key => $value}
-                                        <th>{$value}</th>
-                                    {/foreach}
-                                </tr>
+                                    <tr>
+                                        {foreach $details['field'] as $key => $value}
+                                            <th>{$value}</th>
+                                        {/foreach}
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -62,7 +61,7 @@
                                 <label class="form-label col-3 col-form-label">{$from['info']}</label>
                                 <div class="col">
                                     <input id="{$from['id']}" type="text" class="form-control"
-                                           placeholder="{$from['placeholder']}">
+                                        placeholder="{$from['placeholder']}">
                                 </div>
                             </div>
                         {/if}
@@ -70,7 +69,7 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">{$from['info']}</label>
                                 <textarea id="{$from['id']}" class="col form-control" rows="{$from['rows']}"
-                                          placeholder="{$from['placeholder']}"></textarea>
+                                    placeholder="{$from['placeholder']}"></textarea>
                             </div>
                         {/if}
                         {if $from['type'] === 'select'}
@@ -107,12 +106,10 @@
         tableConfig.order = [
             [1, 'asc']
         ];
-        tableConfig.columnDefs = [
-            {
-                targets: [0, 6, 7],
-                orderable: false
-            },
-        ];
+        tableConfig.columnDefs = [{
+            targets: [0, 6, 7],
+            orderable: false
+        }, ];
 
         let table = new DataTable('#data-table', tableConfig);
 
@@ -120,17 +117,17 @@
             table;
         }
 
-        $("#create-button").click(function () {
+        $("#create-button").click(function() {
             $.ajax({
                 type: "POST",
                 url: "/admin/user/create",
                 dataType: "json",
                 data: {
                     {foreach $details['create_dialog'] as $from}
-                    {$from['id']}: $('#{$from['id']}').val(),
+                        {$from['id']}: $('#{$from['id']}').val(),
                     {/foreach}
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data.ret === 1) {
                         $('#success-message').text(data.msg);
                         $('#success-dialog').modal('show');
@@ -146,12 +143,12 @@
         function deleteUser(user_id) {
             $('#notice-message').text('确定删除此用户？');
             $('#notice-dialog').modal('show');
-            $('#notice-confirm').off('click').on('click', function () {
+            $('#notice-confirm').off('click').on('click', function() {
                 $.ajax({
                     url: "/admin/user/" + user_id,
                     type: 'DELETE',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');

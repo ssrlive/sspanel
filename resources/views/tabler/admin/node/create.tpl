@@ -50,8 +50,7 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">流量倍率</label>
                                 <div class="col">
-                                    <input id="traffic_rate" type="text" class="form-control"
-                                           value="">
+                                    <input id="traffic_rate" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
@@ -159,22 +158,19 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">可用流量 (GB)</label>
                                 <div class="col">
-                                    <input id="node_bandwidth_limit" type="text" class="form-control"
-                                           value="">
+                                    <input id="node_bandwidth_limit" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">流量重置日</label>
                                 <div class="col">
-                                    <input id="bandwidthlimit_resetday" type="text" class="form-control"
-                                           value="">
+                                    <input id="bandwidthlimit_resetday" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">速率限制 (Mbps)</label>
                                 <div class="col">
-                                    <input id="node_speedlimit" type="text" class="form-control"
-                                           value="">
+                                    <input id="node_speedlimit" type="text" class="form-control" value="">
                                 </div>
                             </div>
                         </div>
@@ -192,19 +188,19 @@
     };
     const editor = new JSONEditor(container, options);
 
-    $("#create-node").click(function () {
+    $("#create-node").click(function() {
         $.ajax({
             url: '/admin/node',
             type: 'POST',
             dataType: "json",
             data: {
                 {foreach $update_field as $key}
-                {$key}: $('#{$key}').val(),
+                    {$key}: $('#{$key}').val(),
                 {/foreach}
                 type: $("#type").is(":checked"),
                 custom_config: JSON.stringify(editor.get()),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');

@@ -63,7 +63,7 @@
                                 <label class="form-label col-3 col-form-label">流量倍率</label>
                                 <div class="col">
                                     <input id="traffic_rate" type="text" class="form-control"
-                                           value="{$node->traffic_rate}">
+                                        value="{$node->traffic_rate}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
@@ -93,7 +93,8 @@
                                 <span class="col">显示此节点</span>
                                 <span class="col-auto">
                                     <label class="form-check form-check-single form-switch">
-                                        <input id="type" class="form-check-input" type="checkbox" {if $node->type}checked="" {/if}>
+                                        <input id="type" class="form-check-input" type="checkbox"
+                                            {if $node->type}checked="" {/if}>
                                     </label>
                                 </span>
                             </div>
@@ -104,16 +105,20 @@
                                 <span class="col">启用动态流量倍率</span>
                                 <span class="col-auto">
                                     <label class="form-check form-check-single form-switch">
-                                        <input id="is_dynamic_rate" class="form-check-input" type="checkbox" {if $node->is_dynamic_rate}checked="" {/if}>
+                                        <input id="is_dynamic_rate" class="form-check-input" type="checkbox"
+                                            {if $node->is_dynamic_rate}checked="" {/if}>
                                     </label>
                                 </span>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">动态流量倍率计算方式</label>
                                 <div class="col">
-                                    <select id="dynamic_rate_type" class="col form-select" value="{$node->dynamic_rate_type}">
-                                        <option value="0" {if $node->dynamic_rate_type === 0}selected{/if}>Logistic</option>
-                                        <option value="1" {if $node->dynamic_rate_type === 1}selected{/if}>Linear</option>
+                                    <select id="dynamic_rate_type" class="col form-select"
+                                        value="{$node->dynamic_rate_type}">
+                                        <option value="0" {if $node->dynamic_rate_type === 0}selected{/if}>Logistic
+                                        </option>
+                                        <option value="1" {if $node->dynamic_rate_type === 1}selected{/if}>Linear
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -126,7 +131,8 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">最大倍率时间（时）</label>
                                 <div class="col">
-                                    <input id="max_rate_time" type="text" class="form-control" value="{$node->max_rate_time}">
+                                    <input id="max_rate_time" type="text" class="form-control"
+                                        value="{$node->max_rate_time}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
@@ -138,7 +144,8 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">最小倍率时间（时）</label>
                                 <div class="col">
-                                    <input id="min_rate_time" type="text" class="form-control" value="{$node->min_rate_time}">
+                                    <input id="min_rate_time" type="text" class="form-control"
+                                        value="{$node->min_rate_time}">
                                 </div>
                                 <label class="form-label col-form-label">
                                     最大倍率时间必须大于最小倍率时间，否则将不会生效
@@ -172,7 +179,7 @@
                                 <label class="form-label col-3 col-form-label">已用流量</label>
                                 <div class="col">
                                     <input id="node_bandwidth" type="text" class="form-control"
-                                           value="{$node->node_bandwidth}" disabled="">
+                                        value="{$node->node_bandwidth}" disabled="">
                                 </div>
                                 <div class="col-auto">
                                     <button id="reset-bandwidth" class="btn btn-red">重置</button>
@@ -182,21 +189,21 @@
                                 <label class="form-label col-3 col-form-label">可用流量 (GB)</label>
                                 <div class="col">
                                     <input id="node_bandwidth_limit" type="text" class="form-control"
-                                           value="{$node->node_bandwidth_limit}">
+                                        value="{$node->node_bandwidth_limit}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">流量重置日</label>
                                 <div class="col">
                                     <input id="bandwidthlimit_resetday" type="text" class="form-control"
-                                           value="{$node->bandwidthlimit_resetday}">
+                                        value="{$node->bandwidthlimit_resetday}">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">速率限制 (Mbps)</label>
                                 <div class="col">
                                     <input id="node_speedlimit" type="text" class="form-control"
-                                           value="{$node->node_speedlimit}">
+                                        value="{$node->node_speedlimit}">
                                 </div>
                             </div>
                             <div class="hr-text">
@@ -205,12 +212,12 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">节点通讯密钥</label>
                                 <input type="text" class="form-control" id="password" value="{$node->password}"
-                                       disabled="">
+                                    disabled="">
                                 <div class="row my-3">
                                     <div class="col">
                                         <button id="reset-password" class="btn btn-red">重置</button>
                                         <button id="copy-password" class="copy btn btn-primary"
-                                                data-clipboard-text="{$node->password}">
+                                            data-clipboard-text="{$node->password}">
                                             复制
                                         </button>
                                     </div>
@@ -229,7 +236,7 @@
 
 <script>
     let clipboard = new ClipboardJS('.copy');
-    clipboard.on('success', function (e) {
+    clipboard.on('success', function(e) {
         $('#success-message').text('已复制到剪切板');
         $('#success-dialog').modal('show');
     });
@@ -241,12 +248,12 @@
     const editor = new JSONEditor(container, options);
     editor.set({$node->custom_config})
 
-    $("#reset-bandwidth").click(function () {
+    $("#reset-bandwidth").click(function() {
         $.ajax({
             url: '/admin/node/{$node->id}/reset_bandwidth',
             type: 'POST',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');
@@ -258,12 +265,12 @@
         })
     });
 
-    $("#reset-password").click(function () {
+    $("#reset-password").click(function() {
         $.ajax({
             url: '/admin/node/{$node->id}/reset_password',
             type: 'POST',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');
@@ -275,20 +282,20 @@
         })
     });
 
-    $("#save-node").click(function () {
+    $("#save-node").click(function() {
         $.ajax({
             url: '/admin/node/{$node->id}',
             type: 'PUT',
             dataType: "json",
             data: {
                 {foreach $update_field as $key}
-                {$key}: $('#{$key}').val(),
+                    {$key}: $('#{$key}').val(),
                 {/foreach}
                 type: $("#type").is(":checked"),
                 is_dynamic_rate: $("#is_dynamic_rate").is(":checked"),
                 custom_config: JSON.stringify(editor.get()),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');

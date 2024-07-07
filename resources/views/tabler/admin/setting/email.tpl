@@ -70,41 +70,41 @@
                                             <label class="form-label col-3 col-form-label">邮件服务提供商</label>
                                             <div class="col">
                                                 <select id="email_driver" class="col form-select"
-                                                        value="{$settings['email_driver']}">
+                                                    value="{$settings['email_driver']}">
                                                     <option value="none"
-                                                            {if $settings['email_driver'] === "none"}selected{/if}>
+                                                        {if $settings['email_driver'] === "none"}selected{/if}>
                                                         None
                                                     </option>
                                                     <option value="smtp"
-                                                            {if $settings['email_driver'] === "smtp"}selected{/if}>
+                                                        {if $settings['email_driver'] === "smtp"}selected{/if}>
                                                         SMTP
                                                     </option>
                                                     <option value="mailgun"
-                                                            {if $settings['email_driver'] === "mailgun"}selected{/if}>
+                                                        {if $settings['email_driver'] === "mailgun"}selected{/if}>
                                                         Mailgun
                                                     </option>
                                                     <option value="sendgrid"
-                                                            {if $settings['email_driver'] === "sendgrid"}selected{/if}>
+                                                        {if $settings['email_driver'] === "sendgrid"}selected{/if}>
                                                         Sendgrid
                                                     </option>
                                                     <option value="postal"
-                                                            {if $settings['email_driver'] === "postal"}selected{/if}>
+                                                        {if $settings['email_driver'] === "postal"}selected{/if}>
                                                         Postal
                                                     </option>
                                                     <option value="ses"
-                                                            {if $settings['email_driver'] === "ses"}selected{/if}>
+                                                        {if $settings['email_driver'] === "ses"}selected{/if}>
                                                         AWS SES
                                                     </option>
                                                     <option value="mailchimp"
-                                                            {if $settings['email_driver'] === "mailchimp"}selected{/if}>
+                                                        {if $settings['email_driver'] === "mailchimp"}selected{/if}>
                                                         Mailchimp
                                                     </option>
                                                     <option value="alibabacloud"
-                                                            {if $settings['email_driver'] === "alibabacloud"}selected{/if}>
+                                                        {if $settings['email_driver'] === "alibabacloud"}selected{/if}>
                                                         AlibabaCloud DM
                                                     </option>
                                                     <option value="resend"
-                                                            {if $settings['email_driver'] === "resend"}selected{/if}>
+                                                        {if $settings['email_driver'] === "resend"}selected{/if}>
                                                         Resend
                                                     </option>
                                                 </select>
@@ -128,28 +128,28 @@
                                             <label class="form-label col-3 col-form-label">邮箱验证码有效期（秒）</label>
                                             <div class="col">
                                                 <input id="email_verify_code_ttl" type="text" class="form-control"
-                                                       value="{$settings['email_verify_code_ttl']}">
+                                                    value="{$settings['email_verify_code_ttl']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">邮箱重设密码链接有效期（秒）</label>
                                             <div class="col">
                                                 <input id="email_password_reset_ttl" type="text" class="form-control"
-                                                       value="{$settings['email_password_reset_ttl']}">
+                                                    value="{$settings['email_password_reset_ttl']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">单个IP每小时可请求的发信次数</label>
                                             <div class="col">
                                                 <input id="email_request_ip_limit" type="text" class="form-control"
-                                                       value="{$settings['email_request_ip_limit']}">
+                                                    value="{$settings['email_request_ip_limit']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">单个邮箱地址每小时可请求的发信次数</label>
                                             <div class="col">
                                                 <input id="email_request_address_limit" type="text" class="form-control"
-                                                       value="{$settings['email_request_address_limit']}">
+                                                    value="{$settings['email_request_address_limit']}">
                                             </div>
                                         </div>
                                     </div>
@@ -160,45 +160,45 @@
                                             <label class="form-label col-3 col-form-label">Host</label>
                                             <div class="col">
                                                 <input id="smtp_host" type="text" class="form-control"
-                                                       value="{$settings['smtp_host']}">
+                                                    value="{$settings['smtp_host']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Username</label>
                                             <div class="col">
                                                 <input id="smtp_username" type="text" class="form-control"
-                                                       value="{$settings['smtp_username']}">
+                                                    value="{$settings['smtp_username']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Password</label>
                                             <div class="col">
                                                 <input id="smtp_password" type="text" class="form-control"
-                                                       value="{$settings['smtp_password']}">
+                                                    value="{$settings['smtp_password']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Port</label>
                                             <div class="col">
                                                 <select id="smtp_port" class="col form-select"
-                                                        value="{$settings['smtp_port']}">
+                                                    value="{$settings['smtp_port']}">
                                                     <option value="465"
-                                                            {if $settings['smtp_port'] === "465"}selected{/if}>465
+                                                        {if $settings['smtp_port'] === "465"}selected{/if}>465
                                                     </option>
                                                     <option value="587"
-                                                            {if $settings['smtp_port'] === "587"}selected{/if}>587
+                                                        {if $settings['smtp_port'] === "587"}selected{/if}>587
                                                     </option>
                                                     <option value="443"
-                                                            {if $settings['smtp_port'] === "443"}selected{/if}>443
+                                                        {if $settings['smtp_port'] === "443"}selected{/if}>443
                                                     </option>
                                                     <option value="80"
-                                                            {if $settings['smtp_port'] === "80"}selected{/if}>80
+                                                        {if $settings['smtp_port'] === "80"}selected{/if}>80
                                                     </option>
                                                     <option value="2525"
-                                                            {if $settings['smtp_port'] === "2525"}selected{/if}>2525
+                                                        {if $settings['smtp_port'] === "2525"}selected{/if}>2525
                                                     </option>
                                                     <option value="25"
-                                                            {if $settings['smtp_port'] === "25"}selected{/if}>25
+                                                        {if $settings['smtp_port'] === "25"}selected{/if}>25
                                                     </option>
                                                 </select>
                                             </div>
@@ -207,21 +207,21 @@
                                             <label class="form-label col-3 col-form-label">Name</label>
                                             <div class="col">
                                                 <input id="smtp_name" type="text" class="form-control"
-                                                       value="{$settings['smtp_name']}">
+                                                    value="{$settings['smtp_name']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sener</label>
                                             <div class="col">
                                                 <input id="smtp_sender" type="text" class="form-control"
-                                                       value="{$settings['smtp_sender']}">
+                                                    value="{$settings['smtp_sender']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Enable TLS/SSL</label>
                                             <div class="col">
                                                 <select id="smtp_ssl" class="col form-select"
-                                                        value="{$settings['smtp_ssl']}">
+                                                    value="{$settings['smtp_ssl']}">
                                                     <option value="0" {if ! $settings['smtp_ssl']}selected{/if}>False
                                                     </option>
                                                     <option value="1" {if $settings['smtp_ssl']}selected{/if}>True
@@ -233,7 +233,7 @@
                                             <label class="form-label col-3 col-form-label">BBC</label>
                                             <div class="col">
                                                 <input id="smtp_bbc" type="text" class="form-control"
-                                                       value="{$settings['smtp_bbc']}">
+                                                    value="{$settings['smtp_bbc']}">
                                             </div>
                                         </div>
                                     </div>
@@ -244,28 +244,28 @@
                                             <label class="form-label col-3 col-form-label">Api Key</label>
                                             <div class="col">
                                                 <input id="mailgun_key" type="text" class="form-control"
-                                                       value="{$settings['mailgun_key']}">
+                                                    value="{$settings['mailgun_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Domain</label>
                                             <div class="col">
                                                 <input id="mailgun_domain" type="text" class="form-control"
-                                                       value="{$settings['mailgun_domain']}">
+                                                    value="{$settings['mailgun_domain']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sender</label>
                                             <div class="col">
                                                 <input id="mailgun_sender" type="text" class="form-control"
-                                                       value="{$settings['mailgun_sender']}">
+                                                    value="{$settings['mailgun_sender']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sender Name</label>
                                             <div class="col">
                                                 <input id="mailgun_sender_name" type="text" class="form-control"
-                                                       value="{$settings['mailgun_sender_name']}">
+                                                    value="{$settings['mailgun_sender_name']}">
                                             </div>
                                         </div>
                                     </div>
@@ -276,21 +276,21 @@
                                             <label class="form-label col-3 col-form-label">Api Key</label>
                                             <div class="col">
                                                 <input id="sendgrid_key" type="text" class="form-control"
-                                                       value="{$settings['sendgrid_key']}">
+                                                    value="{$settings['sendgrid_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sender</label>
                                             <div class="col">
                                                 <input id="sendgrid_sender" type="text" class="form-control"
-                                                       value="{$settings['sendgrid_sender']}">
+                                                    value="{$settings['sendgrid_sender']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Name</label>
                                             <div class="col">
                                                 <input id="sendgrid_name" type="text" class="form-control"
-                                                       value="{$settings['sendgrid_name']}">
+                                                    value="{$settings['sendgrid_name']}">
                                             </div>
                                         </div>
                                     </div>
@@ -301,28 +301,28 @@
                                             <label class="form-label col-3 col-form-label">Host</label>
                                             <div class="col">
                                                 <input id="postal_host" type="text" class="form-control"
-                                                       value="{$settings['postal_host']}">
+                                                    value="{$settings['postal_host']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Api Key</label>
                                             <div class="col">
                                                 <input id="postal_key" type="text" class="form-control"
-                                                       value="{$settings['postal_key']}">
+                                                    value="{$settings['postal_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sender</label>
                                             <div class="col">
                                                 <input id="postal_sender" type="text" class="form-control"
-                                                       value="{$settings['postal_sender']}">
+                                                    value="{$settings['postal_sender']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Name</label>
                                             <div class="col">
                                                 <input id="postal_name" type="text" class="form-control"
-                                                       value="{$settings['postal_name']}">
+                                                    value="{$settings['postal_name']}">
                                             </div>
                                         </div>
                                     </div>
@@ -333,28 +333,28 @@
                                             <label class="form-label col-3 col-form-label">Access Key ID</label>
                                             <div class="col">
                                                 <input id="aws_ses_access_key_id" type="text" class="form-control"
-                                                       value="{$settings['aws_ses_access_key_id']}">
+                                                    value="{$settings['aws_ses_access_key_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Access Key Secret</label>
                                             <div class="col">
                                                 <input id="aws_ses_access_key_secret" type="text" class="form-control"
-                                                       value="{$settings['aws_ses_access_key_secret']}">
+                                                    value="{$settings['aws_ses_access_key_secret']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Region</label>
                                             <div class="col">
                                                 <input id="aws_ses_region" type="text" class="form-control"
-                                                       value="{$settings['aws_ses_region']}">
+                                                    value="{$settings['aws_ses_region']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Sender</label>
                                             <div class="col">
                                                 <input id="aws_ses_sender" type="text" class="form-control"
-                                                       value="{$settings['aws_ses_sender']}">
+                                                    value="{$settings['aws_ses_sender']}">
                                             </div>
                                         </div>
                                     </div>
@@ -365,21 +365,21 @@
                                             <label class="form-label col-3 col-form-label">Api Key</label>
                                             <div class="col">
                                                 <input id="mailchimp_key" type="text" class="form-control"
-                                                       value="{$settings['mailchimp_key']}">
+                                                    value="{$settings['mailchimp_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">From Email</label>
                                             <div class="col">
                                                 <input id="mailchimp_from_email" type="text" class="form-control"
-                                                       value="{$settings['mailchimp_from_email']}">
+                                                    value="{$settings['mailchimp_from_email']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">From Name</label>
                                             <div class="col">
                                                 <input id="mailchimp_from_name" type="text" class="form-control"
-                                                       value="{$settings['mailchimp_from_name']}">
+                                                    value="{$settings['mailchimp_from_name']}">
                                             </div>
                                         </div>
                                     </div>
@@ -389,36 +389,39 @@
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Access Key ID</label>
                                             <div class="col">
-                                                <input id="alibabacloud_dm_access_key_id" type="text" class="form-control"
-                                                       value="{$settings['alibabacloud_dm_access_key_id']}">
+                                                <input id="alibabacloud_dm_access_key_id" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['alibabacloud_dm_access_key_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Access Key Secret</label>
                                             <div class="col">
-                                                <input id="alibabacloud_dm_access_key_secret" type="text" class="form-control"
-                                                       value="{$settings['alibabacloud_dm_access_key_secret']}">
+                                                <input id="alibabacloud_dm_access_key_secret" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['alibabacloud_dm_access_key_secret']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Endpoint</label>
                                             <div class="col">
                                                 <input id="alibabacloud_dm_endpoint" type="text" class="form-control"
-                                                       value="{$settings['alibabacloud_dm_endpoint']}">
+                                                    value="{$settings['alibabacloud_dm_endpoint']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Account Name</label>
                                             <div class="col">
-                                                <input id="alibabacloud_dm_account_name" type="text" class="form-control"
-                                                       value="{$settings['alibabacloud_dm_account_name']}">
+                                                <input id="alibabacloud_dm_account_name" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['alibabacloud_dm_account_name']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">From Alias</label>
                                             <div class="col">
                                                 <input id="alibabacloud_dm_from_alias" type="text" class="form-control"
-                                                       value="{$settings['alibabacloud_dm_from_alias']}">
+                                                    value="{$settings['alibabacloud_dm_from_alias']}">
                                             </div>
                                         </div>
                                     </div>
@@ -429,14 +432,14 @@
                                             <label class="form-label col-3 col-form-label">Api Key</label>
                                             <div class="col">
                                                 <input id="resend_api_key" type="text" class="form-control"
-                                                       value="{$settings['resend_api_key']}">
+                                                    value="{$settings['resend_api_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">From</label>
                                             <div class="col">
                                                 <input id="resend_from" type="text" class="form-control"
-                                                       value="{$settings['resend_from']}">
+                                                    value="{$settings['resend_from']}">
                                             </div>
                                         </div>
                                     </div>
@@ -449,17 +452,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/email',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -471,7 +474,7 @@
                 })
             });
 
-            $("#test-email").click(function () {
+            $("#test-email").click(function() {
                 $.ajax({
                     url: '/admin/setting/test/email',
                     type: 'POST',
@@ -479,7 +482,7 @@
                     data: {
                         recipient: $('#recipient').val(),
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -492,4 +495,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

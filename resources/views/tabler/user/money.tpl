@@ -14,13 +14,12 @@
                 </div>
                 <div class="col-auto">
                     <div class="btn-list">
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                           data-bs-target="#topup">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#topup">
                             <i class="icon ti ti-plus"></i>
                             余额充值
                         </a>
                         <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                           data-bs-target="#apply-giftcard-dialog">
+                            data-bs-target="#apply-giftcard-dialog">
                             <i class="icon ti ti-cash-banknote"></i>
                             兑换礼品卡
                         </a>
@@ -37,26 +36,26 @@
                         <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    <th>事件ID</th>
-                                    <th>变动前余额</th>
-                                    <th>变动后余额</th>
-                                    <th>变动金额</th>
-                                    <th>备注</th>
-                                    <th>变动时间</th>
-                                </tr>
+                                    <tr>
+                                        <th>事件ID</th>
+                                        <th>变动前余额</th>
+                                        <th>变动后余额</th>
+                                        <th>变动金额</th>
+                                        <th>备注</th>
+                                        <th>变动时间</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {foreach $moneylogs as $moneylog}
-                                    <tr>
-                                        <td>{$moneylog->id}</td>
-                                        <td>{$moneylog->before}</td>
-                                        <td>{$moneylog->after}</td>
-                                        <td>{$moneylog->amount}</td>
-                                        <td>{$moneylog->remark}</td>
-                                        <td>{$moneylog->create_time}</td>
-                                    </tr>
-                                {/foreach}
+                                    {foreach $moneylogs as $moneylog}
+                                        <tr>
+                                            <td>{$moneylog->id}</td>
+                                            <td>{$moneylog->before}</td>
+                                            <td>{$moneylog->after}</td>
+                                            <td>{$moneylog->amount}</td>
+                                            <td>{$moneylog->remark}</td>
+                                            <td>{$moneylog->create_time}</td>
+                                        </tr>
+                                    {/foreach}
                                 </tbody>
                             </table>
                         </div>
@@ -76,16 +75,14 @@
                 <div class="modal-body">
                     <div class="form-group mb-3 row">
                         <div class="col">
-                            <input id="giftcard" type="text" class="form-control"
-                                   placeholder="输入礼品卡卡号并点击兑换">
+                            <input id="giftcard" type="text" class="form-control" placeholder="输入礼品卡卡号并点击兑换">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
-                    <button id="apply-giftcard" class="btn btn-primary" data-bs-dismiss="modal"
-                            hx-post="/user/giftcard" hx-swap="none"
-                            hx-vals='js:{ giftcard: document.getElementById("giftcard").value }'>
+                    <button id="apply-giftcard" class="btn btn-primary" data-bs-dismiss="modal" hx-post="/user/giftcard"
+                        hx-swap="none" hx-vals='js:{ giftcard: document.getElementById("giftcard").value }'>
                         兑换
                     </button>
                 </div>
@@ -104,15 +101,14 @@
                     <div class="form-group mb-3 row">
                         <div class="col">
                             <input id="topup_amount" type="number" step="10" class="form-control"
-                                   placeholder="请输入要充值的金额">
+                                placeholder="请输入要充值的金额">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
                     <button id="apply-topup" class="btn btn-primary" data-bs-dismiss="modal"
-                            hx-post="/user/order/create" hx-swap="none"
-                            hx-vals='js:{
+                        hx-post="/user/order/create" hx-swap="none" hx-vals='js:{
                                 amount: document.getElementById("topup_amount").value,
                                 type: "topup"
                             }'>

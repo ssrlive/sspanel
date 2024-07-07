@@ -96,7 +96,7 @@
 {include file='tinymce.tpl'}
 
 <script>
-    $("#generate").click(function () {
+    $("#generate").click(function() {
         $.ajax({
             url: "/admin/docs/generate",
             type: 'POST',
@@ -104,7 +104,7 @@
             data: {
                 question: $("#question").val(),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');
@@ -117,18 +117,18 @@
         })
     });
 
-    $("#create").click(function () {
+    $("#create").click(function() {
         $.ajax({
             url: '/admin/docs',
             type: 'POST',
             dataType: "json",
             data: {
                 {foreach $update_field as $key}
-                {$key}: $('#{$key}').val(),
+                    {$key}: $('#{$key}').val(),
                 {/foreach}
                 content: tinyMCE.activeEditor.getContent(),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');

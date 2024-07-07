@@ -1,4 +1,4 @@
-<link href="//cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet"/>
+<link href="//cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet" />
 <script src="//cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
 <script>
@@ -8,12 +8,12 @@
         scrollX: true,
         columns: [
             {foreach $details['field'] as $key => $value}
-            {
-                data: '{$key}'
-            },
+                {
+                    data: '{$key}'
+                },
             {/foreach}
         ],
-        initComplete: function () {
+        initComplete: function() {
             $('div.dt-length').parent().parent().removeClass('mt-2').addClass('row px-3 py-3')
             $('div.dt-scroll').parent().parent().removeClass('mt-2')
             $('div.dt-info').parent().parent().removeClass('mt-2').addClass('row card-footer')

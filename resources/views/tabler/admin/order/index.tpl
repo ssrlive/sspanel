@@ -23,11 +23,11 @@
                         <div class="table-responsive">
                             <table id="data-table" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    {foreach $details['field'] as $key => $value}
-                                        <th>{$value}</th>
-                                    {/foreach}
-                                </tr>
+                                    <tr>
+                                        {foreach $details['field'] as $key => $value}
+                                            <th>{$value}</th>
+                                        {/foreach}
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -48,12 +48,10 @@
         tableConfig.order = [
             [1, 'desc']
         ];
-        tableConfig.columnDefs = [
-            {
-                targets: [0],
-                orderable: false
-            }
-        ];
+        tableConfig.columnDefs = [{
+            targets: [0],
+            orderable: false
+        }];
 
         let table = new DataTable('#data-table', tableConfig);
 
@@ -64,12 +62,12 @@
         function deleteOrder(order_id) {
             $('#notice-message').text('确定删除此订单？');
             $('#notice-dialog').modal('show');
-            $('#notice-confirm').off('click').on('click', function () {
+            $('#notice-confirm').off('click').on('click', function() {
                 $.ajax({
                     url: "/admin/order/" + order_id,
                     type: 'DELETE',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -86,12 +84,12 @@
         function cancelOrder(order_id) {
             $('#notice-message').text('确定取消此订单？如果关联账单已支付，将会退款至用户余额。');
             $('#notice-dialog').modal('show');
-            $('#notice-confirm').off('click').on('click', function () {
+            $('#notice-confirm').off('click').on('click', function() {
                 $.ajax({
                     url: "/admin/order/" + order_id + "/cancel",
                     type: 'POST',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -112,4 +110,4 @@
         loadTable();
     </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

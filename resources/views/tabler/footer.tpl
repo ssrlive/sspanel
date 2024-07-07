@@ -53,8 +53,7 @@
     let failDialog = new bootstrap.Modal(document.getElementById('fail-dialog'));
 
     htmx.on("htmx:afterRequest", function(evt) {
-        if (evt.detail.xhr.getResponseHeader('HX-Redirect'))
-        {
+        if (evt.detail.xhr.getResponseHeader('HX-Redirect')) {
             return;
         }
 

@@ -16,8 +16,7 @@
                 </div>
                 <div class="col-auto">
                     <div class="btn-list">
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                           data-bs-target="#create-dialog">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-dialog">
                             <i class="icon ti ti-plus"></i>
                             创建
                         </a>
@@ -34,11 +33,11 @@
                         <div class="table-responsive">
                             <table id="data-table" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    {foreach $details['field'] as $key => $value}
-                                        <th>{$value}</th>
-                                    {/foreach}
-                                </tr>
+                                    <tr>
+                                        {foreach $details['field'] as $key => $value}
+                                            <th>{$value}</th>
+                                        {/foreach}
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -62,7 +61,7 @@
                                 <label class="form-label col-3 col-form-label">{$detail['info']}</label>
                                 <div class="col">
                                     <input id="{$detail['id']}" type="text" class="form-control"
-                                           placeholder="{$detail['placeholder']}">
+                                        placeholder="{$detail['placeholder']}">
                                 </div>
                             </div>
                         {/if}
@@ -70,7 +69,7 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">{$detail['info']}</label>
                                 <textarea id="{$detail['id']}" class="col form-control" rows="{$detail['rows']}"
-                                          placeholder="{$detail['placeholder']}"></textarea>
+                                    placeholder="{$detail['placeholder']}"></textarea>
                             </div>
                         {/if}
                         {if $detail['type'] === 'select'}
@@ -89,8 +88,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
-                    <button id="create-button" onclick="createGiftCard()"
-                            type="button" class="btn btn-primary" data-bs-dismiss="modal">创建
+                    <button id="create-button" onclick="createGiftCard()" type="button" class="btn btn-primary"
+                        data-bs-dismiss="modal">创建
                     </button>
                 </div>
             </div>
@@ -108,12 +107,10 @@
         tableConfig.order = [
             [1, 'desc']
         ];
-        tableConfig.columnDefs = [
-            {
-                targets: [0],
-                orderable: false
-            }
-        ];
+        tableConfig.columnDefs = [{
+            targets: [0],
+            orderable: false
+        }];
 
         let table = new DataTable('#data-table', tableConfig);
 
@@ -128,10 +125,10 @@
                 dataType: "json",
                 data: {
                     {foreach $details['create_dialog'] as $detail}
-                    {$detail['id']}: $('#{$detail['id']}').val(),
+                        {$detail['id']}: $('#{$detail['id']}').val(),
                     {/foreach}
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data.ret === 1) {
                         $('#success-message').text(data.msg);
                         $('#success-dialog').modal('show');
@@ -147,12 +144,12 @@
         function deleteGiftCard(giftcard_id) {
             $('#notice-message').text('确定删除此礼品卡？');
             $('#notice-dialog').modal('show');
-            $('#notice-confirm').off('click').on('click', function () {
+            $('#notice-confirm').off('click').on('click', function() {
                 $.ajax({
                     url: "/admin/giftcard/" + giftcard_id,
                     type: 'DELETE',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -173,4 +170,4 @@
         loadTable();
     </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

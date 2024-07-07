@@ -88,8 +88,7 @@
     htmx.on("htmx:afterRequest", function(evt) {
         if (evt.detail.xhr.getResponseHeader('HX-Refresh') === 'true' ||
             evt.detail.xhr.getResponseHeader('HX-Redirect') ||
-            evt.detail.xhr.getResponseHeader('HX-Trigger'))
-        {
+            evt.detail.xhr.getResponseHeader('HX-Trigger')) {
             return;
         }
 
@@ -120,7 +119,9 @@
         }
     });
 </script>
-<script>console.table([['数据库查询', '执行时间'], ['{count($queryLog)} 次', '{$optTime} ms']])</script>
+<script>
+    console.table([['数据库查询', '执行时间'], ['{count($queryLog)} 次', '{$optTime} ms']])
+</script>
 
 </body>
 

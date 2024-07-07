@@ -151,7 +151,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             window.ApexCharts && (new ApexCharts(document.getElementById('check-in'), {
                 chart: {
                     type: "donut",
@@ -172,7 +172,8 @@
                 grid: {
                     strokeDashArray: 3,
                 },
-                colors: [tabler.getColor("azure"), tabler.getColor("cyan"), tabler.getColor("orange")],
+                colors: [tabler.getColor("azure"), tabler.getColor("cyan"), tabler.getColor(
+                    "orange")],
                 legend: {
                     show: true,
                     position: 'bottom',
@@ -292,7 +293,8 @@
                 grid: {
                     strokeDashArray: 3,
                 },
-                colors: [tabler.getColor("green"), tabler.getColor("lime"), tabler.getColor("yellow")],
+                colors: [tabler.getColor("green"), tabler.getColor("lime"), tabler.getColor(
+                    "yellow")],
                 legend: {
                     show: true,
                     position: 'bottom',
@@ -314,6 +316,7 @@
         });
     </script>
 
-    <script src="//{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="//{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js">
+    </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

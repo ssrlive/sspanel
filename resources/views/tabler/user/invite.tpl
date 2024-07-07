@@ -42,12 +42,12 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex">
-                                        <button class="btn text-red btn-link"
-                                                hx-post="/user/invite/reset" hx-swap="none">
+                                        <button class="btn text-red btn-link" hx-post="/user/invite/reset"
+                                            hx-swap="none">
                                             重置
                                         </button>
                                         <button data-clipboard-text="{$invite_url}"
-                                           class="copy btn btn-primary ms-auto">复制</button>
+                                            class="copy btn btn-primary ms-auto">复制</button>
                                     </div>
                                 </div>
                             </div>
@@ -62,24 +62,24 @@
                         <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    <th>记录ID</th>
-                                    <th>邀请用户ID</th>
-                                    <th>邀请用户昵称</th>
-                                    <th>返利金额</th>
-                                    <th>返利时间</th>
-                                </tr>
+                                    <tr>
+                                        <th>记录ID</th>
+                                        <th>邀请用户ID</th>
+                                        <th>邀请用户昵称</th>
+                                        <th>返利金额</th>
+                                        <th>返利时间</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {foreach $paybacks as $payback}
-                                    <tr>
-                                        <td>{$payback->id}</td>
-                                        <td>{$payback->userid}</td>
-                                        <td>{$payback->user_name}</td>
-                                        <td>{$payback->ref_get} 元</td>
-                                        <td>{$payback->datetime}</td>
-                                    </tr>
-                                {/foreach}
+                                    {foreach $paybacks as $payback}
+                                        <tr>
+                                            <td>{$payback->id}</td>
+                                            <td>{$payback->userid}</td>
+                                            <td>{$payback->user_name}</td>
+                                            <td>{$payback->ref_get} 元</td>
+                                            <td>{$payback->datetime}</td>
+                                        </tr>
+                                    {/foreach}
                                 </tbody>
                             </table>
                         </div>
@@ -89,4 +89,4 @@
         </div>
     </div>
 
-    {include file='user/footer.tpl'}
+{include file='user/footer.tpl'}

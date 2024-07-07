@@ -46,7 +46,8 @@
                                     <a href="#huggingface" class="nav-link" data-bs-toggle="tab">Hugging Face</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#cf-workers-ai" class="nav-link" data-bs-toggle="tab">Cloudflare Workers AI</a>
+                                    <a href="#cf-workers-ai" class="nav-link" data-bs-toggle="tab">Cloudflare Workers
+                                        AI</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#anthropic" class="nav-link" data-bs-toggle="tab">Anthropic</a>
@@ -64,37 +65,36 @@
                                             <label class="form-label col-3 col-form-label">Backend</label>
                                             <div class="col">
                                                 <select id="llm_backend" class="col form-select"
-                                                        value="{$settings['llm_backend']}">
-                                                    <option value=""
-                                                            {if $settings['llm_backend'] === ""}selected{/if}>
+                                                    value="{$settings['llm_backend']}">
+                                                    <option value="" {if $settings['llm_backend'] === ""}selected{/if}>
                                                         None
                                                     </option>
                                                     <option value="openai"
-                                                            {if $settings['llm_backend'] === "openai"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "openai"}selected{/if}>
                                                         OpenAI
                                                     </option>
                                                     <option value="google-ai"
-                                                            {if $settings['llm_backend'] === "google-ai"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "google-ai"}selected{/if}>
                                                         Google AI
                                                     </option>
                                                     <option value="vertex-ai"
-                                                            {if $settings['llm_backend'] === "vertex-ai"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "vertex-ai"}selected{/if}>
                                                         Vertex AI
                                                     </option>
                                                     <option value="huggingface"
-                                                            {if $settings['llm_backend'] === "huggingface"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "huggingface"}selected{/if}>
                                                         Hugging Face
                                                     </option>
                                                     <option value="cf-workers-ai"
-                                                            {if $settings['llm_backend'] === "cf-workers-ai"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "cf-workers-ai"}selected{/if}>
                                                         Cloudflare Workers AI
                                                     </option>
                                                     <option value="anthropic"
-                                                            {if $settings['llm_backend'] === "anthropic"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "anthropic"}selected{/if}>
                                                         Anthropic
                                                     </option>
                                                     <option value="aws-bedrock"
-                                                            {if $settings['llm_backend'] === "aws-bedrock"}selected{/if}>
+                                                        {if $settings['llm_backend'] === "aws-bedrock"}selected{/if}>
                                                         AWS Bedrock
                                                     </option>
                                                 </select>
@@ -108,14 +108,14 @@
                                             <label class="form-label col-3 col-form-label">API Key</label>
                                             <div class="col">
                                                 <input id="openai_api_key" type="text" class="form-control"
-                                                       value="{$settings['openai_api_key']}">
+                                                    value="{$settings['openai_api_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="openai_model_id" type="text" class="form-control"
-                                                       value="{$settings['openai_model_id']}">
+                                                    value="{$settings['openai_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -126,14 +126,14 @@
                                             <label class="form-label col-3 col-form-label">API Key</label>
                                             <div class="col">
                                                 <input id="google_ai_api_key" type="text" class="form-control"
-                                                       value="{$settings['google_ai_api_key']}">
+                                                    value="{$settings['google_ai_api_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="google_ai_model_id" type="text" class="form-control"
-                                                       value="{$settings['google_ai_model_id']}">
+                                                    value="{$settings['google_ai_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -144,28 +144,28 @@
                                             <label class="form-label col-3 col-form-label">Access Token</label>
                                             <div class="col">
                                                 <input id="vertex_ai_access_token" type="text" class="form-control"
-                                                       value="{$settings['vertex_ai_access_token']}">
+                                                    value="{$settings['vertex_ai_access_token']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Location</label>
                                             <div class="col">
                                                 <input id="vertex_ai_location" type="text" class="form-control"
-                                                       value="{$settings['vertex_ai_location']}">
+                                                    value="{$settings['vertex_ai_location']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Project ID</label>
                                             <div class="col">
                                                 <input id="vertex_ai_project_id" type="text" class="form-control"
-                                                       value="{$settings['vertex_ai_project_id']}">
+                                                    value="{$settings['vertex_ai_project_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="vertex_ai_model_id" type="text" class="form-control"
-                                                       value="{$settings['vertex_ai_model_id']}">
+                                                    value="{$settings['vertex_ai_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -176,14 +176,14 @@
                                             <label class="form-label col-3 col-form-label">API Key</label>
                                             <div class="col">
                                                 <input id="huggingface_api_key" type="text" class="form-control"
-                                                       value="{$settings['huggingface_api_key']}">
+                                                    value="{$settings['huggingface_api_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Endpoint URL</label>
                                             <div class="col">
                                                 <input id="huggingface_endpoint_url" type="text" class="form-control"
-                                                       value="{$settings['huggingface_endpoint_url']}">
+                                                    value="{$settings['huggingface_endpoint_url']}">
                                             </div>
                                         </div>
                                     </div>
@@ -194,21 +194,21 @@
                                             <label class="form-label col-3 col-form-label">Account ID</label>
                                             <div class="col">
                                                 <input id="cf_workers_ai_account_id" type="text" class="form-control"
-                                                       value="{$settings['cf_workers_ai_account_id']}">
+                                                    value="{$settings['cf_workers_ai_account_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">API Token</label>
                                             <div class="col">
                                                 <input id="cf_workers_ai_api_token" type="text" class="form-control"
-                                                       value="{$settings['cf_workers_ai_api_token']}">
+                                                    value="{$settings['cf_workers_ai_api_token']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="cf_workers_ai_model_id" type="text" class="form-control"
-                                                       value="{$settings['cf_workers_ai_model_id']}">
+                                                    value="{$settings['cf_workers_ai_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -219,14 +219,14 @@
                                             <label class="form-label col-3 col-form-label">API Key</label>
                                             <div class="col">
                                                 <input id="anthropic_api_key" type="text" class="form-control"
-                                                       value="{$settings['anthropic_api_key']}">
+                                                    value="{$settings['anthropic_api_key']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="anthropic_model_id" type="text" class="form-control"
-                                                       value="{$settings['anthropic_model_id']}">
+                                                    value="{$settings['anthropic_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -237,28 +237,29 @@
                                             <label class="form-label col-3 col-form-label">Access Key ID</label>
                                             <div class="col">
                                                 <input id="aws_bedrock_access_key_id" type="text" class="form-control"
-                                                       value="{$settings['aws_bedrock_access_key_id']}">
+                                                    value="{$settings['aws_bedrock_access_key_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Access Key Secret</label>
                                             <div class="col">
-                                                <input id="aws_bedrock_access_key_secret" type="text" class="form-control"
-                                                       value="{$settings['aws_bedrock_access_key_secret']}">
+                                                <input id="aws_bedrock_access_key_secret" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['aws_bedrock_access_key_secret']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Region</label>
                                             <div class="col">
                                                 <input id="aws_bedrock_region" type="text" class="form-control"
-                                                       value="{$settings['aws_bedrock_region']}">
+                                                    value="{$settings['aws_bedrock_region']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Model ID</label>
                                             <div class="col">
                                                 <input id="aws_bedrock_model_id" type="text" class="form-control"
-                                                       value="{$settings['aws_bedrock_model_id']}">
+                                                    value="{$settings['aws_bedrock_model_id']}">
                                             </div>
                                         </div>
                                     </div>
@@ -271,17 +272,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/llm',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -294,4 +295,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

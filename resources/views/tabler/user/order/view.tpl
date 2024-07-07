@@ -63,57 +63,57 @@
                 </div>
             </div>
             {if $order->type === 'topup'}
-            <div class="card my-3">
-                <div class="card-header">
-                    <h3 class="card-title">商品内容</h3>
-                </div>
-                <div class="card-body">
-                    <div class="datagrid">
-                        {if $order->product_type === 'tabp' || $order->product_type === 'time'}
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">商品时长 (天)</div>
-                                <div class="datagrid-content">{$order->content->time}</div>
-                            </div>
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">等级时长 (天)</div>
-                                <div class="datagrid-content">{$order->content->class_time}</div>
-                            </div>
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">等级</div>
-                                <div class="datagrid-content">{$order->content->class}</div>
-                            </div>
-                        {/if}
-                        {if $order->product_type === 'tabp' || $order->product_type === 'bandwidth'}
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">可用流量 (GB)</div>
-                                <div class="datagrid-content">{$order->content->bandwidth}</div>
-                            </div>
-                        {/if}
-                        {if $order->product_type === 'tabp' || $order->product_type === 'time'}
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">速率限制 (Mbps)</div>
-                                <div class="datagrid-content">
-                                    {if $order->content->ip_limit === '0'}
-                                        不限制
-                                    {else}
-                                        {$order->content->speed_limit}
-                                    {/if}
+                <div class="card my-3">
+                    <div class="card-header">
+                        <h3 class="card-title">商品内容</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="datagrid">
+                            {if $order->product_type === 'tabp' || $order->product_type === 'time'}
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">商品时长 (天)</div>
+                                    <div class="datagrid-content">{$order->content->time}</div>
                                 </div>
-                            </div>
-                            <div class="datagrid-item">
-                                <div class="datagrid-title">同时连接IP限制</div>
-                                <div class="datagrid-content">
-                                    {if $order->content->ip_limit === '0'}
-                                        不限制
-                                    {else}
-                                        {$order->content->ip_limit}
-                                    {/if}
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">等级时长 (天)</div>
+                                    <div class="datagrid-content">{$order->content->class_time}</div>
                                 </div>
-                            </div>
-                        {/if}
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">等级</div>
+                                    <div class="datagrid-content">{$order->content->class}</div>
+                                </div>
+                            {/if}
+                            {if $order->product_type === 'tabp' || $order->product_type === 'bandwidth'}
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">可用流量 (GB)</div>
+                                    <div class="datagrid-content">{$order->content->bandwidth}</div>
+                                </div>
+                            {/if}
+                            {if $order->product_type === 'tabp' || $order->product_type === 'time'}
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">速率限制 (Mbps)</div>
+                                    <div class="datagrid-content">
+                                        {if $order->content->ip_limit === '0'}
+                                            不限制
+                                        {else}
+                                            {$order->content->speed_limit}
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">同时连接IP限制</div>
+                                    <div class="datagrid-content">
+                                        {if $order->content->ip_limit === '0'}
+                                            不限制
+                                        {else}
+                                            {$order->content->ip_limit}
+                                        {/if}
+                                    </div>
+                                </div>
+                            {/if}
+                        </div>
                     </div>
                 </div>
-            </div>
             {/if}
             <div class="card my-3">
                 <div class="card-header">
@@ -127,18 +127,18 @@
                                 <div class="table-responsive">
                                     <table id="invoice_content_table" class="table table-vcenter card-table">
                                         <thead>
-                                        <tr>
-                                            <th>名称</th>
-                                            <th>价格</th>
-                                        </tr>
+                                            <tr>
+                                                <th>名称</th>
+                                                <th>价格</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        {foreach $invoice->content as $invoice_content}
-                                            <tr>
-                                                <td>{$invoice_content->name}</td>
-                                                <td>{$invoice_content->price}</td>
-                                            </tr>
-                                        {/foreach}
+                                            {foreach $invoice->content as $invoice_content}
+                                                <tr>
+                                                    <td>{$invoice_content->name}</td>
+                                                    <td>{$invoice_content->price}</td>
+                                                </tr>
+                                            {/foreach}
                                         </tbody>
                                     </table>
                                 </div>
@@ -170,4 +170,4 @@
         </div>
     </div>
 
-    {include file='user/footer.tpl'}
+{include file='user/footer.tpl'}

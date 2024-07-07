@@ -25,14 +25,15 @@
                                 <h3 class="card-title">流量倍率图表</h3>
                                 <div class="ms-auto">
                                     <div class="dropdown">
-                                        <a id="dropdown-toggle" class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown"
-                                           aria-haspopup="true" aria-expanded="false">{$node_list[0]['name']}</a>
+                                        <a id="dropdown-toggle" class="dropdown-toggle text-secondary" href="#"
+                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">{$node_list[0]['name']}</a>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             {foreach $node_list as $node}
-                                            <a class="dropdown-item" hx-post="/user/rate" hx-swap="none"
-                                                hx-vals='{ "node_id": "{$node['id']}" }'>
-                                                {$node['name']}
-                                            </a>
+                                                <a class="dropdown-item" hx-post="/user/rate" hx-swap="none"
+                                                    hx-vals='{ "node_id": "{$node['id']}" }'>
+                                                    {$node['name']}
+                                                </a>
                                             {/foreach}
                                         </div>
                                     </div>
@@ -108,8 +109,9 @@
                     axisBorder: {
                         show: false,
                     },
-                    categories: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
-                        '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+                    categories: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
+                        '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'
+                    ],
                 },
                 yaxis: {
                     title: {
@@ -136,6 +138,7 @@
         })
     </script>
 
-    <script src="//{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="//{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js">
+    </script>
 
 {include file='user/footer.tpl'}

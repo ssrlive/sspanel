@@ -31,7 +31,8 @@
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                 <li class="nav-item">
-                                    <a href="#notification" class="nav-link active" data-bs-toggle="tab">Notification</a>
+                                    <a href="#notification" class="nav-link active"
+                                        data-bs-toggle="tab">Notification</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#telegram" class="nav-link" data-bs-toggle="tab">Telegram Bot</a>
@@ -54,13 +55,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_add_node" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_add_node']}">
+                                                    value="{$settings['im_bot_group_notify_add_node']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_add_node']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_add_node']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_add_node']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_add_node']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -72,13 +73,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_update_node" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_update_node']}">
+                                                    value="{$settings['im_bot_group_notify_update_node']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_update_node']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_update_node']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_update_node']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_update_node']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -90,13 +91,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_delete_node" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_delete_node']}">
+                                                    value="{$settings['im_bot_group_notify_delete_node']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_delete_node']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_delete_node']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_delete_node']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_delete_node']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -108,13 +109,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_node_gfwed" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_node_gfwed']}">
+                                                    value="{$settings['im_bot_group_notify_node_gfwed']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -126,13 +127,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_node_ungfwed" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_node_ungfwed']}">
+                                                    value="{$settings['im_bot_group_notify_node_ungfwed']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -144,13 +145,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_node_online" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_node_online']}">
+                                                    value="{$settings['im_bot_group_notify_node_online']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_node_online']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_node_online']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_node_online']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_node_online']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -162,13 +163,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_node_offline" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_node_offline']}">
+                                                    value="{$settings['im_bot_group_notify_node_offline']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_node_offline']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_node_offline']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_node_offline']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_node_offline']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -180,13 +181,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_daily_job" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_daily_job']}">
+                                                    value="{$settings['im_bot_group_notify_daily_job']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_daily_job']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_daily_job']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_daily_job']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_daily_job']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -198,11 +199,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_diary" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_diary']}">
-                                                    <option value="0" {if ! $settings['im_bot_group_notify_diary']}selected{/if}>
+                                                    value="{$settings['im_bot_group_notify_diary']}">
+                                                    <option value="0"
+                                                        {if ! $settings['im_bot_group_notify_diary']}selected{/if}>
                                                         False
                                                     </option>
-                                                    <option value="1" {if $settings['im_bot_group_notify_diary']}selected{/if}>
+                                                    <option value="1"
+                                                        {if $settings['im_bot_group_notify_diary']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -214,13 +217,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_ann_create" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_ann_create']}">
+                                                    value="{$settings['im_bot_group_notify_ann_create']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_ann_create']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_ann_create']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_ann_create']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_ann_create']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -232,13 +235,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="im_bot_group_notify_ann_update" class="col form-select"
-                                                        value="{$settings['im_bot_group_notify_ann_update']}">
+                                                    value="{$settings['im_bot_group_notify_ann_update']}">
                                                     <option value="0"
-                                                            {if ! $settings['im_bot_group_notify_ann_update']}selected{/if}>
+                                                        {if ! $settings['im_bot_group_notify_ann_update']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['im_bot_group_notify_ann_update']}selected{/if}>
+                                                        {if $settings['im_bot_group_notify_ann_update']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -252,12 +255,12 @@
                                             <label class="form-label col-3 col-form-label">Bot Token</label>
                                             <div class="col">
                                                 <input id="telegram_token" type="text" class="form-control"
-                                                       value="{$settings['telegram_token']}">
+                                                    value="{$settings['telegram_token']}">
                                             </div>
                                             <div class="col-auto">
                                                 <button class="btn btn-primary"
-                                                        hx-post="/admin/setting/im/set_webhook/telegram" hx-swap="none"
-                                                        hx-vals='js:{
+                                                    hx-post="/admin/setting/im/set_webhook/telegram" hx-swap="none"
+                                                    hx-vals='js:{
                                                             bot_token: document.getElementById("telegram_token").value
                                                         }'>
                                                     Set Webhook
@@ -268,11 +271,12 @@
                                             <label class="form-label col-3 col-form-label">Webhook Token</label>
                                             <div class="col">
                                                 <input id="telegram_webhook_token" type="text" class="form-control"
-                                                       value="{$settings['telegram_webhook_token']}" disabled>
+                                                    value="{$settings['telegram_webhook_token']}" disabled>
                                             </div>
                                             <div class="col-auto">
                                                 <button class="btn btn-primary"
-                                                        hx-post="/admin/setting/im/reset_webhook_token/telegram" hx-swap="none">
+                                                    hx-post="/admin/setting/im/reset_webhook_token/telegram"
+                                                    hx-swap="none">
                                                     Reset Webhook Token
                                                 </button>
                                             </div>
@@ -281,14 +285,14 @@
                                             <label class="form-label col-3 col-form-label">Bot Account Username</label>
                                             <div class="col">
                                                 <input id="telegram_bot" type="text" class="form-control"
-                                                       value="{$settings['telegram_bot']}">
+                                                    value="{$settings['telegram_bot']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Group ID</label>
                                             <div class="col">
                                                 <input id="telegram_chatid" type="text" class="form-control"
-                                                       value="{$settings['telegram_chatid']}">
+                                                    value="{$settings['telegram_chatid']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -297,11 +301,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_telegram_group_notify" class="col form-select"
-                                                        value="{$settings['enable_telegram_group_notify']}">
-                                                    <option value="0" {if ! $settings['enable_telegram_group_notify']}selected{/if}>
+                                                    value="{$settings['enable_telegram_group_notify']}">
+                                                    <option value="0"
+                                                        {if ! $settings['enable_telegram_group_notify']}selected{/if}>
                                                         False
                                                     </option>
-                                                    <option value="1" {if $settings['enable_telegram_group_notify']}selected{/if}>
+                                                    <option value="1"
+                                                        {if $settings['enable_telegram_group_notify']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -312,13 +318,13 @@
                                                 账户后自动踢出群组</label>
                                             <div class="col">
                                                 <select id="telegram_unbind_kick_member" class="col form-select"
-                                                        value="{$settings['telegram_unbind_kick_member']}">
+                                                    value="{$settings['telegram_unbind_kick_member']}">
                                                     <option value="0"
-                                                            {if ! $settings['telegram_unbind_kick_member']}selected{/if}>
+                                                        {if ! $settings['telegram_unbind_kick_member']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['telegram_unbind_kick_member']}selected{/if}>
+                                                        {if $settings['telegram_unbind_kick_member']}selected{/if}>
                                                         开启
                                                     </option>
                                                 </select>
@@ -329,13 +335,13 @@
                                                 账户的用户加入群组</label>
                                             <div class="col">
                                                 <select id="telegram_group_bound_user" class="col form-select"
-                                                        value="{$settings['telegram_group_bound_user']}">
+                                                    value="{$settings['telegram_group_bound_user']}">
                                                     <option value="0"
-                                                            {if ! $settings['telegram_group_bound_user']}selected{/if}>
+                                                        {if ! $settings['telegram_group_bound_user']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['telegram_group_bound_user']}selected{/if}>开启
+                                                        {if $settings['telegram_group_bound_user']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -345,12 +351,12 @@
                                                 机器人发送欢迎消息</label>
                                             <div class="col">
                                                 <select id="enable_welcome_message" class="col form-select"
-                                                        value="{$settings['enable_welcome_message']}">
+                                                    value="{$settings['enable_welcome_message']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_welcome_message']}selected{/if}>关闭
+                                                        {if ! $settings['enable_welcome_message']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_welcome_message']}selected{/if}>开启
+                                                        {if $settings['enable_welcome_message']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -360,12 +366,12 @@
                                                 机器人在群组中不回应</label>
                                             <div class="col">
                                                 <select id="telegram_group_quiet" class="col form-select"
-                                                        value="{$settings['telegram_group_quiet']}">
+                                                    value="{$settings['telegram_group_quiet']}">
                                                     <option value="0"
-                                                            {if ! $settings['telegram_group_quiet']}selected{/if}>关闭
+                                                        {if ! $settings['telegram_group_quiet']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['telegram_group_quiet']}selected{/if}>开启
+                                                        {if $settings['telegram_group_quiet']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -375,12 +381,12 @@
                                                 加入下方配置之外的群组</label>
                                             <div class="col">
                                                 <select id="allow_to_join_new_groups" class="col form-select"
-                                                        value="{$settings['allow_to_join_new_groups']}">
+                                                    value="{$settings['allow_to_join_new_groups']}">
                                                     <option value="0"
-                                                            {if ! $settings['allow_to_join_new_groups']}selected{/if}>关闭
+                                                        {if ! $settings['allow_to_join_new_groups']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['allow_to_join_new_groups']}selected{/if}>开启
+                                                        {if $settings['allow_to_join_new_groups']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -389,7 +395,7 @@
                                             <label class="form-label col-3 col-form-label">允许加入的群组 ID</label>
                                             <div class="col">
                                                 <input id="group_id_allowed_to_join" type="text" class="form-control"
-                                                       value="{$settings['group_id_allowed_to_join']}">
+                                                    value="{$settings['group_id_allowed_to_join']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -397,7 +403,7 @@
                                                 的回复</label>
                                             <div class="col">
                                                 <select id="help_any_command" class="col form-select"
-                                                        value="{$settings['help_any_command']}">
+                                                    value="{$settings['help_any_command']}">
                                                     <option value="0" {if ! $settings['help_any_command']}selected{/if}>
                                                         关闭
                                                     </option>
@@ -408,7 +414,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
-                                            <label class="form-label col-3 col-form-label">Telegram Chat ID(Group/DM)</label>
+                                            <label class="form-label col-3 col-form-label">Telegram Chat
+                                                ID(Group/DM)</label>
                                             <input type="text" class="form-control" id="telegram_chat_id" value="">
                                             <div class="row my-3">
                                                 <div class="col">
@@ -428,35 +435,35 @@
                                             <label class="form-label col-3 col-form-label">Bot Token</label>
                                             <div class="col">
                                                 <input id="discord_bot_token" type="text" class="form-control"
-                                                       value="{$settings['discord_bot_token']}">
+                                                    value="{$settings['discord_bot_token']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Client ID</label>
                                             <div class="col">
                                                 <input id="discord_client_id" type="text" class="form-control"
-                                                       value="{$settings['discord_client_id']}">
+                                                    value="{$settings['discord_client_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Client Secret</label>
                                             <div class="col">
                                                 <input id="discord_client_secret" type="text" class="form-control"
-                                                       value="{$settings['discord_client_secret']}">
+                                                    value="{$settings['discord_client_secret']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Guild ID</label>
                                             <div class="col">
                                                 <input id="discord_guild_id" type="text" class="form-control"
-                                                       value="{$settings['discord_guild_id']}">
+                                                    value="{$settings['discord_guild_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Discord Channel ID</label>
                                             <div class="col">
                                                 <input id="discord_channel_id" type="text" class="form-control"
-                                                       value="{$settings['discord_channel_id']}">
+                                                    value="{$settings['discord_channel_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -465,18 +472,21 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_discord_channel_notify" class="col form-select"
-                                                        value="{$settings['enable_discord_channel_notify']}">
-                                                    <option value="0" {if ! $settings['enable_discord_channel_notify']}selected{/if}>
+                                                    value="{$settings['enable_discord_channel_notify']}">
+                                                    <option value="0"
+                                                        {if ! $settings['enable_discord_channel_notify']}selected{/if}>
                                                         False
                                                     </option>
-                                                    <option value="1" {if $settings['enable_discord_channel_notify']}selected{/if}>
+                                                    <option value="1"
+                                                        {if $settings['enable_discord_channel_notify']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
-                                            <label class="form-label col-3 col-form-label">Discord User ID/Channel ID</label>
+                                            <label class="form-label col-3 col-form-label">Discord User ID/Channel
+                                                ID</label>
                                             <input type="text" class="form-control" id="discord_channel_id" value="">
                                             <div class="row my-3">
                                                 <div class="col">
@@ -496,35 +506,35 @@
                                             <label class="form-label col-3 col-form-label">App Token</label>
                                             <div class="col">
                                                 <input id="slack_token" type="text" class="form-control"
-                                                       value="{$settings['slack_token']}">
+                                                    value="{$settings['slack_token']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Client ID</label>
                                             <div class="col">
                                                 <input id="slack_client_id" type="text" class="form-control"
-                                                       value="{$settings['slack_client_id']}">
+                                                    value="{$settings['slack_client_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Client Secret</label>
                                             <div class="col">
                                                 <input id="slack_client_secret" type="text" class="form-control"
-                                                       value="{$settings['slack_client_secret']}">
+                                                    value="{$settings['slack_client_secret']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Team ID</label>
                                             <div class="col">
                                                 <input id="slack_team_id" type="text" class="form-control"
-                                                       value="{$settings['slack_team_id']}">
+                                                    value="{$settings['slack_team_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Slack Channel ID</label>
                                             <div class="col">
                                                 <input id="slack_channel_id" type="text" class="form-control"
-                                                       value="{$settings['slack_channel_id']}">
+                                                    value="{$settings['slack_channel_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -533,23 +543,26 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_slack_channel_notify" class="col form-select"
-                                                        value="{$settings['enable_slack_channel_notify']}">
-                                                    <option value="0" {if ! $settings['enable_slack_channel_notify']}selected{/if}>
+                                                    value="{$settings['enable_slack_channel_notify']}">
+                                                    <option value="0"
+                                                        {if ! $settings['enable_slack_channel_notify']}selected{/if}>
                                                         False
                                                     </option>
-                                                    <option value="1" {if $settings['enable_slack_channel_notify']}selected{/if}>
+                                                    <option value="1"
+                                                        {if $settings['enable_slack_channel_notify']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
-                                            <label class="form-label col-3 col-form-label">Slack User ID/Channel ID</label>
+                                            <label class="form-label col-3 col-form-label">Slack User ID/Channel
+                                                ID</label>
                                             <input type="text" class="form-control" id="slack_channel_id" value="">
                                             <div class="row my-3">
                                                 <div class="col">
-                                                    <button class="btn btn-primary"
-                                                        hx-post="/admin/setting/test/slack" hx-swap="none"
+                                                    <button class="btn btn-primary" hx-post="/admin/setting/test/slack"
+                                                        hx-swap="none"
                                                         hx-vals='js:{ slack_channel_id: document.getElementById("slack_channel_id").value }'>
                                                         Send Test Message
                                                     </button>
@@ -566,17 +579,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/im',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -589,4 +602,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

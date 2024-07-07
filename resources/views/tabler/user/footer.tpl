@@ -69,7 +69,7 @@
     let failDialog = new bootstrap.Modal(document.getElementById('fail-dialog'));
 
     let clipboard = new ClipboardJS('.copy');
-    clipboard.on('success', function () {
+    clipboard.on('success', function() {
         document.getElementById("success-message").innerHTML = '已复制到剪切板';
         successDialog.show();
     });
@@ -77,8 +77,7 @@
     htmx.on("htmx:afterRequest", function(evt) {
         if (evt.detail.xhr.getResponseHeader('HX-Refresh') === 'true' ||
             evt.detail.xhr.getResponseHeader('HX-Redirect') ||
-            evt.detail.xhr.getResponseHeader('HX-Trigger'))
-        {
+            evt.detail.xhr.getResponseHeader('HX-Trigger')) {
             return;
         }
 
@@ -119,7 +118,9 @@
         }
     });
 </script>
-<script>console.table([['数据库查询', '执行时间'], ['{count($queryLog)} 次', '{$optTime} ms']])</script>
+<script>
+    console.table([['数据库查询', '执行时间'], ['{count($queryLog)} 次', '{$optTime} ms']])
+</script>
 
 {include file='live_chat.tpl'}
 

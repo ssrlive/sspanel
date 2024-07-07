@@ -45,7 +45,7 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_ss_sub" class="col form-select"
-                                                        value="{$settings['enable_ss_sub']}">
+                                                    value="{$settings['enable_ss_sub']}">
                                                     <option value="0" {if ! $settings['enable_ss_sub']}selected{/if}>
                                                         False
                                                     </option>
@@ -61,7 +61,7 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_v2_sub" class="col form-select"
-                                                        value="{$settings['enable_v2_sub']}">
+                                                    value="{$settings['enable_v2_sub']}">
                                                     <option value="0" {if ! $settings['enable_v2_sub']}selected{/if}>
                                                         False
                                                     </option>
@@ -77,8 +77,9 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_trojan_sub" class="col form-select"
-                                                        value="{$settings['enable_trojan_sub']}">
-                                                    <option value="0" {if ! $settings['enable_trojan_sub']}selected{/if}>
+                                                    value="{$settings['enable_trojan_sub']}">
+                                                    <option value="0"
+                                                        {if ! $settings['enable_trojan_sub']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1" {if $settings['enable_trojan_sub']}selected{/if}>
@@ -93,13 +94,13 @@
                                             </label>
                                             <div class="col">
                                                 <select id="enable_forced_replacement" class="col form-select"
-                                                        value="{$settings['enable_forced_replacement']}">
+                                                    value="{$settings['enable_forced_replacement']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_forced_replacement']}selected{/if}>
+                                                        {if ! $settings['enable_forced_replacement']}selected{/if}>
                                                         False
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_forced_replacement']}selected{/if}>
+                                                        {if $settings['enable_forced_replacement']}selected{/if}>
                                                         True
                                                     </option>
                                                 </select>
@@ -115,17 +116,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/sub',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -138,4 +139,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

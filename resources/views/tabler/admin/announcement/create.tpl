@@ -70,8 +70,7 @@
                                 <span class="col">发送邮件通知</span>
                                 <span class="col-auto">
                                     <label class="form-check form-check-single form-switch">
-                                        <input id="email_notify" class="form-check-input" type="checkbox"
-                                               checked="">
+                                        <input id="email_notify" class="form-check-input" type="checkbox" checked="">
                                     </label>
                                 </span>
                             </div>
@@ -86,20 +85,20 @@
 {include file='tinymce.tpl'}
 
 <script>
-    $("#create").click(function () {
+    $("#create").click(function() {
         $.ajax({
             url: '/admin/announcement',
             type: 'POST',
             dataType: "json",
             data: {
                 {foreach $update_field as $key}
-                {$key}: $('#{$key}').val(),
+                    {$key}: $('#{$key}').val(),
                 {/foreach}
-                email_notify_class : $('#email_notify_class').val(),
+                email_notify_class: $('#email_notify_class').val(),
                 email_notify: $("#email_notify").is(":checked"),
                 content: tinyMCE.activeEditor.getContent(),
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.ret === 1) {
                     $('#success-message').text(data.msg);
                     $('#success-dialog').modal('show');

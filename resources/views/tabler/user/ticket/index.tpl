@@ -30,45 +30,44 @@
                     <div class="row row-cards row-deck">
                         {if $tickets !== 0}
                             {foreach $tickets as $ticket}
-                            <div class="col-md-4 col-sm-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="card-stamp">
-                                            {if $ticket->status !== 'closed'}
-                                            <div class="card-stamp-icon bg-yellow">
-                                                <i class="ti ti-clock"></i>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-stamp">
+                                                {if $ticket->status !== 'closed'}
+                                                    <div class="card-stamp-icon bg-yellow">
+                                                        <i class="ti ti-clock"></i>
+                                                    </div>
+                                                {else}
+                                                    <div class="card-stamp-icon bg-green">
+                                                        <i class="ti ti-check"></i>
+                                                    </div>
+                                                {/if}
                                             </div>
-                                            {else}
-                                            <div class="card-stamp-icon bg-green">
-                                                <i class="ti ti-check"></i>
-                                            </div>
-                                            {/if}
+                                            <h3 class="card-title" style="font-size: 20px;">
+                                                #{$ticket->id}
+                                            </h3>
+                                            <p class="text-secondary text-truncate" style="height: 100px;">
+                                                {$ticket->title}
+                                            </p>
                                         </div>
-                                        <h3 class="card-title" style="font-size: 20px;">
-                                            #{$ticket->id}
-                                        </h3>
-                                        <p class="text-secondary text-truncate" style="height: 100px;">
-                                            {$ticket->title}
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex">
-                                            <span class="status status-grey">{$ticket->status}</span>
-                                            <span class="status status-grey">{$ticket->type}</span>
-                                            <a href="/user/ticket/{$ticket->id}/view"
-                                               class="btn btn-primary ms-auto">查看</a>
+                                        <div class="card-footer">
+                                            <div class="d-flex">
+                                                <span class="status status-grey">{$ticket->status}</span>
+                                                <span class="status status-grey">{$ticket->type}</span>
+                                                <a href="/user/ticket/{$ticket->id}/view" class="btn btn-primary ms-auto">查看</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             {/foreach}
                         {else}
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">没有任何工单</h3>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">没有任何工单</h3>
+                                </div>
+                                <div class="card-body">如需帮助，请点击右上角按钮开启新工单</div>
                             </div>
-                            <div class="card-body">如需帮助，请点击右上角按钮开启新工单</div>
-                        </div>
                         {/if}
                     </div>
                 </div>
@@ -103,8 +102,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
                     <button id="create-ticket-button" class="btn btn-primary" data-bs-dismiss="modal"
-                            hx-post="/user/ticket" hx-swap="none"
-                            hx-vals='js:{
+                        hx-post="/user/ticket" hx-swap="none" hx-vals='js:{
                             title: document.getElementById("ticket-title").value,
                             comment: document.getElementById("ticket-comment").value,
                             type: document.getElementById("ticket-type").value }'>

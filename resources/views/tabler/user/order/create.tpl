@@ -112,11 +112,8 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="input-group mb-2">
-                                    <input id="coupon" type="text" class="form-control"
-                                           placeholder="填写优惠码，没有请留空">
-                                    <button class="btn" type="button"
-                                            hx-post="/user/coupon" hx-swap="none"
-                                            hx-vals='js:{
+                                    <input id="coupon" type="text" class="form-control" placeholder="填写优惠码，没有请留空">
+                                    <button class="btn" type="button" hx-post="/user/coupon" hx-swap="none" hx-vals='js:{
                                                 coupon: document.getElementById("coupon").value,
                                                 product_id: {$product->id},
                                             }'>
@@ -128,9 +125,8 @@
                     </div>
                     <div class="card my-3">
                         <div class="card-body">
-                            <button class="btn btn-primary w-100 my-3"
-                                    hx-post="/user/order/create" hx-swap="none"
-                                    hx-vals='js:{
+                            <button class="btn btn-primary w-100 my-3" hx-post="/user/order/create" hx-swap="none"
+                                hx-vals='js:{
                                         type: "product",
                                         coupon: document.getElementById("coupon").value,
                                         product_id: {$product->id},
@@ -144,4 +140,4 @@
         </div>
     </div>
 
-    {include file='user/footer.tpl'}
+{include file='user/footer.tpl'}

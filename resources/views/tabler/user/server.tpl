@@ -44,8 +44,8 @@
                                                         <div class="col">
                                                             <h2 class="page-title" style="font-size: 16px;">
                                                                 {$server['name']}&nbsp;
-                                                                <span class="card-subtitle my-2"
-                                                                      style="font-size: 10px;">  {$server['node_bandwidth']} /
+                                                                <span class="card-subtitle my-2" style="font-size: 10px;">
+                                                                    {$server['node_bandwidth']} /
                                                                     {$server['node_bandwidth_limit']}
                                                                 </span>
                                                             </h2>
@@ -62,7 +62,7 @@
                                                                 </span>
                                                                 <span class="badge bg-blue-lt">{$server['sort']}</span>
                                                                 {if $server['connection_type'] !== 0}
-                                                                <span class="badge bg-blue-lt">IPv6</span>
+                                                                    <span class="badge bg-blue-lt">IPv6</span>
                                                                 {/if}
                                                             </div>
                                                         </div>
@@ -75,8 +75,7 @@
                                                     <div class="card-body">
                                                         <p class="text-secondary">
                                                             <i class="ti ti-info-circle icon text-blue"></i>
-                                                            你当前的账户等级小于节点等级，因此无法使用。可前往 <a
-                                                                    href="/user/product">商品页面</a> 订购时间流量包
+                                                            你当前的账户等级小于节点等级，因此无法使用。可前往 <a href="/user/product">商品页面</a> 订购时间流量包
                                                         </p>
                                                     </div>
                                                 </div>
@@ -92,4 +91,4 @@
         </div>
     </div>
 
-    {include file="user/footer.tpl"}
+{include file="user/footer.tpl"}

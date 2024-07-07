@@ -24,7 +24,7 @@
                         </a>
                         {if $order->status === 'pending_payment'}
                             <button href="#" class="btn btn-red" data-bs-toggle="modal"
-                                    data-bs-target="#cancel_order_confirm_dialog">
+                                data-bs-target="#cancel_order_confirm_dialog">
                                 <i class="icon ti ti-x"></i>
                                 取消订单
                             </button>
@@ -148,18 +148,18 @@
                                 <div class="table-responsive">
                                     <table id="invoice_content_table" class="table table-vcenter card-table">
                                         <thead>
-                                        <tr>
-                                            <th>名称</th>
-                                            <th>价格</th>
-                                        </tr>
+                                            <tr>
+                                                <th>名称</th>
+                                                <th>价格</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        {foreach $invoice->content as $invoice_content}
-                                            <tr>
-                                                <td>{$invoice_content->name}</td>
-                                                <td>{$invoice_content->price}</td>
-                                            </tr>
-                                        {/foreach}
+                                            {foreach $invoice->content as $invoice_content}
+                                                <tr>
+                                                    <td>{$invoice_content->name}</td>
+                                                    <td>{$invoice_content->price}</td>
+                                                </tr>
+                                            {/foreach}
                                         </tbody>
                                     </table>
                                 </div>
@@ -215,12 +215,12 @@
     </div>
 
     <script>
-        $("#confirm_cancel").click(function () {
+        $("#confirm_cancel").click(function() {
             $.ajax({
                 url: "/admin/order/{$order->id}/cancel",
                 type: 'POST',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.ret === 1) {
                         $('#success-message').text(data.msg);
                         $('#success-dialog').modal('show');
@@ -233,4 +233,4 @@
         });
     </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

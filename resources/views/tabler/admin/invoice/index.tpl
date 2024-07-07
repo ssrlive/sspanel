@@ -25,11 +25,11 @@
                         <div class="table-responsive">
                             <table id="data-table" class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                <tr>
-                                    {foreach $details['field'] as $key => $value}
-                                        <th>{$value}</th>
-                                    {/foreach}
-                                </tr>
+                                    <tr>
+                                        {foreach $details['field'] as $key => $value}
+                                            <th>{$value}</th>
+                                        {/foreach}
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
@@ -50,12 +50,10 @@
         tableConfig.order = [
             [1, 'desc']
         ];
-        tableConfig.columnDefs = [
-            {
-                targets: [0],
-                orderable: false
-            }
-        ];
+        tableConfig.columnDefs = [{
+            targets: [0],
+            orderable: false
+        }];
 
         let table = new DataTable('#data-table', tableConfig);
 
@@ -64,4 +62,4 @@
         }
     </script>
 
-    {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

@@ -23,32 +23,32 @@
                         <div class="table-responsive">
                             <table class="table table-vcenter card-table">
                                 <thead>
-                                <tr>
-                                    <th>事件ID</th>
-                                    <th>节点ID</th>
-                                    <th>节点名称</th>
-                                    <th>规则ID</th>
-                                    <th>名称</th>
-                                    <th>描述</th>
-                                    <th>正则表达式</th>
-                                    <th>类型</th>
-                                    <th>时间</th>
-                                </tr>
+                                    <tr>
+                                        <th>事件ID</th>
+                                        <th>节点ID</th>
+                                        <th>节点名称</th>
+                                        <th>规则ID</th>
+                                        <th>名称</th>
+                                        <th>描述</th>
+                                        <th>正则表达式</th>
+                                        <th>类型</th>
+                                        <th>时间</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {foreach $logs as $log}
-                                    <tr>
-                                        <td>#{$log->id}</td>
-                                        <td>{$log->node_id}</td>
-                                        <td>{$log->node_name}</td>
-                                        <td>{$log->list_id}</td>
-                                        <td>{$log->rule->name}</td>
-                                        <td>{$log->rule->text}</td>
-                                        <td>{$log->rule->regex}</td>
-                                        <td>{$log->rule->type}</td>
-                                        <td>{$log->datetime}</td>
-                                    </tr>
-                                {/foreach}
+                                    {foreach $logs as $log}
+                                        <tr>
+                                            <td>#{$log->id}</td>
+                                            <td>{$log->node_id}</td>
+                                            <td>{$log->node_name}</td>
+                                            <td>{$log->list_id}</td>
+                                            <td>{$log->rule->name}</td>
+                                            <td>{$log->rule->text}</td>
+                                            <td>{$log->rule->regex}</td>
+                                            <td>{$log->rule->type}</td>
+                                            <td>{$log->datetime}</td>
+                                        </tr>
+                                    {/foreach}
                                 </tbody>
                             </table>
                         </div>
@@ -58,4 +58,4 @@
         </div>
     </div>
 
-    {include file='user/footer.tpl'}
+{include file='user/footer.tpl'}

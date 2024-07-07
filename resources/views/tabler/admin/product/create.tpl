@@ -111,15 +111,13 @@
                             <div id="speed_limit_option" class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">速率限制 (Mbps)</label>
                                 <div class="col">
-                                    <input id="speed_limit" type="text" class="form-control"
-                                           value="">
+                                    <input id="speed_limit" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div id="ip_limit_option" class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label required">同时连接IP限制</label>
                                 <div class="col">
-                                    <input id="ip_limit" type="text" class="form-control"
-                                           value="">
+                                    <input id="ip_limit" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="hr-text">
@@ -128,15 +126,13 @@
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">用户等级要求</label>
                                 <div class="col">
-                                    <input id="class_required" type="text" class="form-control"
-                                           value="">
+                                    <input id="class_required" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group mb-3 row">
                                 <label class="form-label col-3 col-form-label">用户所在的节点组</label>
                                 <div class="col">
-                                    <input id="node_group_required" type="text" class="form-control"
-                                           value="">
+                                    <input id="node_group_required" type="text" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -158,11 +154,11 @@
 </div>
 
 <script>
-    $(function () {
+    $(function() {
         $("#type").change();
     });
 
-    $("#type").on("change", function () {
+    $("#type").on("change", function() {
         if (this.value === "bandwidth") {
             $("#time_option").hide();
             $("#class_option").hide();
@@ -211,8 +207,8 @@
         }
     });
 
-    $("#create-product").click(function () {
-        let emptyFields = $('input[required]').filter(function () {
+    $("#create-product").click(function() {
+        let emptyFields = $('input[required]').filter(function() {
             return $(this).val() === '';
         });
 
@@ -226,11 +222,11 @@
                 dataType: "json",
                 data: {
                     {foreach $update_field as $key}
-                    {$key}: $("#{$key}").val(),
+                        {$key}: $("#{$key}").val(),
                     {/foreach}
                     new_user_required: $("#new_user_required").is(":checked"),
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data.ret === 1) {
                         $("#success-message").text(data.msg);
                         $("#success-dialog").modal("show");

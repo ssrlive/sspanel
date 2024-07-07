@@ -2,7 +2,7 @@
     <script>
         window.$crisp = [];
         window.CRISP_WEBSITE_ID = "{$public_setting["crisp_id"]}";
-        (function () {
+        (function() {
             d = document;
             s = d.createElement("script");
             s.src = "https://client.crisp.chat/l.js";
@@ -11,27 +11,26 @@
         })();
         $crisp.push(["safe", true])
         $crisp.push(["set", "user:nickname", "{$user->user_name}"],
-            ["set", "user:email", "{$user->email}"],
-            ["set", "session:data",
-                [[
+        ["set", "user:email", "{$user->email}"],
+        ["set", "session:data",
+            [
+                [
                     ["user_id", "{$user->id}"],
                     ["user_class", "{$user->class}"],
                     ["reg_email", "{$user->email}"],
                     ["class_expire_time", "{$user->class_expire}"],
                     ["available_traffic", "{$user->unusedTraffic()}"],
                     ["balance", "{$user->money}"]
-                ]]
-            ]);
+                ]
+            ]
+        ]);
     </script>
 {/if}
 {if $public_setting['live_chat'] === 'livechat'}
     <script>
-        window.__lc = window.__lc ||
-        {
-        };
+        window.__lc = window.__lc || {};
         window.__lc.license = "{$public_setting['livechat_license']}";
-        window.__lc.params = [
-            {
+        window.__lc.params = [{
                 name: '用户编号', value: '{$user->id}'
             },
             {
@@ -51,7 +50,7 @@
             }
         ];
 
-        (function (n, t, c) {
+        (function(n, t, c) {
             function i(n) {
                 return e._h ? e._h.apply(null, n) : e._q.push(n)
             }
@@ -60,23 +59,23 @@
                 _q: [],
                 _h: null,
                 _v: "2.0",
-                on: function () {
+                on: function() {
                     i(["on", c.call(arguments)])
                 },
-                once: function () {
+                once: function() {
                     i(["once", c.call(arguments)])
                 },
-                off: function () {
+                off: function() {
                     i(["off", c.call(arguments)])
                 },
-                get: function () {
+                get: function() {
                     if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load.");
                     return i(["get", c.call(arguments)])
                 },
-                call: function () {
+                call: function() {
                     i(["call", c.call(arguments)])
                 },
-                init: function () {
+                init: function() {
                     let n = t.createElement("script");
                     n.async = !0,
                         n.type = "text/javascript",

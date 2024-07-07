@@ -57,21 +57,21 @@
                                             <label class="form-label col-3 col-form-label">验证码提供商</label>
                                             <div class="col">
                                                 <select id="captcha_provider" class="col form-select"
-                                                        value="{$settings['captcha_provider']}">
+                                                    value="{$settings['captcha_provider']}">
                                                     <option value="turnstile"
-                                                            {if $settings['captcha_provider'] === "turnstile"}selected{/if}>
+                                                        {if $settings['captcha_provider'] === "turnstile"}selected{/if}>
                                                         Turnstile
                                                     </option>
                                                     <option value="geetest"
-                                                            {if $settings['captcha_provider'] === "geetest"}selected{/if}>
+                                                        {if $settings['captcha_provider'] === "geetest"}selected{/if}>
                                                         Geetest
                                                     </option>
                                                     <option value="hcaptcha"
-                                                            {if $settings['captcha_provider'] === "hcaptcha"}selected{/if}>
+                                                        {if $settings['captcha_provider'] === "hcaptcha"}selected{/if}>
                                                         hCaptcha
                                                     </option>
                                                     <option value="recaptcha_enterprise"
-                                                            {if $settings['captcha_provider'] === "recaptcha_enterprise"}selected{/if}>
+                                                        {if $settings['captcha_provider'] === "recaptcha_enterprise"}selected{/if}>
                                                         reCAPTCHA Enterprise
                                                     </option>
                                                 </select>
@@ -81,9 +81,9 @@
                                             <label class="form-label col-3 col-form-label">注册验证码</label>
                                             <div class="col">
                                                 <select id="enable_reg_captcha" class="col form-select"
-                                                        value="{$settings['enable_reg_captcha']}">
+                                                    value="{$settings['enable_reg_captcha']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_reg_captcha']}selected{/if}>关闭
+                                                        {if ! $settings['enable_reg_captcha']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1" {if $settings['enable_reg_captcha']}selected{/if}>
                                                         开启
@@ -95,12 +95,12 @@
                                             <label class="form-label col-3 col-form-label">登录验证码</label>
                                             <div class="col">
                                                 <select id="enable_login_captcha" class="col form-select"
-                                                        value="{$settings['enable_login_captcha']}">
+                                                    value="{$settings['enable_login_captcha']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_login_captcha']}selected{/if}>关闭
+                                                        {if ! $settings['enable_login_captcha']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_login_captcha']}selected{/if}>开启
+                                                        {if $settings['enable_login_captcha']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -109,12 +109,12 @@
                                             <label class="form-label col-3 col-form-label">签到验证码</label>
                                             <div class="col">
                                                 <select id="enable_checkin_captcha" class="col form-select"
-                                                        value="{$settings['enable_checkin_captcha']}">
+                                                    value="{$settings['enable_checkin_captcha']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_checkin_captcha']}selected{/if}>关闭
+                                                        {if ! $settings['enable_checkin_captcha']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_checkin_captcha']}selected{/if}>开启
+                                                        {if $settings['enable_checkin_captcha']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -123,13 +123,13 @@
                                             <label class="form-label col-3 col-form-label">重置密码验证码</label>
                                             <div class="col">
                                                 <select id="enable_reset_password_captcha" class="col form-select"
-                                                        value="{$settings['enable_reset_password_captcha']}">
+                                                    value="{$settings['enable_reset_password_captcha']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_reset_password_captcha']}selected{/if}>
+                                                        {if ! $settings['enable_reset_password_captcha']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_reset_password_captcha']}selected{/if}>
+                                                        {if $settings['enable_reset_password_captcha']}selected{/if}>
                                                         开启
                                                     </option>
                                                 </select>
@@ -143,14 +143,14 @@
                                             <label class="form-label col-3 col-form-label">Site Key</label>
                                             <div class="col">
                                                 <input id="turnstile_sitekey" type="text" class="form-control"
-                                                       value="{$settings['turnstile_sitekey']}">
+                                                    value="{$settings['turnstile_sitekey']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Secret</label>
                                             <div class="col">
                                                 <input id="turnstile_secret" type="text" class="form-control"
-                                                       value="{$settings['turnstile_secret']}">
+                                                    value="{$settings['turnstile_secret']}">
                                             </div>
                                         </div>
                                     </div>
@@ -161,14 +161,14 @@
                                             <label class="form-label col-3 col-form-label">ID</label>
                                             <div class="col">
                                                 <input id="geetest_id" type="text" class="form-control"
-                                                       value="{$settings['geetest_id']}">
+                                                    value="{$settings['geetest_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Key</label>
                                             <div class="col">
                                                 <input id="geetest_key" type="text" class="form-control"
-                                                       value="{$settings['geetest_key']}">
+                                                    value="{$settings['geetest_key']}">
                                             </div>
                                         </div>
                                     </div>
@@ -179,14 +179,14 @@
                                             <label class="form-label col-3 col-form-label">Site Key</label>
                                             <div class="col">
                                                 <input id="hcaptcha_sitekey" type="text" class="form-control"
-                                                       value="{$settings['hcaptcha_sitekey']}">
+                                                    value="{$settings['hcaptcha_sitekey']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">Secret</label>
                                             <div class="col">
                                                 <input id="hcaptcha_secret" type="text" class="form-control"
-                                                       value="{$settings['hcaptcha_secret']}">
+                                                    value="{$settings['hcaptcha_secret']}">
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +199,7 @@
                                             </label>
                                             <div class="col">
                                                 <input id="recaptcha_enterprise_key_id" type="text" class="form-control"
-                                                       value="{$settings['recaptcha_enterprise_key_id']}">
+                                                    value="{$settings['recaptcha_enterprise_key_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -207,8 +207,9 @@
                                                 Project ID
                                             </label>
                                             <div class="col">
-                                                <input id="recaptcha_enterprise_project_id" type="text" class="form-control"
-                                                       value="{$settings['recaptcha_enterprise_project_id']}">
+                                                <input id="recaptcha_enterprise_project_id" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['recaptcha_enterprise_project_id']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -216,8 +217,9 @@
                                                 API Key
                                             </label>
                                             <div class="col">
-                                                <input id="recaptcha_enterprise_api_key" type="text" class="form-control"
-                                                       value="{$settings['recaptcha_enterprise_api_key']}">
+                                                <input id="recaptcha_enterprise_api_key" type="text"
+                                                    class="form-control"
+                                                    value="{$settings['recaptcha_enterprise_api_key']}">
                                             </div>
                                         </div>
                                     </div>
@@ -230,17 +232,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/captcha',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -253,4 +255,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

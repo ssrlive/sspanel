@@ -7,7 +7,8 @@
                         {$config['appName']}
                     </a>
                     &nbsp;|&nbsp;
-                    <a href="{$config['baseUrl']}/user/edit" style="color:#505050;text-decoration:none;" target="_blank">
+                    <a href="{$config['baseUrl']}/user/edit" style="color:#505050;text-decoration:none;"
+                        target="_blank">
                         修改邮件接收设置
                     </a>
                 </p>
@@ -15,9 +16,3 @@
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</body>
-
-</html>

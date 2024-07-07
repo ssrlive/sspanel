@@ -52,14 +52,14 @@
                                             <label class="form-label col-3 col-form-label">每日任务执行时间(小时)</label>
                                             <div class="col">
                                                 <input id="daily_job_hour" type="text" class="form-control"
-                                                       value="{$settings['daily_job_hour']}">
+                                                    value="{$settings['daily_job_hour']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">每日任务执行时间(分钟)</label>
                                             <div class="col">
                                                 <input id="daily_job_minute" type="text" class="form-control"
-                                                       value="{$settings['daily_job_minute']}">
+                                                    value="{$settings['daily_job_minute']}">
                                             </div>
                                         </div>
                                     </div>
@@ -70,13 +70,13 @@
                                             <label class="form-label col-3 col-form-label">是否启用每日财务报告</label>
                                             <div class="col">
                                                 <select id="enable_daily_finance_mail" class="col form-select"
-                                                        value="{$settings['enable_daily_finance_mail']}">
+                                                    value="{$settings['enable_daily_finance_mail']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_daily_finance_mail']}selected{/if}>
+                                                        {if ! $settings['enable_daily_finance_mail']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_daily_finance_mail']}selected{/if}>开启
+                                                        {if $settings['enable_daily_finance_mail']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -85,13 +85,13 @@
                                             <label class="form-label col-3 col-form-label">是否启用每周财务报告</label>
                                             <div class="col">
                                                 <select id="enable_weekly_finance_mail" class="col form-select"
-                                                        value="{$settings['enable_weekly_finance_mail']}">
+                                                    value="{$settings['enable_weekly_finance_mail']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_weekly_finance_mail']}selected{/if}>
+                                                        {if ! $settings['enable_weekly_finance_mail']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_weekly_finance_mail']}selected{/if}>开启
+                                                        {if $settings['enable_weekly_finance_mail']}selected{/if}>开启
                                                     </option>
                                                 </select>
                                             </div>
@@ -100,13 +100,13 @@
                                             <label class="form-label col-3 col-form-label">是否启用每月财务报告</label>
                                             <div class="col">
                                                 <select id="enable_monthly_finance_mail" class="col form-select"
-                                                        value="{$settings['enable_monthly_finance_mail']}">
+                                                    value="{$settings['enable_monthly_finance_mail']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_monthly_finance_mail']}selected{/if}>
+                                                        {if ! $settings['enable_monthly_finance_mail']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_monthly_finance_mail']}selected{/if}>
+                                                        {if $settings['enable_monthly_finance_mail']}selected{/if}>
                                                         开启
                                                     </option>
                                                 </select>
@@ -120,9 +120,9 @@
                                             <label class="form-label col-3 col-form-label">是否启用节点被墙检测</label>
                                             <div class="col">
                                                 <select id="enable_detect_gfw" class="col form-select"
-                                                        value="{$settings['enable_detect_gfw']}">
+                                                    value="{$settings['enable_detect_gfw']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_detect_gfw']}selected{/if}>关闭
+                                                        {if ! $settings['enable_detect_gfw']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1" {if $settings['enable_detect_gfw']}selected{/if}>
                                                         开启
@@ -134,9 +134,9 @@
                                             <label class="form-label col-3 col-form-label">是否启用审计封禁</label>
                                             <div class="col">
                                                 <select id="enable_detect_ban" class="col form-select"
-                                                        value="{$settings['enable_detect_ban']}">
+                                                    value="{$settings['enable_detect_ban']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_detect_ban']}selected{/if}>关闭
+                                                        {if ! $settings['enable_detect_ban']}selected{/if}>关闭
                                                     </option>
                                                     <option value="1" {if $settings['enable_detect_ban']}selected{/if}>
                                                         开启
@@ -152,13 +152,13 @@
                                             <label class="form-label col-3 col-form-label">是否启用闲置账号检测</label>
                                             <div class="col">
                                                 <select id="enable_detect_inactive_user" class="col form-select"
-                                                        value="{$settings['enable_detect_inactive_user']}">
+                                                    value="{$settings['enable_detect_inactive_user']}">
                                                     <option value="0"
-                                                            {if ! $settings['enable_detect_inactive_user']}selected{/if}>
+                                                        {if ! $settings['enable_detect_inactive_user']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['enable_detect_inactive_user']}selected{/if}>
+                                                        {if $settings['enable_detect_inactive_user']}selected{/if}>
                                                         开启
                                                     </option>
                                                 </select>
@@ -168,37 +168,38 @@
                                             <label class="form-label col-3 col-form-label">未签到时长(天)</label>
                                             <div class="col">
                                                 <input id="detect_inactive_user_checkin_days" type="text"
-                                                       class="form-control"
-                                                       value="{$settings['detect_inactive_user_checkin_days']}">
+                                                    class="form-control"
+                                                    value="{$settings['detect_inactive_user_checkin_days']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">未登录时长(天)</label>
                                             <div class="col">
                                                 <input id="detect_inactive_user_login_days" type="text"
-                                                       class="form-control"
-                                                       value="{$settings['detect_inactive_user_login_days']}">
+                                                    class="form-control"
+                                                    value="{$settings['detect_inactive_user_login_days']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">未使用时长(天)</label>
                                             <div class="col">
                                                 <input id="detect_inactive_user_use_days" type="text"
-                                                       class="form-control"
-                                                       value="{$settings['detect_inactive_user_use_days']}">
+                                                    class="form-control"
+                                                    value="{$settings['detect_inactive_user_use_days']}">
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
                                             <label class="form-label col-3 col-form-label">是否启用移除闲置账号订阅链接与邀请码</label>
                                             <div class="col">
-                                                <select id="remove_inactive_user_link_and_invite" class="col form-select"
-                                                        value="{$settings['remove_inactive_user_link_and_invite']}">
+                                                <select id="remove_inactive_user_link_and_invite"
+                                                    class="col form-select"
+                                                    value="{$settings['remove_inactive_user_link_and_invite']}">
                                                     <option value="0"
-                                                            {if ! $settings['remove_inactive_user_link_and_invite']}selected{/if}>
+                                                        {if ! $settings['remove_inactive_user_link_and_invite']}selected{/if}>
                                                         关闭
                                                     </option>
                                                     <option value="1"
-                                                            {if $settings['remove_inactive_user_link_and_invite']}selected{/if}>
+                                                        {if $settings['remove_inactive_user_link_and_invite']}selected{/if}>
                                                         开启
                                                     </option>
                                                 </select>
@@ -214,17 +215,17 @@
         </div>
 
         <script>
-            $("#save-setting").click(function () {
+            $("#save-setting").click(function() {
                 $.ajax({
                     url: '/admin/setting/cron',
                     type: 'POST',
                     dataType: "json",
                     data: {
                         {foreach $update_field as $key}
-                        {$key}: $('#{$key}').val(),
+                            {$key}: $('#{$key}').val(),
                         {/foreach}
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.ret === 1) {
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
@@ -237,4 +238,4 @@
             });
         </script>
 
-        {include file='admin/footer.tpl'}
+{include file='admin/footer.tpl'}

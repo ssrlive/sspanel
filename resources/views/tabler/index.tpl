@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="robots" content="noindex">
@@ -14,4 +15,5 @@
         </script>
     {/if}
 </head>
+
 </html>
