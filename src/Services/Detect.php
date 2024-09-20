@@ -55,7 +55,7 @@ final class Detect
                         $_ENV['appName'] . '-系统警告',
                         '管理员你好，系统发现节点 ' . $node->name . ' 被墙了。'
                     );
-                } catch (GuzzleException|ClientExceptionInterface|TelegramSDKException $e) {
+                } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
                     echo $e->getMessage() . PHP_EOL;
                 }
 
@@ -88,7 +88,7 @@ final class Detect
                         $_ENV['appName'] . '-系统提示',
                         '管理员你好，系统发现节点 ' . $node->name . ' 溜出墙了。'
                     );
-                } catch (GuzzleException|ClientExceptionInterface|TelegramSDKException $e) {
+                } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
                     echo $e->getMessage() . PHP_EOL;
                 }
 
@@ -133,9 +133,11 @@ final class Detect
                 continue;
             }
 
-            if ($user->is_banned === 1 ||
+            if (
+                $user->is_banned === 1 ||
                 ($user->is_admin && $_ENV['auto_detect_ban_allow_admin']) ||
-                in_array($user->id, $_ENV['auto_detect_ban_allow_users'])) {
+                in_array($user->id, $_ENV['auto_detect_ban_allow_users'])
+            ) {
                 continue;
             }
 

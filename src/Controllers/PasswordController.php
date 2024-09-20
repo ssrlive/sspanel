@@ -57,7 +57,8 @@ final class PasswordController extends BaseController
             return ResponseHelper::error($response, '未填写邮箱');
         }
 
-        if (! (new RateLimit())->checkRateLimit('email_request_ip', $request->getServerParam('REMOTE_ADDR')) ||
+        if (
+            ! (new RateLimit())->checkRateLimit('email_request_ip', $request->getServerParam('REMOTE_ADDR')) ||
             ! (new RateLimit())->checkRateLimit('email_request_address', $email)
         ) {
             return ResponseHelper::error($response, '你的请求过于频繁，请稍后再试');
@@ -69,7 +70,7 @@ final class PasswordController extends BaseController
         if ($user !== null) {
             try {
                 Password::sendResetEmail($email);
-            } catch (ClientExceptionInterface|RedisException) {
+            } catch (ClientExceptionInterface | RedisException) {
                 $msg = '邮件发送失败';
             }
         }

@@ -105,7 +105,7 @@ final class PayPal extends Base
                 'CNY',
                 Config::obtain('paypal_currency')
             );
-        } catch (GuzzleException|RedisException) {
+        } catch (GuzzleException | RedisException $e) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '汇率获取失败',
@@ -154,7 +154,8 @@ final class PayPal extends Base
             ]);
         }
 
-        if ($verify_result['verification_status'] === 'SUCCESS' &&
+        if (
+            $verify_result['verification_status'] === 'SUCCESS' &&
             $webhook_data['event_type'] === 'PAYMENT.CAPTURE.COMPLETED' &&
             $webhook_data['resource']['status'] === 'COMPLETED'
         ) {

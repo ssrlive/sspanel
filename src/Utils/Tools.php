@@ -64,13 +64,13 @@ final class Tools
 
             try {
                 $city = $geoip->getCity($ip);
-            } catch (AddressNotFoundException|InvalidDatabaseException) {
+            } catch (AddressNotFoundException | InvalidDatabaseException) {
                 $city = '未知城市';
             }
 
             try {
                 $country = $geoip->getCountry($ip);
-            } catch (AddressNotFoundException|InvalidDatabaseException) {
+            } catch (AddressNotFoundException | InvalidDatabaseException) {
                 $country = '未知国家';
             }
         }
@@ -241,7 +241,8 @@ final class Tools
         $max_port = Config::obtain('max_port');
         $min_port = Config::obtain('min_port');
 
-        if ($min_port >= 65535
+        if (
+            $min_port >= 65535
             || $min_port <= 0
             || $max_port > 65535
             || $max_port <= 0

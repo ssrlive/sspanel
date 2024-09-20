@@ -38,8 +38,10 @@ final class MyCommand extends Command
         $message_id = $message->messageId;
         $chat_id = $message->chat->id;
 
-        if (in_array($message->chat->type, ['group', 'supergroup']) &&
-            (Config::obtain('telegram_group_quiet') || $chat_id !== Config::obtain('telegram_chatid'))) {
+        if (
+            in_array($message->chat->type, ['group', 'supergroup']) &&
+            (Config::obtain('telegram_group_quiet') || $chat_id !== Config::obtain('telegram_chatid'))
+        ) {
             return null;
         }
         // 发送 '输入中' 会话状态

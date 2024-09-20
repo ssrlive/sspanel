@@ -64,7 +64,7 @@ final class Clash extends Base
                         'type' => 'ss',
                         'server' => $node_raw->server,
                         'port' => (int) $ss_2022_port,
-                        'password' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
+                        'password' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                         'cipher' => $method,
                         'udp' => (bool) $udp,
                     ];

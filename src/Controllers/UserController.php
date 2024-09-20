@@ -37,9 +37,11 @@ final class UserController extends BaseController
             ->orderBy('sort')
             ->orderBy('date', 'desc')->first();
 
-        if (Config::obtain('enable_checkin') &&
+        if (
+            Config::obtain('enable_checkin') &&
             Config::obtain('enable_checkin_captcha') &&
-            $this->user->isAbleToCheckin()) {
+            $this->user->isAbleToCheckin()
+        ) {
             $captcha = Captcha::generate();
         }
 

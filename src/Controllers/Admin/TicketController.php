@@ -27,18 +27,17 @@ use function time;
 
 final class TicketController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'op' => '操作',
-                'id' => '工单ID',
-                'title' => '主题',
-                'status' => '工单状态',
-                'type' => '工单类型',
-                'userid' => '提交用户',
-                'datetime' => '创建时间',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'op' => '操作',
+            'id' => '工单ID',
+            'title' => '主题',
+            'status' => '工单状态',
+            'type' => '工单类型',
+            'userid' => '提交用户',
+            'datetime' => '创建时间',
+        ],
+    ];
 
     /**
      * @throws Exception
@@ -88,7 +87,7 @@ final class TicketController extends BaseController
                 $_ENV['appName'] . '-工单被回复',
                 '你好，有人回复了<a href="' . $_ENV['baseUrl'] . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
             );
-        } catch (TelegramSDKException|GuzzleException|ClientExceptionInterface $e) {
+        } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');
         }
 
@@ -155,7 +154,7 @@ final class TicketController extends BaseController
                 $_ENV['appName'] . '-工单被回复',
                 '你好，AI助理回复了<a href="' . $_ENV['baseUrl'] . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
             );
-        } catch (TelegramSDKException|GuzzleException|ClientExceptionInterface $e) {
+        } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');
         }
 

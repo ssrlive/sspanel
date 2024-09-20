@@ -22,6 +22,7 @@ use Smarty\Smarty;
 /*
  * Mail Service
  */
+
 final class Mail
 {
     public static function getClient(): AlibabaCloud|Mailchimp|Mailgun|NullMail|Postal|Resend|SendGrid|Ses|Smtp

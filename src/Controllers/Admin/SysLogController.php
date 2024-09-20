@@ -15,19 +15,18 @@ use function strlen;
 
 final class SysLogController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'op' => '操作',
-                'id' => '事件ID',
-                'user_id' => '触发用户',
-                'ip' => '触发IP',
-                'message' => '日志内容',
-                'level' => '日志等级',
-                'channel' => '日志类别',
-                'datetime' => '记录时间',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'op' => '操作',
+            'id' => '事件ID',
+            'user_id' => '触发用户',
+            'ip' => '触发IP',
+            'message' => '日志内容',
+            'level' => '日志等级',
+            'channel' => '日志类别',
+            'datetime' => '记录时间',
+        ],
+    ];
 
     /**
      * 系统日志页面

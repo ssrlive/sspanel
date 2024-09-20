@@ -221,8 +221,10 @@ final class OrderController extends BaseController
             ]);
         }
 
-        if ($product_limit->node_group_required !== ''
-            && $user->node_group !== (int) $product_limit->node_group_required) {
+        if (
+            $product_limit->node_group_required !== '' &&
+            $user->node_group !== (int) $product_limit->node_group_required
+        ) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '你所在的用户组无法购买此商品',

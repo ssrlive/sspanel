@@ -27,8 +27,10 @@ final class AwsBedrock extends Base
 
     private function makeRequest(array $conversation): string
     {
-        if (Config::obtain('aws_bedrock_access_key_id') === '' ||
-            Config::obtain('aws_bedrock_access_key_secret') === '') {
+        if (
+            Config::obtain('aws_bedrock_access_key_id') === '' ||
+            Config::obtain('aws_bedrock_access_key_secret') === ''
+        ) {
             return 'Access Key ID or Access Key Secret is empty';
         }
 

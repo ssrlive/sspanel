@@ -53,7 +53,7 @@ final class SingBox extends Base
                         'server' => $node_raw->server,
                         'server_port' => (int) $ss_2022_port,
                         'method' => $method,
-                        'password' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
+                        'password' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                     ];
 
                     break;

@@ -154,7 +154,8 @@ final class AuthController extends BaseController
                 return ResponseHelper::error($response, '无效的邮箱');
             }
 
-            if (! (new RateLimit())->checkRateLimit('email_request_ip', $request->getServerParam('REMOTE_ADDR')) ||
+            if (
+                ! (new RateLimit())->checkRateLimit('email_request_ip', $request->getServerParam('REMOTE_ADDR')) ||
                 ! (new RateLimit())->checkRateLimit('email_request_address', $email)
             ) {
                 return ResponseHelper::error($response, '你的请求过于频繁，请稍后再试');
@@ -180,7 +181,7 @@ final class AuthController extends BaseController
                         'expire' => date('Y-m-d H:i:s', time() + Config::obtain('email_verify_code_ttl')),
                     ]
                 );
-            } catch (Exception|ClientExceptionInterface) {
+            } catch (Exception | ClientExceptionInterface) {
                 return ResponseHelper::error($response, '邮件发送失败，请联系网站管理员。');
             }
 

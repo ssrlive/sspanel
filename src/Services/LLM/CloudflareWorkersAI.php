@@ -27,8 +27,10 @@ final class CloudflareWorkersAI extends Base
 
     private function makeRequest(array $conversation): string
     {
-        if (Config::obtain('cf_workers_ai_account_id') === '' ||
-            Config::obtain('cf_workers_ai_api_token') === '') {
+        if (
+            Config::obtain('cf_workers_ai_account_id') === '' ||
+            Config::obtain('cf_workers_ai_api_token') === ''
+        ) {
             return 'Cloudflare Workers AI Account ID or API Token not set';
         }
 

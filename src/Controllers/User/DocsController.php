@@ -19,8 +19,10 @@ final class DocsController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        if (! Config::obtain('display_docs') ||
-            (Config::obtain('display_docs_only_for_paid_user') && $this->user->class === 0)) {
+        if (
+            ! Config::obtain('display_docs') ||
+            (Config::obtain('display_docs_only_for_paid_user') && $this->user->class === 0)
+        ) {
             return $response->withRedirect('/user');
         }
 
@@ -40,8 +42,10 @@ final class DocsController extends BaseController
      */
     public function detail(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        if (! Config::obtain('display_docs') ||
-            (Config::obtain('display_docs_only_for_paid_user') && $this->user->class === 0)) {
+        if (
+            ! Config::obtain('display_docs') ||
+            (Config::obtain('display_docs_only_for_paid_user') && $this->user->class === 0)
+        ) {
             return $response->withRedirect('/user/docs');
         }
 

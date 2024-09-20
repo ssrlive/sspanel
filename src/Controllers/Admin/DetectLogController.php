@@ -14,18 +14,17 @@ use Slim\Http\ServerRequest;
 
 final class DetectLogController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'id' => '事件ID',
-                'user_id' => '用户ID',
-                'node_id' => '节点ID',
-                'node_name' => '节点名',
-                'list_id' => '规则ID',
-                'rule_name' => '规则名',
-                'datetime' => '时间',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'id' => '事件ID',
+            'user_id' => '用户ID',
+            'node_id' => '节点ID',
+            'node_name' => '节点名',
+            'list_id' => '规则ID',
+            'rule_name' => '规则名',
+            'datetime' => '时间',
+        ],
+    ];
 
     /**
      * @throws Exception

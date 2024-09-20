@@ -14,20 +14,19 @@ use Slim\Http\ServerRequest;
 
 final class PaybackController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'id' => '事件ID',
-                'total' => '原始金额',
-                'userid' => '发起用户ID',
-                'user_name' => '发起用户名',
-                'ref_by' => '获利用户ID',
-                'ref_user_name' => '获利用户名',
-                'ref_get' => '获利金额',
-                'invoice_id' => '账单ID',
-                'datetime' => '时间',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'id' => '事件ID',
+            'total' => '原始金额',
+            'userid' => '发起用户ID',
+            'user_name' => '发起用户名',
+            'ref_by' => '获利用户ID',
+            'ref_user_name' => '获利用户名',
+            'ref_get' => '获利金额',
+            'invoice_id' => '账单ID',
+            'datetime' => '时间',
+        ],
+    ];
 
     /**
      * 后台邀请记录页面

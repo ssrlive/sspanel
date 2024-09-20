@@ -57,7 +57,8 @@ final class LoginIp extends Model
             $this->datetime = time();
             $this->type = $type;
 
-            if (Config::obtain('notify_new_login') &&
+            if (
+                Config::obtain('notify_new_login') &&
                 $user_id !== 0 &&
                 (new LoginIp())->where('userid', $user_id)->where('ip', $this->ip)->count() === 0
             ) {
@@ -67,7 +68,7 @@ final class LoginIp extends Model
                         $_ENV['appName'] . '-新登录通知',
                         '你的账号于 ' . date('Y-m-d H:i:s') . ' 通过 ' . $this->ip . ' 地址登录了用户面板',
                     );
-                } catch (GuzzleException|ClientExceptionInterface|TelegramSDKException $e) {
+                } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
                     echo $e->getMessage();
                 }
             }

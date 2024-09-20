@@ -35,8 +35,10 @@ final class HelpCommand extends Command
             return;
         }
 
-        if (! preg_match('/^\/help\s?(@' . Config::obtain('telegram_bot') . ')?.*/i', $message->text) &&
-            ! Config::obtain('help_any_command')) {
+        if (
+            ! preg_match('/^\/help\s?(@' . Config::obtain('telegram_bot') . ')?.*/i', $message->text) &&
+            ! Config::obtain('help_any_command')
+        ) {
             return;
         }
 

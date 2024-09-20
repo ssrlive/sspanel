@@ -54,7 +54,7 @@ final class V2RayJson extends Base
                             'address' => $node_raw->server,
                             'port' => (int) $ss_2022_port,
                             'method' => $user->method,
-                            'psk' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
+                            'psk' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                         ],
                         'tag' => $node_raw->name,
                     ];

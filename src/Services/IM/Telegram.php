@@ -28,12 +28,8 @@ final class Telegram extends Base
     public function send($to, $msg = ''): void
     {
         $msg = str_replace(
-            [
-                '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!',
-            ],
-            [
-                '\_', '\*', '\[', '\]', '\(', '\)', '\~', '\`', '\>', '\#', '\+', '\-', '\=', '\|', '\{', '\}', '\.', '\!',
-            ],
+            ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'],
+            ['\_', '\*', '\[', '\]', '\(', '\)', '\~', '\`', '\>', '\#', '\+', '\-', '\=', '\|', '\{', '\}', '\.', '\!'],
             $msg
         );
 
@@ -58,9 +54,7 @@ final class Telegram extends Base
             'chat_id' => $to,
             'text' => strip_tags(
                 $msg,
-                ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike','del', 'span','tg-spoiler', 'a', 'tg-emoji',
-                    'code', 'pre', 'blockquote',
-                ]
+                ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'span', 'tg-spoiler', 'a', 'tg-emoji', 'code', 'pre', 'blockquote']
             ),
             'parse_mode' => 'HTML',
             'disable_web_page_preview' => false,

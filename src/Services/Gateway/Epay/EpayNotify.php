@@ -17,7 +17,7 @@ final class EpayNotify
 
     public function verifyNotify(): bool
     {
-        if (is_null($_GET)) {//判断POST来的数组是否为空
+        if (is_null($_GET)) { //判断POST来的数组是否为空
             return false;
         }
 

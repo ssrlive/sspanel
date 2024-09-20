@@ -59,18 +59,17 @@ final class SubscribeLog extends Model
         $this->request_user_agent = $ua;
         $this->request_time = time();
 
-        if (Config::obtain('notify_new_subscribe') &&
-            (new SubscribeLog())->where('user_id', $this->user_id)
-                ->where('request_ip', 'like', '%' . $this->request_ip . '%')
-                ->count() === 0
-        ) {
+        $the_count = (new SubscribeLog())->where('user_id', $this->user_id)
+            ->where('request_ip', 'like', '%' . $this->request_ip . '%')
+            ->count();
+        if (Config::obtain('notify_new_subscribe') && $the_count === 0) {
             try {
                 Notification::notifyUser(
                     $user,
                     $_ENV['appName'] . '-新订阅通知',
                     '你的账号于 ' . date('Y-m-d H:i:s') . ' 通过 ' . $this->request_ip . ' 地址订阅了新的节点',
                 );
-            } catch (GuzzleException|ClientExceptionInterface|TelegramSDKException $e) {
+            } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
                 echo $e->getMessage();
             }
         }

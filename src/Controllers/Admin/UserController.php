@@ -147,7 +147,7 @@ final class UserController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功，用户邮箱：' . $email . ' 密码：'.$password,
+            'msg' => '添加成功，用户邮箱：' . $email . ' 密码：' . $password,
         ]);
     }
 
@@ -184,7 +184,8 @@ final class UserController extends BaseController
             }
         }
 
-        if ($request->getParam('money') !== '' &&
+        if (
+            $request->getParam('money') !== '' &&
             $request->getParam('money') !== null &&
             (float) $request->getParam('money') !== $user->money
         ) {

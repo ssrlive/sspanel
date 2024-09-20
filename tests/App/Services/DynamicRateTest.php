@@ -19,10 +19,7 @@ class DynamicRateTest extends TestCase
         $min_rate_time = 3;
         $method = 'logistic';
 
-        $expected_rates = [
-            2.14, 1.36, 0.81, 0.5, 0.51, 0.51, 0.53, 0.55, 0.6, 0.7, 0.87, 1.15,
-            1.53, 1.97, 2.35, 2.63, 2.8, 2.9, 2.95, 2.97, 2.99, 2.99, 3.0, 2.69,
-        ];
+        $expected_rates = [2.14, 1.36, 0.81, 0.5, 0.51, 0.51, 0.53, 0.55, 0.6, 0.7, 0.87, 1.15, 1.53, 1.97, 2.35, 2.63, 2.8, 2.9, 2.95, 2.97, 2.99, 2.99, 3.0, 2.69,];
 
         $rates = DynamicRate::getFullDayRates($max_rate, $max_rate_time, $min_rate, $min_rate_time, $method);
 

@@ -60,7 +60,8 @@ final class Stripe extends Base
 
         $price = $invoice->price;
 
-        if ($price < Config::obtain('stripe_min_recharge') ||
+        if (
+            $price < Config::obtain('stripe_min_recharge') ||
             $price > Config::obtain('stripe_max_recharge')
         ) {
             return $response->withJson([
@@ -87,7 +88,7 @@ final class Stripe extends Base
 
         try {
             $exchange_amount = (new Exchange())->exchange((float) $price, 'CNY', $stripe_currency);
-        } catch (GuzzleException|RedisException) {
+        } catch (GuzzleException | RedisException) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '汇率获取失败',
@@ -96,9 +97,7 @@ final class Stripe extends Base
         // https://docs.stripe.com/currencies?presentment-currency=US#zero-decimal
         if (! in_array(
             $stripe_currency,
-            ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW',
-                'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF',
-            ]
+            ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF']
         )) {
             $exchange_amount *= 100;
         }

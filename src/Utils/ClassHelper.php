@@ -35,7 +35,8 @@ final class ClassHelper
 
         return array_filter($this->getClasses(), static function ($class) use ($termUpper) {
             $className = strtoupper($class);
-            if (str_starts_with($className, $termUpper) &&
+            if (
+                str_starts_with($className, $termUpper) &&
                 ! str_contains($className, strtoupper('Abstract')) &&
                 ! str_contains($className, strtoupper('Interface'))
             ) {

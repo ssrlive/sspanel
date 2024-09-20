@@ -48,7 +48,8 @@ final class DcCommand extends Command
                 'limit' => 1,
             ]);
 
-            if (isset($profile_photos['total_count']) &&
+            if (
+                isset($profile_photos['total_count']) &&
                 $profile_photos['total_count'] > 0 &&
                 $message->from->username !== null
             ) {

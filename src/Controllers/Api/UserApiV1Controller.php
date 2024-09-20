@@ -8,4 +8,5 @@ use App\Controllers\BaseController;
 
 final class UserApiV1Controller extends BaseController
 {
+    // dummy comment to make linter happy
 }

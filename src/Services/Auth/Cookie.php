@@ -39,7 +39,8 @@ final class Cookie extends Base
         $user = new User();
         $user->isLogin = false;
 
-        if ($uid === null ||
+        if (
+            $uid === null ||
             $email === null ||
             $key === null ||
             $ipHash === null ||

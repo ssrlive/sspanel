@@ -122,7 +122,7 @@ final class ImController extends BaseController
                 (int) $request->getParam('telegram_chat_id'),
                 I18n::trans('bot.test_message', $_ENV['locale']),
             );
-        } catch (TelegramSDKException|\Exception $e) {
+        } catch (TelegramSDKException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $this::$err_msg . ' ' . $e->getMessage(),
@@ -142,7 +142,7 @@ final class ImController extends BaseController
                 (int) $request->getParam('discord_channel_id'),
                 I18n::trans('bot.test_message', $_ENV['locale']),
             );
-        } catch (GuzzleException|\Exception $e) {
+        } catch (GuzzleException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $this::$err_msg . ' ' . $e->getMessage(),
@@ -162,7 +162,7 @@ final class ImController extends BaseController
                 (int) $request->getParam('slack_channel_id'),
                 I18n::trans('bot.test_message', $_ENV['locale']),
             );
-        } catch (GuzzleException|\Exception $e) {
+        } catch (GuzzleException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $this::$err_msg . ' ' . $e->getMessage(),

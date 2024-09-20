@@ -98,13 +98,11 @@ final class UserController extends BaseController
                 }
             }
 
-            if ($user_raw->node_iplimit !== 0 &&
-                $user_raw->node_iplimit <
-                (new OnlineLog())
-                    ->where('user_id', $user_raw->id)
-                    ->where('last_time', '>', time() - 90)
-                    ->count()
-            ) {
+            $the_count = (new OnlineLog())
+                ->where('user_id', $user_raw->id)
+                ->where('last_time', '>', time() - 90)
+                ->count();
+            if ($user_raw->node_iplimit !== 0 && $user_raw->node_iplimit < $the_count) {
                 continue;
             }
 

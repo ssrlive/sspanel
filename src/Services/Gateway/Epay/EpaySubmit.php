@@ -42,14 +42,14 @@ final class EpaySubmit
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
-        $html = "<form id='alipaysubmit' name='alipaysubmit' action='".
+        $html = "<form id='alipaysubmit' name='alipaysubmit' action='" .
             $this->epay_gateway . "' method='" . $method . "'>";
 
         foreach ($para as $key => $val) {
-            $html .= "<input type='hidden' name='".$key."' value='".$val."'/>";
+            $html .= "<input type='hidden' name='" . $key . "' value='" . $val . "'/>";
         }
         //submit按钮控件请不要含有name属性
-        $html .= "<input type='submit' value='".$button_name."'></form>";
+        $html .= "<input type='submit' value='" . $button_name . "'></form>";
         $html .= "<script>document.forms['alipaysubmit'].submit();</script>";
 
         return $html;

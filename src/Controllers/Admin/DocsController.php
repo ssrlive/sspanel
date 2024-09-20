@@ -16,17 +16,16 @@ use function time;
 
 final class DocsController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'op' => '操作',
-                'id' => 'ID',
-                'status' => '状态',
-                'sort' => '排序',
-                'date' => '日期',
-                'title' => '标题',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'op' => '操作',
+            'id' => 'ID',
+            'status' => '状态',
+            'sort' => '排序',
+            'date' => '日期',
+            'title' => '标题',
+        ],
+    ];
 
     private static array $update_field = [
         'status',

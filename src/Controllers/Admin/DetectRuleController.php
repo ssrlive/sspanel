@@ -13,46 +13,45 @@ use Slim\Http\ServerRequest;
 
 final class DetectRuleController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'op' => '操作',
-                'id' => '规则ID',
-                'name' => '规则名称',
-                'text' => '规则介绍',
-                'regex' => '正则表达式',
-                'type' => '规则类型',
+    private static array $details = [
+        'field' => [
+            'op' => '操作',
+            'id' => '规则ID',
+            'name' => '规则名称',
+            'text' => '规则介绍',
+            'regex' => '正则表达式',
+            'type' => '规则类型',
+        ],
+        'add_dialog' => [
+            [
+                'id' => 'name',
+                'info' => '规则名称',
+                'type' => 'input',
+                'placeholder' => '审计规则名称',
             ],
-            'add_dialog' => [
-                [
-                    'id' => 'name',
-                    'info' => '规则名称',
-                    'type' => 'input',
-                    'placeholder' => '审计规则名称',
-                ],
-                [
-                    'id' => 'text',
-                    'info' => '规则介绍',
-                    'type' => 'input',
-                    'placeholder' => '简洁明了地描述审计规则',
-                ],
-                [
-                    'id' => 'regex',
-                    'info' => '正则表达式',
-                    'type' => 'input',
-                    'placeholder' => '用以匹配审计内容的正则表达式',
-                ],
-                [
-                    'id' => 'type',
-                    'info' => '规则类型',
-                    'type' => 'select',
-                    'select' => [
-                        '1' => '数据包明文匹配',
-                        '0' => '数据包十六进制匹配',
-                    ],
+            [
+                'id' => 'text',
+                'info' => '规则介绍',
+                'type' => 'input',
+                'placeholder' => '简洁明了地描述审计规则',
+            ],
+            [
+                'id' => 'regex',
+                'info' => '正则表达式',
+                'type' => 'input',
+                'placeholder' => '用以匹配审计内容的正则表达式',
+            ],
+            [
+                'id' => 'type',
+                'info' => '规则类型',
+                'type' => 'select',
+                'select' => [
+                    '1' => '数据包明文匹配',
+                    '0' => '数据包十六进制匹配',
                 ],
             ],
-        ];
+        ],
+    ];
 
     /**
      * @throws Exception

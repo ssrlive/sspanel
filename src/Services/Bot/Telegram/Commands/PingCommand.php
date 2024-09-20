@@ -47,8 +47,10 @@ final class PingCommand extends Command
                     'parse_mode' => 'Markdown',
                 ]
             );
-        } elseif (in_array($message->chat->type, ['group', 'supergroup']) &&
-            ! Config::obtain('telegram_group_quiet')) {
+        } elseif (
+            in_array($message->chat->type, ['group', 'supergroup']) &&
+            ! Config::obtain('telegram_group_quiet')
+        ) {
             // 发送 '输入中' 会话状态
             $this->replyWithChatAction(['action' => Actions::TYPING]);
 

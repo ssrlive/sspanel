@@ -26,17 +26,16 @@ use const PHP_EOL;
 
 final class AnnController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'op' => '操作',
-                'id' => 'ID',
-                'status' => '状态',
-                'sort' => '排序',
-                'date' => '日期',
-                'content' => '内容（节选）',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'op' => '操作',
+            'id' => 'ID',
+            'status' => '状态',
+            'sort' => '排序',
+            'date' => '日期',
+            'content' => '内容（节选）',
+        ],
+    ];
 
     private static array $update_field = [
         'status',

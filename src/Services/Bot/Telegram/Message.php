@@ -90,9 +90,10 @@ final class Message
 
         if ($new_chat_member->username === Config::obtain('telegram_bot')) {
             // 机器人加入新群组
-            if (! Config::obtain('allow_to_join_new_groups')
-                &&
-                ! in_array($this->chat_id, json_decode(Config::obtain('group_id_allowed_to_join')))) {
+            if (
+                ! Config::obtain('allow_to_join_new_groups') &&
+                ! in_array($this->chat_id, json_decode(Config::obtain('group_id_allowed_to_join')))
+            ) {
                 // 退群
                 $this->bot->leaveChat(
                     [
@@ -110,12 +111,10 @@ final class Message
             // 新成员加入群组
             $new_user = self::getUser($member['id']);
 
-            if (Config::obtain('telegram_group_bound_user')
-                &&
-                $this->chat_id === Config::obtain('telegram_chatid')
-                &&
-                $new_user === null
-                &&
+            if (
+                Config::obtain('telegram_group_bound_user') &&
+                $this->chat_id === Config::obtain('telegram_chatid') &&
+                $new_user === null &&
                 ! $new_chat_member->isBot
             ) {
                 $this->replyWithMessage(

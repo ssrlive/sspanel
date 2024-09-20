@@ -193,8 +193,7 @@ $_ENV['Clash_Group_Config'] = [
             'url' => 'http://cp.cloudflare.com/generate_204',
             'interval' => 300,
             // 插入节点名称
-            'proxies' => [
-            ],
+            'proxies' => [],
         ],
         [
             'name' => '🎥 Netflix',

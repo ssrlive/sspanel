@@ -312,7 +312,7 @@ final class User extends Model
 
             try {
                 IM::send((int) $this->im_value, $text, $this->im_type);
-            } catch (GuzzleException|TelegramSDKException $e) {
+            } catch (GuzzleException | TelegramSDKException $e) {
                 echo $e->getMessage() . PHP_EOL;
             }
         }

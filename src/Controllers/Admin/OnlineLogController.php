@@ -16,19 +16,18 @@ use function time;
 
 final class OnlineLogController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'id' => '事件ID',
-                'user_id' => '用户ID',
-                'node_id' => '节点ID',
-                'node_name' => '节点名',
-                'ip' => 'IP',
-                'location' => 'IP归属地',
-                'first_time' => '首次连接',
-                'last_time' => '最后连接',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'id' => '事件ID',
+            'user_id' => '用户ID',
+            'node_id' => '节点ID',
+            'node_name' => '节点名',
+            'ip' => 'IP',
+            'location' => 'IP归属地',
+            'first_time' => '首次连接',
+            'last_time' => '最后连接',
+        ],
+    ];
 
     /**
      * 后台在线 IP 页面

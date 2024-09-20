@@ -29,7 +29,7 @@ final class Slack extends Base
         $url = 'https://slack.com/api/chat.postMessage';
 
         $headers = [
-            'Authorization' => 'Bearer '.$this->token,
+            'Authorization' => 'Bearer ' . $this->token,
             'Content-Type' => 'application/json',
         ];
 

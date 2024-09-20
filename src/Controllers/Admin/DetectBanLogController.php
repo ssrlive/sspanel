@@ -14,19 +14,18 @@ use Slim\Http\ServerRequest;
 
 final class DetectBanLogController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'id' => '事件ID',
-                'user_id' => '用户ID',
-                'detect_number' => '违规次数',
-                'ban_time' => '封禁时长(分钟)',
-                'start_time' => '统计开始时间',
-                'end_time' => '统计结束&封禁开始时间',
-                'ban_end_time' => '封禁结束时间',
-                'all_detect_number' => '累计违规次数',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'id' => '事件ID',
+            'user_id' => '用户ID',
+            'detect_number' => '违规次数',
+            'ban_time' => '封禁时长(分钟)',
+            'start_time' => '统计开始时间',
+            'end_time' => '统计结束&封禁开始时间',
+            'ban_end_time' => '封禁结束时间',
+            'all_detect_number' => '累计违规次数',
+        ],
+    ];
 
     /**
      * @throws Exception

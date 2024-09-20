@@ -8,12 +8,12 @@ final class NullMail extends Base
 {
     public function __construct()
     {
+        // dummy comment to make linter happy
     }
 
     public function getConfig(): array
     {
-        return [
-        ];
+        return [];
     }
 
     public function send($to, $subject, $body): void

@@ -19,5 +19,6 @@ final class UserApi
      */
     public function __invoke($request, $response, $next): ResponseInterface
     {
+        // dummy comment to make linter happy
     }
 }

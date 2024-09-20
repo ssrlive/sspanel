@@ -62,7 +62,8 @@ final class TicketController extends BaseController
         $comment = $request->getParam('comment') ?? '';
         $type = $request->getParam('type') ?? '';
 
-        if (! Config::obtain('enable_ticket') ||
+        if (
+            ! Config::obtain('enable_ticket') ||
             $this->user->is_shadow_banned ||
             ! (new RateLimit())->checkRateLimit('ticket', (string) $this->user->id) ||
             $title === '' ||
@@ -111,7 +112,8 @@ final class TicketController extends BaseController
         $id = $args['id'];
         $comment = $request->getParam('comment') ?? '';
 
-        if (! Config::obtain('enable_ticket') ||
+        if (
+            ! Config::obtain('enable_ticket') ||
             $this->user->is_shadow_banned ||
             $comment === ''
         ) {
@@ -143,8 +145,8 @@ final class TicketController extends BaseController
             Notification::notifyAdmin(
                 $_ENV['appName'] . '-工单被回复',
                 '管理员，有人回复了 <a href="' .
-                $_ENV['baseUrl'] . '/admin/ticket/' . $ticket->id . '/view">#' . $ticket->id .
-                '</a> 工单，请你及时处理。'
+                    $_ENV['baseUrl'] . '/admin/ticket/' . $ticket->id . '/view">#' . $ticket->id .
+                    '</a> 工单，请你及时处理。'
             );
         }
 

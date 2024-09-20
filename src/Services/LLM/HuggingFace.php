@@ -27,8 +27,10 @@ final class HuggingFace extends Base
 
     private function makeRequest(array $conversation): string
     {
-        if (Config::obtain('huggingface_api_key') === '' ||
-            Config::obtain('huggingface_endpoint_url') === '') {
+        if (
+            Config::obtain('huggingface_api_key') === '' ||
+            Config::obtain('huggingface_endpoint_url') === ''
+        ) {
             return 'Hugging Face API key or Endpoint URL not set';
         }
 

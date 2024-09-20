@@ -108,7 +108,8 @@ final class OAuthController extends BaseController
         $slack_user_id = $id_token->claims()->get('https://slack.com/user_id');
 
         if ((new User())->where('im_type', 1)->where('im_value', $slack_user_id)->first() !== null ||
-            ($user->im_type === 1 && $user->im_value === $slack_user_id)) {
+            ($user->im_type === 1 && $user->im_value === $slack_user_id)
+        ) {
             return ResponseHelper::error($response, 'Slack 账户已绑定');
         }
 
@@ -193,7 +194,8 @@ final class OAuthController extends BaseController
         $discord_user_id = json_decode($user_response->getBody()->getContents(), true)['id'];
 
         if ((new User())->where('im_type', 2)->where('im_value', $discord_user_id)->first() !== null ||
-            ($user->im_type === 2 && $user->im_value === $discord_user_id)) {
+            ($user->im_type === 2 && $user->im_value === $discord_user_id)
+        ) {
             return ResponseHelper::error($response, 'Discord 账户已绑定');
         }
 
@@ -248,7 +250,8 @@ final class OAuthController extends BaseController
         $user = $this->user;
 
         if ((new User())->where('im_type', 4)->where('im_value', $telegram_id)->first() !== null ||
-            ($user->im_type === 4 && $user->im_value === $telegram_id)) {
+            ($user->im_type === 4 && $user->im_value === $telegram_id)
+        ) {
             return ResponseHelper::error($response, 'Telegram 账户已绑定');
         }
 

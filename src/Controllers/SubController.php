@@ -32,7 +32,8 @@ final class SubController extends BaseController
         $subtype = $args['subtype'];
         $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan'];
 
-        if (! $_ENV['Subscribe'] ||
+        if (
+            ! $_ENV['Subscribe'] ||
             ! in_array($subtype, $subtype_list) ||
             'https://' . $request->getHeaderLine('Host') !== $_ENV['subUrl']
         ) {
@@ -41,9 +42,10 @@ final class SubController extends BaseController
 
         $token = $this->antiXss->xss_clean($args['token']);
 
-        if ($_ENV['enable_rate_limit'] &&
+        if (
+            $_ENV['enable_rate_limit'] &&
             (! (new RateLimit())->checkRateLimit('sub_ip', $request->getServerParam('REMOTE_ADDR')) ||
-            ! (new RateLimit())->checkRateLimit('sub_token', $token))
+                ! (new RateLimit())->checkRateLimit('sub_token', $token))
         ) {
             return ResponseHelper::error($response, $err_msg);
         }
@@ -59,14 +61,14 @@ final class SubController extends BaseController
 
         $content_type = match ($subtype) {
             'clash' => 'application/yaml',
-            'json','sip008','singbox','v2rayjson' => 'application/json',
+            'json', 'sip008', 'singbox', 'v2rayjson' => 'application/json',
             default => 'text/plain',
         };
 
         $sub_details = ' upload=' . $user->u
-        . '; download=' . $user->d
-        . '; total=' . $user->transfer_enable
-        . '; expire=' . strtotime($user->class_expire);
+            . '; download=' . $user->d
+            . '; total=' . $user->transfer_enable
+            . '; expire=' . strtotime($user->class_expire);
         // Clash specific
         $sub_content_disposition = 'attachment; filename=' . $_ENV['appName'];
         $sub_profile_update_interval = 6;

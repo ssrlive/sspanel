@@ -15,17 +15,16 @@ use Slim\Http\ServerRequest;
 
 final class LoginLogController extends BaseController
 {
-    private static array $details =
-        [
-            'field' => [
-                'id' => '事件ID',
-                'userid' => '用户ID',
-                'ip' => '登录IP',
-                'location' => 'IP归属地',
-                'datetime' => '时间',
-                'type' => '类型',
-            ],
-        ];
+    private static array $details = [
+        'field' => [
+            'id' => '事件ID',
+            'userid' => '用户ID',
+            'ip' => '登录IP',
+            'location' => 'IP归属地',
+            'datetime' => '时间',
+            'type' => '类型',
+        ],
+    ];
 
     /**
      * 后台登录记录页面

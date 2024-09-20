@@ -87,7 +87,8 @@ END;
                     $latest = $version;
                 }
 
-                if ($version <= $min_version ||
+                if (
+                    $version <= $min_version ||
                     $version > $max_version ||
                     ($target === 'new' && $version !== 2023020100)
                 ) {

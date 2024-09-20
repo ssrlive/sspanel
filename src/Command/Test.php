@@ -39,7 +39,7 @@ EOL;
         if (count($this->argv) === 3) {
             $type = 'daily';
         } else {
-            [, , , $type] = $this->argv;
+            [,,, $type] = $this->argv;
         }
 
         $cron = new Cron();
