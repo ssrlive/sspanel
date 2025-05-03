@@ -39,8 +39,10 @@ sudo apt install -y php-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mys
 sudo apt remove apache2 -y
 sudo apt autoremove -y
 
-sudo systemctl restart php8.3-fpm
+sudo systemctl restart php8.4-fpm
 ```
+
+> 如何刪除舊版 PHP? 比如 `php8.3`, 可以使用命令 `sudo apt remove 'php8.3*' -y` 然後 `sudo apt autoremove -y` 來刪除所有舊版 PHP 相關的包。
 
 參考文章： https://portal.databasemart.com/kb/a2136/how-to-install-php-8_1-for-nginx-on-ubuntu-20_04.aspx
 
@@ -92,7 +94,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 
         location ~ \\.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         }
 
         location / {
@@ -121,13 +123,13 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 
         location ~ \\.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         }
     }
 ```
 
-上面配置中 `fastcgi_pass unix:/run/php/php8.3-fpm.sock;` 語句的值必須自己改正確，
-可以用命令 `ls /run/php/`  查看它的確切值，我這裏實際上是  `php8.3-fpm.sock` 我就使用了它。
+上面配置中 `fastcgi_pass unix:/run/php/php8.4-fpm.sock;` 語句的值必須自己改正確，
+可以用命令 `ls /run/php/`  查看它的確切值，我這裏實際上是  `php8.4-fpm.sock` 我就使用了它。
 
 添加完成后使用命令 `nginx -t` 檢查，無誤後用命令 `systemctl restart nginx` 重启 Nginx。
 
@@ -190,15 +192,15 @@ vi config/.config.php
 $_ENV['db_driver']    = 'mysql';
 $_ENV['db_host']      = '127.0.0.1';
 $_ENV['db_socket']    = '';
-$_ENV['db_database']  = 'sspanel';           //数据库名
+$_ENV['db_database']  = 'sspanel';              //数据库名
 $_ENV['db_username']  = 'sspanel';              //数据库用户名
-$_ENV['db_password']  = 'password';          //用户名对应的密码
+$_ENV['db_password']  = 'password';             //用户名对应的密码
 ```
 
 还需要依照注释，修改这些重要的参数
 
 ```php
-$_ENV['key']        = '1145141919810';          // !!! 瞎 jb 修改此 key 为随机字符串确保网站安全 !!!
+$_ENV['key']        = '1145141919810';          // !!! 瞎 jb 修改此 key 为随机字符串, 用以确保网站安全 !!!
 $_ENV['debug']      = false;                    // 正式环境请确保为 false
 $_ENV['appName']    = 'SSPanel-UIM';            // 站点名称
 $_ENV['baseUrl']    = 'https://sspanel.host';   // 站点地址
