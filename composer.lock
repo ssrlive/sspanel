@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cdf56c3af79304d5dae0345ef6b5269",
+    "content-hash": "edda947c80cbf88eb04b5e6e68019d59",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -3311,16 +3311,16 @@
         },
         {
             "name": "openai-php/client",
-            "version": "v0.12.0",
+            "version": "v0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openai-php/client.git",
-                "reference": "87cb05309dc1b3ba96725dfeb66186df83a2d489"
+                "reference": "d857954cb96731e183adc5e51e5f79d16717ab2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openai-php/client/zipball/87cb05309dc1b3ba96725dfeb66186df83a2d489",
-                "reference": "87cb05309dc1b3ba96725dfeb66186df83a2d489",
+                "url": "https://api.github.com/repos/openai-php/client/zipball/d857954cb96731e183adc5e51e5f79d16717ab2a",
+                "reference": "d857954cb96731e183adc5e51e5f79d16717ab2a",
                 "shasum": ""
             },
             "require": {
@@ -3335,7 +3335,7 @@
             "require-dev": {
                 "guzzlehttp/guzzle": "^7.9.3",
                 "guzzlehttp/psr7": "^2.7.1",
-                "laravel/pint": "^1.22.0",
+                "laravel/pint": "^1.24.0",
                 "mockery/mockery": "^1.6.12",
                 "nunomaduro/collision": "^8.8.0",
                 "pestphp/pest": "^3.8.2|^4.0.0",
@@ -3382,7 +3382,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openai-php/client/issues",
-                "source": "https://github.com/openai-php/client/tree/v0.12.0"
+                "source": "https://github.com/openai-php/client/tree/v0.16.0"
             },
             "funding": [
                 {
@@ -3398,7 +3398,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-04T13:34:48+00:00"
+            "time": "2025-08-26T12:28:37+00:00"
         },
         {
             "name": "php-http/client-common",
