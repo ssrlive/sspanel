@@ -35,8 +35,8 @@ final class DetectLogController extends BaseController
             $log->datetime = Tools::toDateTime($log->datetime);
         }
 
-        return $response->write($this->view()
-            ->assign('logs', $logs)
-            ->fetch('user/detect/log.tpl'));
+        $view = $this->view();
+        $view->assign('logs', $logs);
+        return $response->write($view->fetch('user/detect/log.tpl'));
     }
 }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
+use App\Models\User;
 use App\Services\Subscribe;
 
 final class Json extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $sub_url = Subscribe::getUniversalSubLink($user);
 

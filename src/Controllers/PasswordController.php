@@ -12,9 +12,7 @@ use App\Services\Password;
 use App\Services\RateLimit;
 use App\Utils\Hash;
 use App\Utils\ResponseHelper;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use RedisException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Smarty\Exception;
@@ -34,11 +32,9 @@ final class PasswordController extends BaseController
             $captcha = Captcha::generate();
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('captcha', $captcha)
-                ->fetch('password/reset.tpl')
-        );
+        $view = $this->view();
+        $view->assign('captcha', $captcha);
+        return $response->write($view->fetch('password/reset.tpl'));
     }
 
     public function handleReset(ServerRequest $request, Response $response, array $args): ResponseInterface
@@ -70,7 +66,7 @@ final class PasswordController extends BaseController
         if ($user !== null) {
             try {
                 Password::sendResetEmail($email);
-            } catch (ClientExceptionInterface | RedisException) {
+            } catch (\Throwable) {
                 $msg = '邮件发送失败';
             }
         }
@@ -88,7 +84,7 @@ final class PasswordController extends BaseController
 
         try {
             $email = $redis->get('password_reset:' . $token);
-        } catch (RedisException) {
+        } catch (\Throwable) {
             return $response->withStatus(302)->withHeader('Location', '/password/reset');
         }
 
@@ -120,7 +116,7 @@ final class PasswordController extends BaseController
         try {
             $email = $redis->get('password_reset:' . $token);
             $redis->del('password_reset:' . $token);
-        } catch (RedisException) {
+        } catch (\Throwable) {
             return ResponseHelper::error($response, '链接无效');
         }
 

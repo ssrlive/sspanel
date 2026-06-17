@@ -40,10 +40,8 @@ final class ServerController extends BaseController
             ];
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('servers', $node_list)
-                ->fetch('user/server.tpl')
-        );
+        $view = $this->view();
+        $view->assign('servers', $node_list);
+        return $response->write($view->fetch('user/server.tpl'));
     }
 }

@@ -37,26 +37,24 @@ final class AdminController extends BaseController
         $last_traffic = Analytics::getLastTrafficUsage();
         $unused_traffic = Analytics::getUnusedTrafficUsage();
 
-        return $response->write(
-            $this->view()
-                ->assign('today_income', $today_income)
-                ->assign('yesterday_income', $yesterday_income)
-                ->assign('this_month_income', $this_month_income)
-                ->assign('total_income', $total_income)
-                ->assign('total_user', $total_user)
-                ->assign('checkin_user', $checkin_user)
-                ->assign('today_checkin_user', $today_checkin_user)
-                ->assign('inactive_user', $inactive_user)
-                ->assign('active_user', $active_user)
-                ->assign('total_node', $total_node)
-                ->assign('alive_node', $alive_node)
-                ->assign('raw_today_traffic', $raw_today_traffic)
-                ->assign('raw_last_traffic', $raw_last_traffic)
-                ->assign('raw_unused_traffic', $raw_unused_traffic)
-                ->assign('today_traffic', $today_traffic)
-                ->assign('last_traffic', $last_traffic)
-                ->assign('unused_traffic', $unused_traffic)
-                ->fetch('admin/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('today_income', $today_income)
+            ->assign('yesterday_income', $yesterday_income)
+            ->assign('this_month_income', $this_month_income)
+            ->assign('total_income', $total_income)
+            ->assign('total_user', $total_user)
+            ->assign('checkin_user', $checkin_user)
+            ->assign('today_checkin_user', $today_checkin_user)
+            ->assign('inactive_user', $inactive_user)
+            ->assign('active_user', $active_user)
+            ->assign('total_node', $total_node)
+            ->assign('alive_node', $alive_node)
+            ->assign('raw_today_traffic', $raw_today_traffic)
+            ->assign('raw_last_traffic', $raw_last_traffic)
+            ->assign('raw_unused_traffic', $raw_unused_traffic)
+            ->assign('today_traffic', $today_traffic)
+            ->assign('last_traffic', $last_traffic)
+            ->assign('unused_traffic', $unused_traffic);
+        return $response->write($view->fetch('admin/index.tpl'));
     }
 }

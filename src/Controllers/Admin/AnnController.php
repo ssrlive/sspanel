@@ -49,11 +49,9 @@ final class AnnController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/announcement/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/announcement/index.tpl'));
     }
 
     /**
@@ -63,11 +61,9 @@ final class AnnController extends BaseController
      */
     public function create(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/announcement/create.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/announcement/create.tpl'));
     }
 
     /**
@@ -147,12 +143,10 @@ final class AnnController extends BaseController
      */
     public function edit(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('ann', (new Ann())->find($args['id']))
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/announcement/edit.tpl')
-        );
+        $view = $this->view();
+        $view->assign('ann', (new Ann())->find($args['id']))
+            ->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/announcement/edit.tpl'));
     }
 
     /**

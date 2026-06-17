@@ -39,11 +39,9 @@ final class OrderController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/order/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/order/index.tpl'));
     }
 
     /**
@@ -71,12 +69,10 @@ final class OrderController extends BaseController
         $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
         $invoice->content = json_decode($invoice->content);
 
-        return $response->write(
-            $this->view()
-                ->assign('order', $order)
-                ->assign('invoice', $invoice)
-                ->fetch('admin/order/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('order', $order)
+            ->assign('invoice', $invoice);
+        return $response->write($view->fetch('admin/order/view.tpl'));
     }
 
     public function cancel(ServerRequest $request, Response $response, array $args): ResponseInterface

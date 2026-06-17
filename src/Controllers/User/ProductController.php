@@ -46,12 +46,10 @@ final class ProductController extends BaseController
             $time->content = json_decode($time->content);
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('tabps', $tabps)
-                ->assign('bandwidths', $bandwidths)
-                ->assign('times', $times)
-                ->fetch('user/product.tpl')
-        );
+        $view = $this->view();
+        $view->assign('tabps', $tabps)
+            ->assign('bandwidths', $bandwidths)
+            ->assign('times', $times);
+        return $response->write($view->fetch('user/product.tpl'));
     }
 }

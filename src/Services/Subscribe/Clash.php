@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
+use App\Models\User;
 use App\Services\Subscribe;
 use App\Utils\Tools;
 use function array_merge;
+use function call_user_func;
+use function function_exists;
 use function json_decode;
-use function yaml_emit;
-use const YAML_UTF8_ENCODING;
 
 final class Clash extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $nodes = [];
         $clash_config = $_ENV['Clash_Config'];
@@ -181,9 +182,16 @@ final class Clash extends Base
             'proxies' => $nodes,
         ];
 
-        return yaml_emit(
+        if (! function_exists('yaml_emit') || ! defined('YAML_UTF8_ENCODING')) {
+            throw new \RuntimeException('YAML extension is not available.');
+        }
+
+        $yaml = call_user_func(
+            'yaml_emit',
             array_merge($clash_config, $clash_nodes, $clash_group_config),
-            YAML_UTF8_ENCODING
+            \YAML_UTF8_ENCODING
         );
+
+        return $yaml === false ? '' : $yaml;
     }
 }

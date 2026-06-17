@@ -55,12 +55,10 @@ final class ProfileController extends BaseController
             $sub->request_time = Tools::toDateTime($sub->request_time);
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('ips', $ips)
-                ->assign('logins', $logins)
-                ->assign('subs', $subs)
-                ->fetch('user/profile.tpl')
-        );
+        $view = $this->view();
+        $view->assign('ips', $ips)
+            ->assign('logins', $logins)
+            ->assign('subs', $subs);
+        return $response->write($view->fetch('user/profile.tpl'));
     }
 }

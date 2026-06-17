@@ -34,14 +34,12 @@ final class BillingController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', $this->update_field)
-                ->assign('settings', $this->settings)
-                ->assign('payment_gateways', $this->returnGatewaysList())
-                ->assign('active_payment_gateway', $this->returnActiveGateways())
-                ->fetch('admin/setting/billing.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', $this->update_field)
+            ->assign('settings', $this->settings)
+            ->assign('payment_gateways', $this->returnGatewaysList())
+            ->assign('active_payment_gateway', $this->returnActiveGateways());
+        return $response->write($view->fetch('admin/setting/billing.tpl'));
     }
 
     public function save(ServerRequest $request, Response $response, array $args): ResponseInterface

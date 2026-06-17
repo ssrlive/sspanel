@@ -44,11 +44,9 @@ final class TicketController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/ticket/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/ticket/index.tpl'));
     }
 
     public function reply(ServerRequest $request, Response $response, array $args): ResponseInterface
@@ -182,12 +180,10 @@ final class TicketController extends BaseController
             $comment->datetime = Tools::toDateTime((int) $comment->datetime);
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('ticket', $ticket)
-                ->assign('comments', $comments)
-                ->fetch('admin/ticket/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('ticket', $ticket)
+            ->assign('comments', $comments);
+        return $response->write($view->fetch('admin/ticket/view.tpl'));
     }
 
     /**

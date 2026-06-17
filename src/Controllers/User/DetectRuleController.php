@@ -20,8 +20,8 @@ final class DetectRuleController extends BaseController
     {
         $rules = (new DetectRule())->get();
 
-        return $response->write($this->view()
-            ->assign('rules', $rules)
-            ->fetch('user/detect/index.tpl'));
+        $view = $this->view();
+        $view->assign('rules', $rules);
+        return $response->write($view->fetch('user/detect/index.tpl'));
     }
 }

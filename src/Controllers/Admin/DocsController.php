@@ -40,11 +40,9 @@ final class DocsController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/docs/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/docs/index.tpl'));
     }
 
     /**
@@ -54,11 +52,9 @@ final class DocsController extends BaseController
      */
     public function create(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/docs/create.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/docs/create.tpl'));
     }
 
     /**
@@ -127,12 +123,10 @@ final class DocsController extends BaseController
     {
         $doc = (new Docs())->find($args['id']);
 
-        return $response->write(
-            $this->view()
-                ->assign('doc', $doc)
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/docs/edit.tpl')
-        );
+        $view = $this->view();
+        $view->assign('doc', $doc)
+            ->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/docs/edit.tpl'));
     }
 
     /**

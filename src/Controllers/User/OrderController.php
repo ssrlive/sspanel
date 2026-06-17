@@ -46,11 +46,9 @@ final class OrderController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('user/order/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('user/order/index.tpl'));
     }
 
     /**
@@ -78,11 +76,9 @@ final class OrderController extends BaseController
         $product->type_text = $product->type();
         $product->content = json_decode($product->content);
 
-        return $response->write(
-            $this->view()
-                ->assign('product', $product)
-                ->fetch('user/order/create.tpl')
-        );
+        $view = $this->view();
+        $view->assign('product', $product);
+        return $response->write($view->fetch('user/order/create.tpl'));
     }
 
     /**
@@ -116,12 +112,9 @@ final class OrderController extends BaseController
         $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
         $invoice->content = json_decode($invoice->content);
 
-        return $response->write(
-            $this->view()
-                ->assign('order', $order)
-                ->assign('invoice', $invoice)
-                ->fetch('user/order/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('order', $order)->assign('invoice', $invoice);
+        return $response->write($view->fetch('user/order/view.tpl'));
     }
 
     public function process(ServerRequest $request, Response $response, array $args): ResponseInterface

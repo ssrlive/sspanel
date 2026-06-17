@@ -48,10 +48,10 @@ final class AuthController extends BaseController
             $captcha = Captcha::generate();
         }
 
-        return $response->write($this->view()
-            ->assign('base_url', $_ENV['baseUrl'])
-            ->assign('captcha', $captcha)
-            ->fetch('auth/login.tpl'));
+        $view = $this->view();
+        $view->assign('base_url', $_ENV['baseUrl'])
+            ->assign('captcha', $captcha);
+        return $response->write($view->fetch('auth/login.tpl'));
     }
 
     public function loginHandle(ServerRequest $request, Response $response, array $args): ResponseInterface
@@ -126,13 +126,11 @@ final class AuthController extends BaseController
 
         $invite_code = $this->antiXss->xss_clean($request->getParam('code'));
 
-        return $response->write(
-            $this->view()
-                ->assign('invite_code', $invite_code)
-                ->assign('base_url', $_ENV['baseUrl'])
-                ->assign('captcha', $captcha)
-                ->fetch('auth/register.tpl')
-        );
+        $view = $this->view();
+        $view->assign('invite_code', $invite_code)
+            ->assign('base_url', $_ENV['baseUrl'])
+            ->assign('captcha', $captcha);
+        return $response->write($view->fetch('auth/register.tpl'));
     }
 
     /**

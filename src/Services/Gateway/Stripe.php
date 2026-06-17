@@ -11,9 +11,7 @@ use App\Services\Auth;
 use App\Services\Exchange;
 use App\Services\View;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use RedisException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Stripe\Exception\ApiErrorException;
@@ -88,7 +86,7 @@ final class Stripe extends Base
 
         try {
             $exchange_amount = (new Exchange())->exchange((float) $price, 'CNY', $stripe_currency);
-        } catch (GuzzleException | RedisException) {
+        } catch (\Throwable) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '汇率获取失败',

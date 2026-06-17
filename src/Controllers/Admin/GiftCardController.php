@@ -60,11 +60,9 @@ final class GiftCardController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/giftcard.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/giftcard.tpl'));
     }
 
     public function add(ServerRequest $request, Response $response, array $args): ResponseInterface

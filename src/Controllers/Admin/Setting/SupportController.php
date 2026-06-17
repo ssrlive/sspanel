@@ -28,12 +28,10 @@ final class SupportController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', $this->update_field)
-                ->assign('settings', $this->settings)
-                ->fetch('admin/setting/support.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', $this->update_field)
+            ->assign('settings', $this->settings);
+        return $response->write($view->fetch('admin/setting/support.tpl'));
     }
 
     public function save(ServerRequest $request, Response $response, array $args): ResponseInterface

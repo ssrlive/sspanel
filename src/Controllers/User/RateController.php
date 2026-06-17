@@ -41,11 +41,9 @@ final class RateController extends BaseController
             ];
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('node_list', $node_list)
-                ->fetch('user/rate.tpl')
-        );
+        $view = $this->view();
+        $view->assign('node_list', $node_list);
+        return $response->write($view->fetch('user/rate.tpl'));
     }
 
     public function ajax(ServerRequest $request, Response $response, array $args): ResponseInterface

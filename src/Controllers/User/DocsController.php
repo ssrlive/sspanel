@@ -30,11 +30,9 @@ final class DocsController extends BaseController
             ->orderBy('sort')
             ->orderBy('id', 'desc')->get();
 
-        return $response->write(
-            $this->view()
-                ->assign('docs', $docs)
-                ->fetch('user/docs/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('docs', $docs);
+        return $response->write($view->fetch('user/docs/index.tpl'));
     }
 
     /**
@@ -55,10 +53,8 @@ final class DocsController extends BaseController
             return $response->withRedirect('/user/docs');
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('doc', $doc)
-                ->fetch('user/docs/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('doc', $doc);
+        return $response->write($view->fetch('user/docs/view.tpl'));
     }
 }

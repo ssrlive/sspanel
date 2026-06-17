@@ -35,11 +35,9 @@ final class SysLogController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/syslog/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/syslog/index.tpl'));
     }
 
     /**
@@ -60,11 +58,9 @@ final class SysLogController extends BaseController
         $syslog->channel_text = $syslog->channel();
         $syslog->datetime = Tools::toDateTime($syslog->datetime);
 
-        return $response->write(
-            $this->view()
-                ->assign('syslog', $syslog)
-                ->fetch('admin/syslog/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('syslog', $syslog);
+        return $response->write($view->fetch('admin/syslog/view.tpl'));
     }
 
     /**

@@ -1,14 +1,14 @@
-sspanel installation tutorial
----------------------------------------------
+# sspanel installation tutorial
 
 > 本教程是基于 `Ubuntu 22.04` 系统的安装教程，其他系统可能会有所不同。
 
 ## Install `LEMP`
 
 系統需求：
+
 - Git
 - Nginx（HTTPS configured）
-- PHP 8.2+ （OPcache+JIT enabled）
+- PHP 8.4+ （OPcache+JIT enabled）
 - PHP Redis extension 6.0+
 - MySQL 8.0+
 - Redis 7.0+
@@ -63,6 +63,7 @@ bash ./share_dir.sh /var/www www-data
 ### **0x41 安装网站程序**
 
 ```bash
+rm -rf /var/www/sspanel
 mkdir -p /var/www/sspanel
 cd /var/www/sspanel
 
@@ -86,6 +87,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 在 `/etc/nginx/conf.d/sspanel.conf` 文件中写入以下参考配置：
 
 - 對於未配置 HTTPS 的網站，使用以下配置：
+
 ```nginx
     server {
         listen 80 default_server;
@@ -109,6 +111,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 ```
 
 - 對於已配置了 HTTPS 的網站， 可以如下設置。 注意 `ssl_certificate` 和 `ssl_certificate_key` 项。
+
 ```nginx
     server {
         listen 443 ssl http2;
@@ -134,7 +137,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 ```
 
 上面配置中 `fastcgi_pass unix:/run/php/php8.5-fpm.sock;` 語句的值必須自己改正確，
-可以用命令 `ls /run/php/`  查看它的確切值，我這裏實際上是  `php8.5-fpm.sock` 我就使用了它。
+可以用命令 `ls /run/php/` 查看它的確切值，我這裏實際上是 `php8.5-fpm.sock` 我就使用了它。
 
 添加完成后使用命令 `nginx -t` 檢查，無誤後用命令 `systemctl restart nginx` 重启 Nginx。
 
@@ -143,6 +146,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 ### **0x43 创建数据库**
 
 使用命令 `sudo mysql -u root -p` 並輸入密碼以後，即登录数据库，执行以下命令：
+
 ```sql
 mysql> CREATE USER 'sspanel'@'localhost' IDENTIFIED BY 'password';
 mysql> GRANT ALL PRIVILEGES ON *.* TO 'sspanel'@'localhost' WITH GRANT OPTION;
@@ -154,6 +158,7 @@ mysql> FLUSH PRIVILEGES;
 
 mysql> exit
 ```
+
 這些命令創建名爲 `sspanel` 的數據庫，並創建一個用戶 `sspanel` ，密碼是 `password` ，並賦予其所有權限。
 
 ### **0x44 修改 sql 模式**
@@ -187,7 +192,7 @@ vi config/.config.php
 
 找到以下部分
 
-`db_host` 如果使用本地数据库，填 `localhost` 或 `127.0.0.1` , 
+`db_host` 如果使用本地数据库，填 `localhost` 或 `127.0.0.1` ,
 如果使用云数据库，填写 `ip` 或域名，并注意允许服务器 `ip` 连接
 `db_socket` 可留空，或根据文件上方注释填写
 注意数据库账户需要有对表结构的操作权限
@@ -230,6 +235,7 @@ php xcat Tool createAdmin # 创建管理员账户
 > 如果创建管理员出错, 请检查 `config/.config.php` 中的数据库连接信息。
 
 下載各種客戶端
+
 ```bash
 sudo -u www-data /usr/bin/php xcat ClientDownload
 ```

@@ -90,11 +90,9 @@ final class UserController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/user/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/user/index.tpl'));
     }
 
     /**
@@ -161,14 +159,12 @@ final class UserController extends BaseController
         $user->last_check_in_time = Tools::toDateTime($user->last_check_in_time);
         $user->last_login_time = Tools::toDateTime($user->last_login_time);
 
-        return $response->write(
-            $this->view()
-                ->assign('update_field', self::$update_field)
-                ->assign('edit_user', $user)
-                ->assign('ss_methods', Tools::getSsMethod())
-                ->assign('locales', I18n::getLocaleList())
-                ->fetch('admin/user/edit.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', self::$update_field)
+            ->assign('edit_user', $user)
+            ->assign('ss_methods', Tools::getSsMethod())
+            ->assign('locales', I18n::getLocaleList());
+        return $response->write($view->fetch('admin/user/edit.tpl'));
     }
 
     public function update(ServerRequest $request, Response $response, array $args): ResponseInterface

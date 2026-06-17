@@ -38,11 +38,9 @@ final class InvoiceController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('user/invoice/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('user/invoice/index.tpl'));
     }
 
     /**
@@ -70,14 +68,12 @@ final class InvoiceController extends BaseController
         $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
         $invoice_content = json_decode($invoice->content);
 
-        return $response->write(
-            $this->view()
-                ->assign('invoice', $invoice)
-                ->assign('invoice_content', $invoice_content)
-                ->assign('paylist', $paylist)
-                ->assign('payments', Payment::getPaymentsEnabled())
-                ->fetch('user/invoice/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('invoice', $invoice)
+            ->assign('invoice_content', $invoice_content)
+            ->assign('paylist', $paylist)
+            ->assign('payments', Payment::getPaymentsEnabled());
+        return $response->write($view->fetch('user/invoice/view.tpl'));
     }
 
     public function payBalance(ServerRequest $request, Response $response, array $args): ResponseInterface

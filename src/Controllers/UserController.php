@@ -53,15 +53,13 @@ final class UserController extends BaseController
             }
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('ann', $ann)
-                ->assign('captcha', $captcha)
-                ->assign('traffic_logs', json_encode($traffic_logs))
-                ->assign('class_expire_days', $class_expire_days)
-                ->assign('UniversalSub', Subscribe::getUniversalSubLink($this->user))
-                ->fetch('user/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('ann', $ann)
+            ->assign('captcha', $captcha)
+            ->assign('traffic_logs', json_encode($traffic_logs))
+            ->assign('class_expire_days', $class_expire_days)
+            ->assign('UniversalSub', Subscribe::getUniversalSubLink($this->user));
+        return $response->write($view->fetch('user/index.tpl'));
     }
 
     /**
@@ -74,11 +72,9 @@ final class UserController extends BaseController
             ->orderBy('sort')
             ->orderBy('date', 'desc')->get();
 
-        return $response->write(
-            $this->view()
-                ->assign('anns', $anns)
-                ->fetch('user/announcement.tpl')
-        );
+        $view = $this->view();
+        $view->assign('anns', $anns);
+        return $response->write($view->fetch('user/announcement.tpl'));
     }
 
     public function checkin(ServerRequest $request, Response $response, array $args): ResponseInterface
@@ -115,11 +111,9 @@ final class UserController extends BaseController
      */
     public function banned(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('banned_reason', $this->user->banned_reason)
-                ->fetch('user/banned.tpl')
-        );
+        $view = $this->view();
+        $view->assign('banned_reason', $this->user->banned_reason);
+        return $response->write($view->fetch('user/banned.tpl'));
     }
 
     public function logout(ServerRequest $request, Response $response, array $args): Response

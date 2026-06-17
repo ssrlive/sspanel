@@ -44,11 +44,9 @@ final class TicketController extends BaseController
             $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
         }
 
-        return $response->write(
-            $this->view()
-                ->assign('tickets', $tickets)
-                ->fetch('user/ticket/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('tickets', $tickets);
+        return $response->write($view->fetch('user/ticket/index.tpl'));
     }
 
     /**
@@ -117,13 +115,13 @@ final class TicketController extends BaseController
             $this->user->is_shadow_banned ||
             $comment === ''
         ) {
-            ResponseHelper::error($response, '工单回复失败');
+            return ResponseHelper::error($response, '工单回复失败');
         }
 
         $ticket = (new Ticket())->where('id', $id)->where('userid', $this->user->id)->first();
 
         if ($ticket === null) {
-            ResponseHelper::error($response, '工单不存在');
+            return ResponseHelper::error($response, '工单不存在');
         }
 
         $content_old = json_decode($ticket->content, true);
@@ -180,11 +178,9 @@ final class TicketController extends BaseController
         $ticket->type = $ticket->type();
         $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
 
-        return $response->write(
-            $this->view()
-                ->assign('ticket', $ticket)
-                ->assign('comments', $comments)
-                ->fetch('user/ticket/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('ticket', $ticket)
+            ->assign('comments', $comments);
+        return $response->write($view->fetch('user/ticket/view.tpl'));
     }
 }

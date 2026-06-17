@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
+use App\Models\User;
 use App\Services\Subscribe;
 use App\Utils\Tools;
 use function array_filter;
@@ -13,7 +14,7 @@ use function json_encode;
 
 final class V2RayJson extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $nodes = [];
         $v2rayjson_config = $_ENV['V2RayJson_Config'];

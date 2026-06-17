@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Subscribe;
 
 use App\Models\Config;
+use App\Models\User;
 use App\Services\Subscribe;
 use function base64_encode;
 use function json_decode;
@@ -13,7 +14,7 @@ use const PHP_EOL;
 
 final class V2Ray extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $links = '';
         //判断是否开启V2Ray订阅

@@ -44,14 +44,12 @@ final class InviteController extends BaseController
         $invite_url = $_ENV['baseUrl'] . '/auth/register?code=' . $code;
         $invite_reward_rate = Config::obtain('invite_reward_rate') * 100;
 
-        return $response->write(
-            $this->view()
-                ->assign('paybacks', $paybacks)
-                ->assign('invite_url', $invite_url)
-                ->assign('paybacks_sum', $paybacks_sum)
-                ->assign('invite_reward_rate', $invite_reward_rate)
-                ->fetch('user/invite.tpl')
-        );
+        $view = $this->view();
+        $view->assign('paybacks', $paybacks)
+            ->assign('invite_url', $invite_url)
+            ->assign('paybacks_sum', $paybacks_sum)
+            ->assign('invite_reward_rate', $invite_reward_rate);
+        return $response->write($view->fetch('user/invite.tpl'));
     }
 
     public function reset(ServerRequest $request, Response $response, array $args): ResponseInterface

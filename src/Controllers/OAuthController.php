@@ -11,11 +11,10 @@ use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\UnencryptedToken;
 use Psr\Http\Message\ResponseInterface;
-use RedisException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Smarty\Exception as SmartyException;
@@ -46,8 +45,8 @@ final class OAuthController extends BaseController
     }
 
     /**
-     * @throws GuzzleException
-     * @throws RedisException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RedisException
      * @throws Exception
      */
     public function slack(ServerRequest $request, Response $response, array $args): ResponseInterface
@@ -105,6 +104,7 @@ final class OAuthController extends BaseController
         $parser = new Parser(new JoseEncoder());
         $id_token = $parser->parse(json_decode($code_response->getBody()->__toString())->id_token);
 
+        /** @var UnencryptedToken $id_token */
         $slack_user_id = $id_token->claims()->get('https://slack.com/user_id');
 
         if ((new User())->where('im_type', 1)->where('im_value', $slack_user_id)->first() !== null ||
@@ -121,8 +121,8 @@ final class OAuthController extends BaseController
     }
 
     /**
-     * @throws GuzzleException
-     * @throws RedisException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RedisException
      */
     public function discord(ServerRequest $request, Response $response, array $args): ResponseInterface
     {

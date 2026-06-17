@@ -38,11 +38,9 @@ final class InvoiceController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/invoice/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/invoice/index.tpl'));
     }
 
     /**
@@ -64,13 +62,11 @@ final class InvoiceController extends BaseController
         $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
         $invoice_content = json_decode($invoice->content);
 
-        return $response->write(
-            $this->view()
-                ->assign('invoice', $invoice)
-                ->assign('invoice_content', $invoice_content)
-                ->assign('paylist', $paylist)
-                ->fetch('admin/invoice/view.tpl')
-        );
+        $view = $this->view();
+        $view->assign('invoice', $invoice)
+            ->assign('invoice_content', $invoice_content)
+            ->assign('paylist', $paylist);
+        return $response->write($view->fetch('admin/invoice/view.tpl'));
     }
 
     public function markPaid(ServerRequest $request, Response $response, array $args): ResponseInterface

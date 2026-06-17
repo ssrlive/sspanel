@@ -68,11 +68,9 @@ final class NodeController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/node/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/node/index.tpl'));
     }
 
     /**
@@ -82,11 +80,9 @@ final class NodeController extends BaseController
      */
     public function create(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/node/create.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/node/create.tpl'));
     }
 
     /**
@@ -175,12 +171,10 @@ final class NodeController extends BaseController
         $node->node_bandwidth = Tools::autoBytes($node->node_bandwidth);
         $node->node_bandwidth_limit = Tools::bToGB($node->node_bandwidth_limit);
 
-        return $response->write(
-            $this->view()
-                ->assign('node', $node)
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/node/edit.tpl')
-        );
+        $view = $this->view();
+        $view->assign('node', $node)
+            ->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/node/edit.tpl'));
     }
 
     /**

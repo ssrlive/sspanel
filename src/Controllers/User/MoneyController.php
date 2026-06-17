@@ -30,12 +30,10 @@ final class MoneyController extends BaseController
 
         $moneylog_count = $moneylogs->count();
 
-        return $response->write(
-            $this->view()
-                ->assign('moneylogs', $moneylogs)
-                ->assign('moneylog_count', $moneylog_count)
-                ->fetch('user/money.tpl')
-        );
+        $view = $this->view();
+        $view->assign('moneylogs', $moneylogs)
+            ->assign('moneylog_count', $moneylog_count);
+        return $response->write($view->fetch('user/money.tpl'));
     }
 
     public function applyGiftCard(ServerRequest $request, Response $response, array $args): ResponseInterface

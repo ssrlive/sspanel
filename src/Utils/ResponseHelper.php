@@ -38,7 +38,7 @@ final class ResponseHelper
      */
     public static function successWithDataEtag(
         RequestInterface $request,
-        ResponseInterface $response,
+        Response $response,
         array $data
     ): ResponseInterface {
         $etag = 'W/"' . hash('xxh64', (string) json_encode($data)) . '"';

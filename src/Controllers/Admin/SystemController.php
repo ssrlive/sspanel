@@ -27,13 +27,11 @@ final class SystemController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('version', PANEL_VERSION)
-                ->assign('last_daily_job_time', Tools::toDateTime(Config::obtain('last_daily_job_time')))
-                ->assign('db_version', Config::obtain('db_version'))
-                ->fetch('admin/system.tpl')
-        );
+        $view = $this->view();
+        $view->assign('version', PANEL_VERSION)
+            ->assign('last_daily_job_time', Tools::toDateTime(Config::obtain('last_daily_job_time')))
+            ->assign('db_version', Config::obtain('db_version'));
+        return $response->write($view->fetch('admin/system.tpl'));
     }
 
     /**

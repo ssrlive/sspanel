@@ -56,11 +56,9 @@ final class ProductController extends BaseController
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('details', self::$details)
-                ->fetch('admin/product/index.tpl')
-        );
+        $view = $this->view();
+        $view->assign('details', self::$details);
+        return $response->write($view->fetch('admin/product/index.tpl'));
     }
 
     /**
@@ -68,11 +66,9 @@ final class ProductController extends BaseController
      */
     public function create(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        return $response->write(
-            $this->view()
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/product/create.tpl')
-        );
+        $view = $this->view();
+        $view->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/product/create.tpl'));
     }
 
     /**
@@ -93,14 +89,12 @@ final class ProductController extends BaseController
         $content->speed_limit = $content->speed_limit ?? 0;
         $content->ip_limit = $content->ip_limit ?? 0;
 
-        return $response->write(
-            $this->view()
-                ->assign('product', $product)
-                ->assign('content', $content)
-                ->assign('limit', $limit)
-                ->assign('update_field', self::$update_field)
-                ->fetch('admin/product/edit.tpl')
-        );
+        $view = $this->view();
+        $view->assign('product', $product)
+            ->assign('content', $content)
+            ->assign('limit', $limit)
+            ->assign('update_field', self::$update_field);
+        return $response->write($view->fetch('admin/product/edit.tpl'));
     }
 
     public function add(ServerRequest $request, Response $response, array $args): ResponseInterface

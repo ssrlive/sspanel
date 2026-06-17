@@ -36,12 +36,12 @@ final class InfoController extends BaseController
         $methods = Tools::getSsMethod();
         $ga_url = MFA::getGaUrl($this->user);
 
-        return $response->write($this->view()
-            ->assign('user', $this->user)
+        $view = $this->view();
+        $view->assign('user', $this->user)
             ->assign('themes', $themes)
             ->assign('methods', $methods)
-            ->assign('ga_url', $ga_url)
-            ->fetch('user/edit.tpl'));
+            ->assign('ga_url', $ga_url);
+        return $response->write($view->fetch('user/edit.tpl'));
     }
 
     /**

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Services\Subscribe;
 
 use App\Models\Config;
+use App\Models\User;
 use App\Services\Subscribe;
 use function json_decode;
 use const PHP_EOL;
 
 final class SIP002 extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $links = '';
         //判断是否开启SS订阅
