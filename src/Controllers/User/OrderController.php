@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\UserCoupon;
+use App\Services\DB;
 use App\Utils\Cookie;
 use App\Utils\Tools;
 use Exception;
@@ -19,6 +20,7 @@ use function explode;
 use function in_array;
 use function json_decode;
 use function json_encode;
+use function max;
 use function property_exists;
 use function time;
 
@@ -68,6 +70,11 @@ final class OrderController extends BaseController
         }
 
         $product = (new Product())->where('id', $product_id)->first();
+
+        if ($product === null) {
+            return $response->withRedirect('/user/product');
+        }
+
         $product->type_text = $product->type();
         $product->content = json_decode($product->content);
 
@@ -98,6 +105,11 @@ final class OrderController extends BaseController
         $order->content = json_decode($order->product_content);
 
         $invoice = (new Invoice())->where('order_id', $id)->first();
+
+        if ($invoice === null) {
+            return $response->withRedirect('/user/order');
+        }
+
         $invoice->status = $invoice->status();
         $invoice->create_time = Tools::toDateTime($invoice->create_time);
         $invoice->update_time = Tools::toDateTime($invoice->update_time);
@@ -209,7 +221,7 @@ final class OrderController extends BaseController
                 $discount = $content->value;
             }
 
-            $buy_price = $product->price - $discount;
+            $buy_price = max(0, $product->price - $discount);
         }
 
         $product_limit = json_decode($product->limit);
@@ -241,59 +253,94 @@ final class OrderController extends BaseController
             }
         }
 
-        $order = new Order();
-        $order->user_id = $user->id;
-        $order->product_id = $product->id;
-        $order->product_type = $product->type;
-        $order->product_name = $product->name;
-        $order->product_content = $product->content;
-        $order->coupon = $coupon_raw;
-        $order->price = $buy_price;
-        $order->status = $buy_price === 0 ? 'pending_activation' : 'pending_payment';
-        $order->create_time = time();
-        $order->update_time = time();
-        $order->save();
+        try {
+            $invoice_id = DB::transaction(static function () use ($user, $product, $coupon_raw, $coupon, $buy_price, $discount) {
+                $product_in_tx = (new Product())->where('id', $product->id)->lockForUpdate()->first();
 
-        $invoice_content = [];
-        $invoice_content[] = [
-            'content_id' => 0,
-            'name' => $product->name,
-            'price' => $product->price,
-        ];
+                if ($product_in_tx === null || $product_in_tx->stock === 0) {
+                    throw new Exception('商品不存在或库存不足');
+                }
 
-        if ($coupon_raw !== '') {
-            $invoice_content[] = [
-                'content_id' => 1,
-                'name' => '优惠码 ' . $coupon_raw,
-                'price' => '-' . $discount,
-            ];
+                $coupon_in_tx = null;
+
+                if ($coupon_raw !== '') {
+                    $coupon_in_tx = (new UserCoupon())->where('id', $coupon->id)->lockForUpdate()->first();
+
+                    if ($coupon_in_tx === null) {
+                        throw new Exception('优惠码不存在或已过期');
+                    }
+
+                    $coupon_limit = json_decode($coupon_in_tx->limit);
+                    if (property_exists($coupon_limit, 'total_use_time')) {
+                        $coupon_total_use_limit = $coupon_limit->total_use_time;
+                    } else {
+                        $coupon_total_use_limit = -1;
+                    }
+
+                    if ($coupon_total_use_limit > 0 && $coupon_in_tx->use_count >= $coupon_total_use_limit) {
+                        throw new Exception('优惠码使用次数已达上限');
+                    }
+                }
+
+                $order = new Order();
+                $order->user_id = $user->id;
+                $order->product_id = $product_in_tx->id;
+                $order->product_type = $product_in_tx->type;
+                $order->product_name = $product_in_tx->name;
+                $order->product_content = $product_in_tx->content;
+                $order->coupon = $coupon_raw;
+                $order->price = $buy_price;
+                $order->status = $buy_price === 0 ? 'pending_activation' : 'pending_payment';
+                $order->create_time = time();
+                $order->update_time = time();
+                $order->save();
+
+                $invoice_content = [];
+                $invoice_content[] = [
+                    'content_id' => 0,
+                    'name' => $product_in_tx->name,
+                    'price' => $product_in_tx->price,
+                ];
+
+                if ($coupon_raw !== '') {
+                    $invoice_content[] = [
+                        'content_id' => 1,
+                        'name' => '优惠码 ' . $coupon_raw,
+                        'price' => '-' . $discount,
+                    ];
+                }
+
+                $invoice = new Invoice();
+                $invoice->user_id = $user->id;
+                $invoice->order_id = $order->id;
+                $invoice->content = json_encode($invoice_content);
+                $invoice->price = $buy_price;
+                $invoice->status = $buy_price === 0 ? 'paid_gateway' : 'unpaid';
+                $invoice->create_time = time();
+                $invoice->update_time = time();
+                $invoice->pay_time = 0;
+                $invoice->type = 'product';
+                $invoice->save();
+
+                $product_in_tx->stock -= 1;
+                $product_in_tx->sale_count += 1;
+                $product_in_tx->save();
+
+                if ($coupon_in_tx !== null) {
+                    $coupon_in_tx->use_count += 1;
+                    $coupon_in_tx->save();
+                }
+
+                return $invoice->id;
+            });
+        } catch (Exception $e) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => $e->getMessage(),
+            ]);
         }
 
-        $invoice = new Invoice();
-        $invoice->user_id = $user->id;
-        $invoice->order_id = $order->id;
-        $invoice->content = json_encode($invoice_content);
-        $invoice->price = $buy_price;
-        $invoice->status = $buy_price === 0 ? 'paid_gateway' : 'unpaid';
-        $invoice->create_time = time();
-        $invoice->update_time = time();
-        $invoice->pay_time = 0;
-        $invoice->type = 'product';
-        $invoice->save();
-
-        if ($product->stock > 0) {
-            $product->stock -= 1;
-        }
-
-        $product->sale_count += 1;
-        $product->save();
-
-        if ($coupon_raw !== '') {
-            $coupon->use_count += 1;
-            $coupon->save();
-        }
-
-        return $response->withHeader('HX-Redirect', '/user/invoice/' . $invoice->id . '/view');
+        return $response->withHeader('HX-Redirect', '/user/invoice/' . $invoice_id . '/view');
     }
 
     public function topup(ServerRequest $request, Response $response, array $args): ResponseInterface

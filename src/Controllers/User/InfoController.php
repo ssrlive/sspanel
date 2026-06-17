@@ -207,11 +207,11 @@ final class InfoController extends BaseController
         $method = strtolower($this->antiXss->xss_clean($request->getParam('method')));
 
         if ($method === '') {
-            ResponseHelper::error($response, '非法输入');
+            return ResponseHelper::error($response, '非法输入');
         }
 
         if (! Tools::isParamValidate('method', $method)) {
-            ResponseHelper::error($response, '加密无效');
+            return ResponseHelper::error($response, '加密无效');
         }
 
         $user->method = $method;

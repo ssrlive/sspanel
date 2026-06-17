@@ -53,7 +53,7 @@ final class V2RayJson extends Base
                         'settings' => [
                             'address' => $node_raw->server,
                             'port' => (int) $ss_2022_port,
-                            'method' => $user->method,
+                            'method' => $method,
                             'psk' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                         ],
                         'tag' => $node_raw->name,
@@ -101,7 +101,7 @@ final class V2RayJson extends Base
                             'security' => $security,
                             'securitySettings' => [
                                 'tls' => [
-                                    'server_name' => $security === ('tls' || 'auto') ? $host : '',
+                                    'server_name' => in_array($security, ['tls', 'auto']) ? $host : '',
                                 ],
                             ],
                         ],
