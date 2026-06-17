@@ -31,20 +31,30 @@ sudo apt remove apache2 -y
 sudo apt autoremove -y
 sudo apt update -y
 
-sudo apt install -y nginx-extras mysql-server redis python3 python-is-python3 php-fpm
+sudo apt install -y nginx-extras mysql-server redis python3 python-is-python3
 sleep 2
-sudo apt install -y php-xmlrpc php php-json
-sudo apt install -y php-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mysql,readline,redis,xml,yaml,zip}
+sudo apt install -y php8.5-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mysql,readline,redis,xml,xmlrpc,yaml,zip}
 
 sudo apt remove apache2 -y
 sudo apt autoremove -y
 
-sudo systemctl restart php8.4-fpm
+sudo systemctl restart php8.5-fpm
 ```
 
 > 如何刪除舊版 PHP? 比如 `php8.3`, 可以使用命令 `sudo apt remove 'php8.3*' -y` 然後 `sudo apt autoremove -y` 來刪除所有舊版 PHP 相關的包。
 
 參考文章： https://portal.databasemart.com/kb/a2136/how-to-install-php-8_1-for-nginx-on-ubuntu-20_04.aspx
+
+## 把 `/var/www` 的读写权限自动共享给 `你自己` 和 账号 `www-data`
+
+脚本 下载链接 https://github.com/ssrlive/tips/raw/refs/heads/master/tips/share_dir.sh ,
+
+然后本地执行 `bash ./share_dir.sh /var/www www-data` 命令。
+
+```bash
+curl -L https://github.com/ssrlive/tips/raw/refs/heads/master/tips/share_dir.sh -o share_dir.sh
+bash ./share_dir.sh /var/www www-data
+```
 
 ## **部署 SSPanel**
 
@@ -55,13 +65,8 @@ sudo systemctl restart php8.4-fpm
 ```bash
 mkdir -p /var/www/sspanel
 cd /var/www/sspanel
-chmod -R 755 ${PWD}
-chown -R www-data:www-data ${PWD}
 
-git clone --depth=1 -b main https://github.com/ssrlive/sspanel.git ${PWD}
-git config --global --add safe.directory ${PWD}
-git config core.filemode false
-git checkout .
+git clone -b main https://github.com/ssrlive/sspanel.git ${PWD}
 
 wget https://getcomposer.org/installer -O composer.phar
 php composer.phar
@@ -94,7 +99,7 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 
         location ~ \\.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.5-fpm.sock;
         }
 
         location / {
@@ -123,13 +128,13 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 
         location ~ \\.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.5-fpm.sock;
         }
     }
 ```
 
-上面配置中 `fastcgi_pass unix:/run/php/php8.4-fpm.sock;` 語句的值必須自己改正確，
-可以用命令 `ls /run/php/`  查看它的確切值，我這裏實際上是  `php8.4-fpm.sock` 我就使用了它。
+上面配置中 `fastcgi_pass unix:/run/php/php8.5-fpm.sock;` 語句的值必須自己改正確，
+可以用命令 `ls /run/php/`  查看它的確切值，我這裏實際上是  `php8.5-fpm.sock` 我就使用了它。
 
 添加完成后使用命令 `nginx -t` 檢查，無誤後用命令 `systemctl restart nginx` 重启 Nginx。
 
