@@ -8,7 +8,7 @@ use App\Models\User;
 
 abstract class Base
 {
-    abstract public function login($uid, $time): void;
+    abstract public function login(int $uid, int $time): void;
 
     abstract public function logout(): void;
 

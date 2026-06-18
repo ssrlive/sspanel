@@ -23,7 +23,7 @@ final class EmailQueue extends Model
     protected $connection = 'default';
     protected $table = 'email_queue';
 
-    public function add($to, $subject, $template, $array): void
+    public function add(string $to, string $subject, string $template, array $array): void
     {
         $this->to_email = $to;
         $this->subject = $subject;

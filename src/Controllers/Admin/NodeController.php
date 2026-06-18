@@ -303,7 +303,7 @@ final class NodeController extends BaseController
         ]);
     }
 
-    public function copy($request, $response, $args)
+    public function copy(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $old_node = (new Node())->find($args['id']);
         $new_node = $old_node->replicate([

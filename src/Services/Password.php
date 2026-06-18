@@ -15,7 +15,7 @@ final class Password
      * @throws ClientExceptionInterface
      * @throws RedisException
      */
-    public static function sendResetEmail($email): void
+    public static function sendResetEmail(string $email): void
     {
         $redis = (new Cache())->initRedis();
         $token = Tools::genRandomChar(64);

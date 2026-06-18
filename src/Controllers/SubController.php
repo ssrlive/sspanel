@@ -13,7 +13,8 @@ use App\Utils\ResponseHelper;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use RedisException;
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use function in_array;
 use function strtotime;
@@ -23,10 +24,10 @@ final class SubController extends BaseController
     /**
      * @throws ClientExceptionInterface
      * @throws GuzzleException
-     * @throws RedisException
+     * @throws \RedisException
      * @throws TelegramSDKException
      */
-    public function index($request, $response, $args): ResponseInterface
+    public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $err_msg = '订阅链接无效';
         $subtype = $args['subtype'];

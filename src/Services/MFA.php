@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\User;
 use Exception;
 use Vectorface\GoogleAuthenticator;
 
@@ -18,13 +19,13 @@ final class MFA
         return $ga->createSecret();
     }
 
-    public static function verifyGa($user, string $code): bool
+    public static function verifyGa(User $user, string $code): bool
     {
         $ga = new GoogleAuthenticator();
         return $ga->verifyCode($user->ga_token, $code);
     }
 
-    public static function getGaUrl($user): string
+    public static function getGaUrl(User $user): string
     {
         return 'otpauth://totp/' .
             rawurlencode($_ENV['appName'] . ' (' . $user->email . ')') . '?secret=' . $user->ga_token;

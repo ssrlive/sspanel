@@ -10,7 +10,7 @@ final class EpayNotify
 {
     private array $epay_config;
 
-    public function __construct($epay_config)
+    public function __construct(array $epay_config)
     {
         $this->epay_config = $epay_config;
     }
@@ -28,7 +28,7 @@ final class EpayNotify
         return false;
     }
 
-    public function getSignVeryfy($para_temp, $sign): bool
+    public function getSignVeryfy(array $para_temp, string $sign): bool
     {
         //除去待签名参数数组中的空值和签名参数
         $para_filter = EpayTool::paraFilter($para_temp);

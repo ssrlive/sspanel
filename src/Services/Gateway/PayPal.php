@@ -139,7 +139,7 @@ final class PayPal extends Base
         return $response->withJson($order);
     }
 
-    public function notify($request, $response, $args): ResponseInterface
+    public function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $webhook_data = json_decode($request->getBody()->getContents(), true);
 

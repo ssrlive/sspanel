@@ -24,7 +24,7 @@ final class Cloudflare
         return new S3Client($options);
     }
 
-    public static function uploadR2($name, $file): void
+    public static function uploadR2(string $name, string $file): void
     {
         $r2 = self::initR2();
 
@@ -39,7 +39,7 @@ final class Cloudflare
         }
     }
 
-    public static function genR2PresignedUrl($fileName): string
+    public static function genR2PresignedUrl(string $fileName): string
     {
         $r2 = self::initR2();
 

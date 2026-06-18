@@ -15,7 +15,7 @@ use function time;
 
 final class Reward
 {
-    public static function issuePaybackReward($user_id, $ref_user_id, $total, $invoice_id): void
+    public static function issuePaybackReward(int $user_id, int $ref_user_id, float $total, int $invoice_id): void
     {
         $ref_get = 0;
 
@@ -84,7 +84,7 @@ final class Reward
         }
     }
 
-    public static function issueRegReward($user_id, $ref_user_id): void
+    public static function issueRegReward(int $user_id, int $ref_user_id): void
     {
         $invite_reg_money_reward = Config::obtain('invite_reg_money_reward');
         $invite_reg_traffic_reward = Config::obtain('invite_reg_traffic_reward');
@@ -118,7 +118,7 @@ final class Reward
         }
     }
 
-    public static function issueCheckinReward($user_id): int|false
+    public static function issueCheckinReward(int $user_id): int|false
     {
         $user = (new User())->where('id', $user_id)->first();
 

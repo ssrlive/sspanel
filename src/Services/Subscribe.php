@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Link;
 use App\Models\Node;
+use App\Models\User;
 use App\Services\Subscribe\Clash;
 use App\Services\Subscribe\Json;
 use App\Services\Subscribe\SingBox;
@@ -20,7 +21,7 @@ use Illuminate\Support\Collection;
 
 final class Subscribe
 {
-    public static function getUniversalSubLink($user): string
+    public static function getUniversalSubLink(User $user): string
     {
         $userid = $user->id;
         $token = (new Link())->where('userid', $userid)->first();
@@ -35,7 +36,7 @@ final class Subscribe
         return $_ENV['subUrl'] . '/sub/' . $token->token;
     }
 
-    public static function getUserNodes($user, bool $show_all_nodes = false): Collection
+    public static function getUserNodes(User $user, bool $show_all_nodes = false): Collection
     {
         $query = Node::query();
         $query->where('type', 1);
@@ -56,7 +57,7 @@ final class Subscribe
             ->get();
     }
 
-    public static function getContent($user, string $type): string
+    public static function getContent(User $user, string $type): string
     {
         return self::getClient($type)->getContent($user);
     }

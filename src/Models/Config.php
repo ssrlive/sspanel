@@ -27,7 +27,7 @@ final class Config extends Model
     protected $connection = 'default';
     protected $table = 'config';
 
-    public static function obtain($item): bool|int|array|string
+    public static function obtain(string $item): bool|int|array|string
     {
         $config = (new Config())->where('item', $item)->first();
 
@@ -39,7 +39,7 @@ final class Config extends Model
         };
     }
 
-    public static function getClass($class): array
+    public static function getClass(string $class): array
     {
         $configs = [];
         $all_configs = (new Config())->where('class', $class)->get();
@@ -56,7 +56,7 @@ final class Config extends Model
         return $configs;
     }
 
-    public static function getItemListByClass($class): array
+    public static function getItemListByClass(string $class): array
     {
         $items = [];
         $all_configs = (new Config())->where('class', $class)->get();

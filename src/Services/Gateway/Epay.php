@@ -148,7 +148,7 @@ final class Epay extends Base
         }
     }
 
-    public function notify($request, $response, $args): ResponseInterface
+    public function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $epayNotify = new EpayNotify($this->epay);
         $verify_result = $epayNotify->verifyNotify();

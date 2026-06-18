@@ -126,7 +126,7 @@ final class AlipayF2F extends Base
     /**
      * @throws ApiException
      */
-    public function notify($request, $response, $args): ResponseInterface
+    public function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $api = $this->createApi();
 
@@ -146,7 +146,10 @@ final class AlipayF2F extends Base
     private function createApi(): AlipayTradeApi
     {
         $alipayTradeApi = new AlipayTradeApi(new Client());
+
+        /** @disregard P1119 */
         $alipayConfigUtil = new AlipayConfigUtil($this->alipayConfig);
+
         $alipayTradeApi->setAlipayConfigUtil($alipayConfigUtil);
 
         return $alipayTradeApi;

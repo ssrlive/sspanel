@@ -34,7 +34,7 @@ final class Captcha
     /**
      * 获取验证结果
      */
-    public static function verify($param): bool
+    public static function verify(array $param): bool
     {
         $result = false;
         $client = new Client();

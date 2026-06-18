@@ -10,7 +10,7 @@ final class Auth
 {
     private User $user;
 
-    public static function login($uid, $time): void
+    public static function login(int $uid, int $time): void
     {
         self::getDriver()->login($uid, $time);
     }

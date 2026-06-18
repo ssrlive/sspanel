@@ -18,7 +18,7 @@ final class Notification
      * @throws TelegramSDKException
      * @throws ClientExceptionInterface
      */
-    public static function notifyAdmin($title = '', $msg = '', $template = 'warn.tpl'): void
+    public static function notifyAdmin(string $title = '', string $msg = '', string $template = 'warn.tpl'): void
     {
         $admins = (new User())->where('is_admin', 1)->get();
 
@@ -45,7 +45,7 @@ final class Notification
      * @throws TelegramSDKException
      * @throws ClientExceptionInterface
      */
-    public static function notifyUser($user, $title = '', $msg = '', $template = 'warn.tpl'): void
+    public static function notifyUser(User $user, string $title = '', string $msg = '', string $template = 'warn.tpl'): void
     {
         if ($user->contact_method === 1 || $user->im_type === 0) {
             (new EmailQueue())->add(
@@ -59,7 +59,7 @@ final class Notification
                 ]
             );
         } else {
-            IM::send($user->im_value, $msg, $user->im_type);
+            IM::send((int) $user->im_value, $msg, $user->im_type);
         }
     }
 
@@ -67,7 +67,7 @@ final class Notification
      * @throws GuzzleException
      * @throws TelegramSDKException
      */
-    public static function notifyAllUser($title = '', $msg = '', $template = 'warn.tpl'): void
+    public static function notifyAllUser(string $title = '', string $msg = '', string $template = 'warn.tpl'): void
     {
         $users = User::all();
 

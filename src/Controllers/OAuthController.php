@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Services\Cache;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
-use Exception;
 use GuzzleHttp\Client;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
@@ -31,8 +30,8 @@ final class OAuthController extends BaseController
 
     /**
      * @throws SmartyException
-     * @throws GuzzleException
-     * @throws RedisException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RedisException
      */
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
@@ -47,7 +46,7 @@ final class OAuthController extends BaseController
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RedisException
-     * @throws Exception
+     * @throws \Exception
      */
     public function slack(ServerRequest $request, Response $response, array $args): ResponseInterface
     {

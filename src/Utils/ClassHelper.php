@@ -25,7 +25,7 @@ final class ClassHelper
         }
     }
 
-    public function getClassesByNamespace($namespace): array
+    public function getClassesByNamespace(string $namespace): array
     {
         if (! str_starts_with($namespace, '\\')) {
             $namespace = '\\' . $namespace;

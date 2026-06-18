@@ -89,7 +89,7 @@ final class Tools
     /**
      * 根据流量值自动转换单位输出
      */
-    public static function autoBytes($size, int $precision = 2): string
+    public static function autoBytes(int $size, int $precision = 2): string
     {
         if ($size <= 0) {
             return '0B';
@@ -102,7 +102,7 @@ final class Tools
         $base = log((float) $size, 1024);
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-        return round(pow(1024, $base - floor($base)), $precision) . $units[floor($base)];
+        return round(pow(1024, $base - floor($base)), $precision) . $units[(int) floor($base)];
     }
 
     /**
@@ -135,7 +135,7 @@ final class Tools
     /**
      * 根据速率值自动转换单位输出
      */
-    public static function autoMbps($size, int $precision = 2): string
+    public static function autoMbps(int $size, int $precision = 2): string
     {
         if ($size <= 0) {
             return '0Bps';
@@ -148,10 +148,10 @@ final class Tools
         $base = log((float) $size, 1000);
         $units = ['Mbps', 'Gbps', 'Tbps'];
 
-        return round(pow(1000, $base - floor($base)), $precision) . $units[floor($base)];
+        return round(pow(1000, $base - floor($base)), $precision) . $units[(int) floor($base)];
     }
 
-    public static function mbToB($traffic): int
+    public static function mbToB(int $traffic): int
     {
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
@@ -160,7 +160,7 @@ final class Tools
         return (int) $traffic * 1048576;
     }
 
-    public static function gbToB($traffic): int
+    public static function gbToB(int $traffic): int
     {
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
@@ -169,7 +169,7 @@ final class Tools
         return (int) $traffic * 1073741824;
     }
 
-    public static function bToMB($traffic): float
+    public static function bToMB(int $traffic): float
     {
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
@@ -178,7 +178,7 @@ final class Tools
         return round($traffic / 1048576, 2);
     }
 
-    public static function bToGB($traffic): float
+    public static function bToGB(int $traffic): float
     {
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
@@ -259,12 +259,7 @@ final class Tools
         return $port[0];
     }
 
-    /**
-     * @param $dir
-     *
-     * @return array
-     */
-    public static function getDir($dir): array
+    public static function getDir(string $dir): array
     {
         $dirArray = [];
         $handle = opendir($dir);
@@ -285,7 +280,7 @@ final class Tools
         return $dirArray;
     }
 
-    public static function isParamValidate($type, $str): bool
+    public static function isParamValidate(string $type, mixed $str): bool
     {
         $list = self::getSsMethod($type);
 
@@ -315,7 +310,7 @@ final class Tools
         };
     }
 
-    public static function isEmail($input): bool
+    public static function isEmail(string $input): bool
     {
         if (! filter_var($input, FILTER_VALIDATE_EMAIL)) {
             return false;
@@ -324,7 +319,7 @@ final class Tools
         return true;
     }
 
-    public static function isIPv4($input): bool
+    public static function isIPv4(string $input): bool
     {
         if (! filter_var($input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             return false;
@@ -333,7 +328,7 @@ final class Tools
         return true;
     }
 
-    public static function isIPv6($input): bool
+    public static function isIPv6(string $input): bool
     {
         if (! filter_var($input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             return false;
@@ -342,7 +337,7 @@ final class Tools
         return true;
     }
 
-    public static function isInt($input): bool
+    public static function isInt(mixed $input): bool
     {
         if (! filter_var($input, FILTER_VALIDATE_INT)) {
             return false;

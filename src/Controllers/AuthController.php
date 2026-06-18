@@ -194,14 +194,14 @@ final class AuthController extends BaseController
      */
     public function registerHelper(
         Response $response,
-        $name,
-        $email,
-        $password,
-        $invite_code,
-        $imtype,
-        $imvalue,
-        $money,
-        $is_admin_reg
+        string $name,
+        string $email,
+        string $password,
+        string $invite_code,
+        string $imtype,
+        string $imvalue,
+        float $money,
+        bool $is_admin_reg
     ): ResponseInterface {
         $redir = $this->antiXss->xss_clean(Cookie::get('redir')) ?? '/user';
         $configs = Config::getClass('reg');
@@ -327,7 +327,7 @@ final class AuthController extends BaseController
             }
         }
 
-        $imtype = 0;
+        $imtype = '';
         $imvalue = '';
 
         // check email format
@@ -355,7 +355,7 @@ final class AuthController extends BaseController
             $redis->del('email_verify:' . $email_verify_code);
         }
 
-        return $this->registerHelper($response, $name, $email, $password, $invite_code, $imtype, $imvalue, 0, 0);
+        return $this->registerHelper($response, $name, $email, $password, $invite_code, $imtype, $imvalue, 0, false);
     }
 
     public function logout(ServerRequest $request, Response $response, $next): Response

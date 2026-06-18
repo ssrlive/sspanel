@@ -77,7 +77,7 @@ final class MyCommand extends Command
         return $response;
     }
 
-    private function group($user, $send_user, $chat_id, $message, $message_id)
+    private function group(User $user, array $send_user, $chat_id, $message, int $message_id)
     {
         $text = Message::getUserTrafficInfo($user);
         // 回送信息

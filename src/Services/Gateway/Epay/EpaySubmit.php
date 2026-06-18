@@ -9,13 +9,13 @@ final class EpaySubmit
     private array $epay_config;
     private string $epay_gateway;
 
-    public function __construct($epay_config)
+    public function __construct(array $epay_config)
     {
         $this->epay_config = $epay_config;
         $this->epay_gateway = $this->epay_config['apiurl'] . 'submit.php?';
     }
 
-    public function buildRequestMysign($para_sort): string
+    public function buildRequestMysign(array $para_sort): string
     {
         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         $prestr = EpayTool::createLinkstring($para_sort);
@@ -23,7 +23,7 @@ final class EpaySubmit
         return EpayTool::sign($prestr, $this->epay_config['key']);
     }
 
-    public function buildRequestPara($para_temp)
+    public function buildRequestPara(array $para_temp): array
     {
         //除去待签名参数数组中的空值和签名参数
         $para_filter = EpayTool::paraFilter($para_temp);
@@ -38,7 +38,7 @@ final class EpaySubmit
         return $para_sort;
     }
 
-    public function buildRequestForm($para_temp, $method = 'POST', $button_name = '正在跳转'): string
+    public function buildRequestForm(array $para_temp, string $method = 'POST', string $button_name = '正在跳转'): string
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);

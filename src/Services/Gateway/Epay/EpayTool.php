@@ -10,14 +10,14 @@ use function strlen;
 
 final class EpayTool
 {
-    public static function sign($prestr, $key): string
+    public static function sign(string $prestr, string $key): string
     {
         $prestr .= $key;
 
         return hash(Config::obtain('epay_sign_type'), $prestr);
     }
 
-    public static function verify($prestr, $sign, $key): bool
+    public static function verify(string $prestr, string $sign, string $key): bool
     {
         $prestr .= $key;
         $correct_sign = hash(Config::obtain('epay_sign_type'), $prestr);
@@ -25,7 +25,7 @@ final class EpayTool
         return $correct_sign === $sign;
     }
 
-    public static function createLinkstring($para): string
+    public static function createLinkstring(array $para): string
     {
         $arg = '';
 
@@ -38,7 +38,7 @@ final class EpayTool
         return stripslashes($arg);
     }
 
-    public static function paraFilter($para): array
+    public static function paraFilter(array $para): array
     {
         $para_filter = [];
 
@@ -52,7 +52,7 @@ final class EpayTool
         return $para_filter;
     }
 
-    public static function argSort($para)
+    public static function argSort(array $para): array
     {
         ksort($para);
 

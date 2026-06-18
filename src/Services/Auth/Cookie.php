@@ -50,6 +50,7 @@ final class Cookie extends Base
             return $user;
         }
 
+        $expire_in = (int) $expire_in;
         if ($expire_in < time()) {
             return $user;
         }
@@ -58,7 +59,7 @@ final class Cookie extends Base
             $ip = $_SERVER['REMOTE_ADDR'];
             $node = (new Node())->where('ipv4', $ip)->orWhere('ipv6', $ip)->first();
 
-            if ($node === null && $ipHash !== Hash::ipHash($ip, $uid, $expire_in)) {
+            if ($node === null && $ipHash !== Hash::ipHash($ip, (int) $uid, $expire_in)) {
                 return $user;
             }
         }
@@ -66,7 +67,7 @@ final class Cookie extends Base
         if ($_ENV['enable_login_bind_device']) {
             $ua = $_SERVER['HTTP_USER_AGENT'];
 
-            if ($deviceHash !== Hash::deviceHash($ua, $uid, $expire_in)) {
+            if ($deviceHash !== Hash::deviceHash($ua, (int) $uid, $expire_in)) {
                 return $user;
             }
         }

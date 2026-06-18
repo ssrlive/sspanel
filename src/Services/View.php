@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Config;
+use App\Models\User;
 use Illuminate\Database\DatabaseManager;
 use Smarty\Smarty;
 use Twig\Environment;
@@ -48,7 +49,7 @@ final class View
         return $twig;
     }
 
-    public static function getTheme($user): string
+    public static function getTheme(User $user): string
     {
         if ($user->isLogin) {
             $theme = $user->theme;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\User;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use function strlen;
@@ -27,7 +28,8 @@ class MFATest extends TestCase
      */
     public function testVerifyGa()
     {
-        $user = (object) ['ga_token' => 'SECRET'];
+        $user = new User();
+        $user->ga_token = 'SECRET';
         $this->assertFalse(MFA::verifyGa($user, '000000'));
         $this->assertFalse(MFA::verifyGa($user, 'test'));
         $this->assertFalse(MFA::verifyGa($user, '0'));
@@ -39,7 +41,9 @@ class MFATest extends TestCase
     public function testGetGaUrl()
     {
         $_ENV['appName'] = 'Test';
-        $user = (object) ['email' => 'test@example.com', 'ga_token' => 'SECRET'];
+        $user = new User();
+        $user->email = 'test@example.com';
+        $user->ga_token = 'SECRET';
         $url = MFA::getGaUrl($user);
         $this->assertStringContainsString('otpauth://totp/', $url);
         $this->assertStringContainsString(rawurlencode('Test' . ' (' . $user->email . ')'), $url);

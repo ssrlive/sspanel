@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Services\Gateway\Base;
 use App\Utils\ClassHelper;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 final class Payment
 {
@@ -43,18 +46,22 @@ final class Payment
         return $result;
     }
 
-    public static function getPaymentByName($name): ?string
+    public static function getPaymentByName(string $name): ?string
     {
         $all = self::getPaymentMap();
 
-        return $all[$name];
+        return $all[$name] ?? null;
     }
 
-    public static function notify($request, $response, $args): ResponseInterface
+    public static function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
+        if (! isset($args['type'])) {
+            return $response->withStatus(404);
+        }
+
         $payment = self::getPaymentByName($args['type']);
 
-        if ($payment !== null) {
+        if ($payment !== null && is_a($payment, Base::class, true)) {
             $instance = new $payment();
             return $instance->notify($request, $response, $args);
         }
@@ -62,11 +69,15 @@ final class Payment
         return $response->withStatus(404);
     }
 
-    public static function returnHTML($request, $response, $args): ResponseInterface
+    public static function returnHTML(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
+        if (! isset($args['type'])) {
+            return $response->withStatus(404);
+        }
+
         $payment = self::getPaymentByName($args['type']);
 
-        if ($payment !== null) {
+        if ($payment !== null && is_a($payment, Base::class, true)) {
             $instance = new $payment();
             return $instance->getReturnHTML($request, $response, $args);
         }
@@ -74,11 +85,15 @@ final class Payment
         return $response->withStatus(404);
     }
 
-    public static function purchase($request, $response, $args): ResponseInterface
+    public static function purchase(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
+        if (! isset($args['type'])) {
+            return $response->withStatus(404);
+        }
+
         $payment = self::getPaymentByName($args['type']);
 
-        if ($payment !== null) {
+        if ($payment !== null && is_a($payment, Base::class, true)) {
             $instance = new $payment();
             return $instance->purchase($request, $response, $args);
         }

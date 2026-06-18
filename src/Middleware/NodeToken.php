@@ -12,6 +12,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RedisException;
 use Slim\Factory\AppFactory;
+use Slim\Http\Response;
 use voku\helper\AntiXSS;
 
 final class NodeToken implements MiddlewareInterface
@@ -24,7 +25,9 @@ final class NodeToken implements MiddlewareInterface
         $key = $request->getQueryParams()['key'] ?? null;
 
         if ($key === null) {
-            return AppFactory::determineResponseFactory()->createResponse(401)->withJson([
+            /** @var Response $response */
+            $response = AppFactory::determineResponseFactory()->createResponse(401);
+            return $response->withJson([
                 'ret' => 0,
                 'msg' => 'Invalid request.',
             ]);
@@ -34,10 +37,12 @@ final class NodeToken implements MiddlewareInterface
 
         if (
             $_ENV['enable_rate_limit'] &&
-            (! (new RateLimit())->checkRateLimit('webapi_ip', $request->getServerParam('REMOTE_ADDR')) ||
+            (! (new RateLimit())->checkRateLimit('webapi_ip', $request->getServerParams()['REMOTE_ADDR'] ?? '') ||
                 ! (new RateLimit())->checkRateLimit('webapi_key', $antiXss->xss_clean($key)))
         ) {
-            return AppFactory::determineResponseFactory()->createResponse(401)->withJson([
+            /** @var Response $response */
+            $response = AppFactory::determineResponseFactory()->createResponse(401);
+            return $response->withJson([
                 'ret' => 0,
                 'msg' => 'Invalid request.',
             ]);
@@ -48,20 +53,24 @@ final class NodeToken implements MiddlewareInterface
             $key !== $_ENV['muKey'] ||
             'https://' . $request->getHeaderLine('Host') !== $_ENV['webAPIUrl']
         ) {
-            return AppFactory::determineResponseFactory()->createResponse(401)->withJson([
+            /** @var Response $response */
+            $response = AppFactory::determineResponseFactory()->createResponse(401);
+            return $response->withJson([
                 'ret' => 0,
                 'msg' => 'Invalid request.',
             ]);
         }
 
         if ($_ENV['checkNodeIp']) {
-            $ip = $request->getServerParam('REMOTE_ADDR');
+            $ip = $request->getServerParams()['REMOTE_ADDR'] ?? '';
 
             if (
                 $ip !== '127.0.0.1' && $ip !== '::1' && $ip !== '0:0:0:0:0:0:0:1' &&
                 ! (new Node())->where('ipv4', $ip)->orWhere('ipv6', $ip)->exists()
             ) {
-                return AppFactory::determineResponseFactory()->createResponse(401)->withJson([
+                /** @var Response $response */
+                $response = AppFactory::determineResponseFactory()->createResponse(401);
+                return $response->withJson([
                     'ret' => 0,
                     'msg' => 'Invalid request IP.',
                 ]);

@@ -12,13 +12,9 @@ final class UserApi
 {
     /**
      * MID /user/api
-     *
-     * @param ServerRequest $request
-     * @param Response $response
-     * @param callable $next
      */
-    public function __invoke($request, $response, $next): ResponseInterface
+    public function __invoke(ServerRequest $request, Response $response, callable $next): ResponseInterface
     {
-        // dummy comment to make linter happy
+        return $next($request, $response);
     }
 }

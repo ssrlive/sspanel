@@ -153,7 +153,7 @@ final class Callback
         $this->bot->answerCallbackQuery($send_message);
     }
 
-    public static function getUserIndexKeyboard($user): array
+    public static function getUserIndexKeyboard(User $user): array
     {
         $checkin = (! $user->isAbleToCheckin() ? '已签到' : '签到');
 

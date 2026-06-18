@@ -187,7 +187,7 @@ final class ClientDownload extends Command
         );
     }
 
-    private static function getNames($name, $taskName, $tagName): array|string
+    private static function getNames(string $name, string $taskName, string $tagName): array|string
     {
         return str_replace(
             [

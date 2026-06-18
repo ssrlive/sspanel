@@ -43,7 +43,7 @@ final class Mail
     /**
      * @throws Exception
      */
-    public static function genHtml($template, $ary): false|string
+    public static function genHtml(string $template, array $ary): false|string
     {
         $smarty = new Smarty();
         $smarty->setTemplateDir(BASE_PATH . '/resources/email/');
@@ -63,7 +63,7 @@ final class Mail
      * @throws ClientExceptionInterface
      * @throws TypeException
      */
-    public static function send($to, $subject, $template, $array = []): void
+    public static function send(string $to, string $subject, string $template, array $array = []): void
     {
         $body = self::genHtml($template, $array);
 

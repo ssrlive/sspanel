@@ -11,9 +11,15 @@ namespace App\Command;
  */
 abstract class Command
 {
-    public array|null $argv;
+    /**
+     * @var array<int, string>
+     */
+    public array $argv;
 
-    public function __construct($argv)
+    /**
+     * @param array<int, string> $argv
+     */
+    public function __construct(array $argv)
     {
         $this->argv = $argv;
     }

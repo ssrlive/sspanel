@@ -6,5 +6,5 @@ namespace App\Services\Mail;
 
 abstract class Base
 {
-    abstract public function send($to, $subject, $body): void;
+    abstract public function send(string $to, string $subject, string $body): void;
 }
