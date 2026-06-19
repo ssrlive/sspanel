@@ -131,10 +131,10 @@ final class UserController extends BaseController
             $email,
             $password,
             '',
-            0,
+            '0',
             '',
             $balance,
-            1
+            false
         );
         $user = (new User())->where('email', $email)->first();
 
