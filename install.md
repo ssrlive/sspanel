@@ -25,7 +25,7 @@ sudo apt install -y curl gnupg2 ca-certificates apt-transport-https git lsb-rele
 
 # 設置 php 官方版本的安裝源
 sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository -y ppa:ondrej/php
 
 sudo apt remove apache2 -y
 sudo apt autoremove -y
@@ -47,12 +47,12 @@ sudo systemctl restart php8.5-fpm
 
 ## 把 `/var/www` 的读写权限自动共享给 `你自己` 和 账号 `www-data`
 
-脚本 下载链接 https://github.com/ssrlive/tips/raw/refs/heads/master/tips/share_dir.sh ,
+脚本 下载链接 https://github.com/ssrlive/sspanel/raw/refs/heads/main/scripts/share_dir.sh ,
 
 然后本地执行 `bash ./share_dir.sh /var/www www-data` 命令。
 
 ```bash
-curl -L https://github.com/ssrlive/tips/raw/refs/heads/master/tips/share_dir.sh -o share_dir.sh
+curl -L https://github.com/ssrlive/sspanel/raw/refs/heads/main/scripts/share_dir.sh -o share_dir.sh
 bash ./share_dir.sh /var/www www-data
 ```
 
