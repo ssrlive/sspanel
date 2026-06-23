@@ -25,7 +25,7 @@ sudo apt install -y curl gnupg2 ca-certificates apt-transport-https git lsb-rele
 
 # 設置 php 官方版本的安裝源
 sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository -y ppa:ondrej/php
 
 sudo apt remove apache2 -y
 sudo apt autoremove -y
@@ -55,6 +55,16 @@ sudo systemctl restart php8.5-fpm
 curl -L https://github.com/ssrlive/tips/raw/refs/heads/master/tips/share_dir.sh -o share_dir.sh
 bash ./share_dir.sh /var/www www-data
 ```
+
+## 给当前主机的 公网IP 颁发 SSL 证书
+
+```bash
+curl -L https://github.com/ssrlive/tips/raw/refs/heads/master/tips/pure-ip-cert.sh -o pure-ip-cert.sh
+chmod +x pure-ip-cert.sh
+bash ./pure-ip-cert.sh
+```
+
+证书的各种文件会被存储在 `~/.acme.sh/${hostaddr}_ecc` 目录下， 其中 `${hostaddr}` 是你当前主机的公网 IP 地址。
 
 ## **部署 SSPanel**
 
