@@ -8,12 +8,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: "8.4"
       - run: |
           composer install --no-interaction --no-progress --no-suggest --quiet
           php vendor/bin/phpinsights analyse --no-interaction --format=github-action \

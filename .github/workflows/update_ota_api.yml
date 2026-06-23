@@ -2,7 +2,7 @@ name: Update OTA API Version
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   update_ota_api:

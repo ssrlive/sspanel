@@ -1,4 +1,4 @@
-share_dir.sh
+/share_dir.sh
 tmp/
 build/
 .VSCodeCounter/

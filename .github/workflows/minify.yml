@@ -3,30 +3,30 @@ name: Auto Minify CSS/JS file
 on:
   push:
     paths:
-      - 'public/assets/css/**'
-      - 'public/theme/**'
+      - "public/assets/css/**"
+      - "public/theme/**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Auto minify tabler theme CSS file
         uses: nizarmah/auto-minify@v3
         with:
-          directory: 'public/theme/tabler/css'
+          directory: "public/theme/tabler/css"
       - name: Auto minify tabler theme JS file
         uses: nizarmah/auto-minify@v3
         with:
-          directory: 'public/theme/tabler/js'
+          directory: "public/theme/tabler/js"
       - name: Auto minify asset CSS file
         uses: nizarmah/auto-minify@v3
         with:
-          directory: 'public/assets/css'
+          directory: "public/assets/css"
       - name: Auto committing minified files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          repository: 'public'
+          repository: "public"
           commit_message: "chore: auto minified theme CSS/JS files"
