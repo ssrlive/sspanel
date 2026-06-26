@@ -178,7 +178,7 @@ mysql> exit
 給 `/etc/mysql/mysql.conf.d/mysqld.cnf` 文件末尾追加一行 `sql_mode = ""` ，使用下列命令：
 
 ```bash
-sed -i '$asql_mode = ""\\n' /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i '$asql_mode = ""\n' /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 
 然後重啓 mysql 服務
