@@ -23,7 +23,7 @@ final class Migration extends Command
 ├─=: php xcat Migration [版本]
 │ ├─ <version> - 迁移至指定版本（前进/退回）
 │ ├─ latest    - 迁移至最新版本
-│ ├─ new       - 导入全新数据库至最新版本
+│ ├─ new       - 全新安装模式：优先执行初始迁移并设置 db_version
 END;
 
     public function boot(): void
@@ -43,6 +43,9 @@ END;
             $min_version = $current;
             $max_version = PHP_INT_MAX;
         } elseif ($target === 'new') {
+            // "new" is a fresh-install mode. It currently requires an empty
+            // database and is intended to use the initial migration as the
+            // primary entry point for new installs.
             $tables = DB::select('SHOW TABLES');
 
             if ($tables === []) {
@@ -92,6 +95,8 @@ END;
                     $version > $max_version ||
                     ($target === 'new' && $version !== 2023020100)
                 ) {
+                    // For fresh install mode, the current implementation skips all
+                    // migrations except the initial one.
                     echo '...skip' . PHP_EOL;
                     continue;
                 }
