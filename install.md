@@ -175,10 +175,10 @@ mysql> exit
 
 > 這一步必須做，否則會出現 500 錯誤黑屏。
 
-給 `/etc/mysql/mysql.conf.d/mysqld.cnf` 文件末尾追加一行 `sql_mode = ""` ，使用下列命令：
+給 `/etc/mysql/mysql.conf.d/mysqld.cnf` 文件末尾追加一行 `sql_mode = ""`，但先檢查文件中是否已經存在該設置。使用下列命令：
 
 ```bash
-sed -i '$asql_mode = ""\n' /etc/mysql/mysql.conf.d/mysqld.cnf
+grep -q '^sql_mode *= *""' /etc/mysql/mysql.conf.d/mysqld.cnf || echo 'sql_mode = ""' >> /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 
 然後重啓 mysql 服務
