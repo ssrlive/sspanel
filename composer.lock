@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cdf56c3af79304d5dae0345ef6b5269",
+    "content-hash": "7bc75f88581bf77301c83523065aed58",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -1437,26 +1437,26 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.12.1",
+            "version": "7.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "d34627490fbc03bf5c5d7cfed81f2faa19519425"
+                "reference": "9aa17bcdd777ee31df9fc83c337ca4ca2340def3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/d34627490fbc03bf5c5d7cfed81f2faa19519425",
-                "reference": "d34627490fbc03bf5c5d7cfed81f2faa19519425",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9aa17bcdd777ee31df9fc83c337ca4ca2340def3",
+                "reference": "9aa17bcdd777ee31df9fc83c337ca4ca2340def3",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^2.5",
-                "guzzlehttp/psr7": "^2.12.1",
+                "guzzlehttp/psr7": "^2.12.3",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.5 || ^3.0",
-                "symfony/polyfill-php80": "^1.24"
+                "symfony/polyfill-php80": "^1.25"
             },
             "provide": {
                 "psr/http-client-implementation": "1.0"
@@ -1545,7 +1545,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.12.1"
+                "source": "https://github.com/guzzle/guzzle/tree/7.12.3"
             },
             "funding": [
                 {
@@ -1561,7 +1561,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-18T14:12:49+00:00"
+            "time": "2026-06-23T15:29:02+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1649,16 +1649,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.12.1",
+            "version": "2.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "172ef2f4e9824c1e058b7f30be8ae25a02c0f2b7"
+                "reference": "7ec62dc3f44aa218487dbed81a9bf9bc647be55d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/172ef2f4e9824c1e058b7f30be8ae25a02c0f2b7",
-                "reference": "172ef2f4e9824c1e058b7f30be8ae25a02c0f2b7",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7ec62dc3f44aa218487dbed81a9bf9bc647be55d",
+                "reference": "7ec62dc3f44aa218487dbed81a9bf9bc647be55d",
                 "shasum": ""
             },
             "require": {
@@ -1667,7 +1667,7 @@
                 "psr/http-message": "^1.1 || ^2.0",
                 "ralouphie/getallheaders": "^3.0",
                 "symfony/deprecation-contracts": "^2.5 || ^3.0",
-                "symfony/polyfill-php80": "^1.24"
+                "symfony/polyfill-php80": "^1.25"
             },
             "provide": {
                 "psr/http-factory-implementation": "1.0",
@@ -1748,7 +1748,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.12.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.12.3"
             },
             "funding": [
                 {
@@ -1764,7 +1764,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-18T09:49:37+00:00"
+            "time": "2026-06-23T15:21:08+00:00"
         },
         {
             "name": "illuminate/collections",
@@ -2744,16 +2744,16 @@
         },
         {
             "name": "mailgun/mailgun-php",
-            "version": "v4.5.0",
+            "version": "v4.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailgun/mailgun-php.git",
-                "reference": "fc237ff552fc52abd0a878686d67c7bc984c0ed8"
+                "reference": "5024827b4ba170d9547919c7cbcb56477659bdd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailgun/mailgun-php/zipball/fc237ff552fc52abd0a878686d67c7bc984c0ed8",
-                "reference": "fc237ff552fc52abd0a878686d67c7bc984c0ed8",
+                "url": "https://api.github.com/repos/mailgun/mailgun-php/zipball/5024827b4ba170d9547919c7cbcb56477659bdd0",
+                "reference": "5024827b4ba170d9547919c7cbcb56477659bdd0",
                 "shasum": ""
             },
             "require": {
@@ -2762,6 +2762,7 @@
                 "php-http/discovery": "^1.19",
                 "php-http/multipart-stream-builder": "^1.1.2",
                 "psr/http-client": "^1.0",
+                "psr/http-message": "^1.0 || ^2.0",
                 "webmozart/assert": "^1.9.1"
             },
             "require-dev": {
@@ -2802,9 +2803,9 @@
             "description": "The Mailgun SDK provides methods for all API functions.",
             "support": {
                 "issues": "https://github.com/mailgun/mailgun-php/issues",
-                "source": "https://github.com/mailgun/mailgun-php/tree/v4.5.0"
+                "source": "https://github.com/mailgun/mailgun-php/tree/v4.5.1"
             },
-            "time": "2026-04-29T18:19:32+00:00"
+            "time": "2026-06-23T18:48:59+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -3247,20 +3248,20 @@
         },
         {
             "name": "nikolaposa/rate-limit",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikolaposa/rate-limit.git",
-                "reference": "80a1badf8157c6f206074defd752bd00f9cf08e9"
+                "reference": "5a1d8b245d67a7526d8af649c17520b7161f0d6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikolaposa/rate-limit/zipball/80a1badf8157c6f206074defd752bd00f9cf08e9",
-                "reference": "80a1badf8157c6f206074defd752bd00f9cf08e9",
+                "url": "https://api.github.com/repos/nikolaposa/rate-limit/zipball/5a1d8b245d67a7526d8af649c17520b7161f0d6c",
+                "reference": "5a1d8b245d67a7526d8af649c17520b7161f0d6c",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^3.2",
+                "beberlei/assert": "^3.3",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -3271,13 +3272,15 @@
                 "phpstan/phpstan-beberlei-assert": "^1.1",
                 "phpstan/phpstan-phpunit": "^1.3",
                 "phpunit/phpunit": "^10.5",
-                "predis/predis": "^1.1"
+                "predis/predis": "^1.1",
+                "psr/simple-cache": "^1.0"
             },
             "suggest": {
                 "ext-apcu": "In order to use ApcuRateLimiter",
                 "ext-memcached": "In order to use MemcachedRateLimiter",
                 "ext-redis": "In order to use RedisRateLimiter",
-                "predis/predis": "In order to use PredisRateLimiter"
+                "predis/predis": "In order to use PredisRateLimiter",
+                "psr/simple-cache": "In order to use Psr16RateLimiter"
             },
             "type": "library",
             "extra": {
@@ -3308,9 +3311,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikolaposa/rate-limit/issues",
-                "source": "https://github.com/nikolaposa/rate-limit/tree/3.2.0"
+                "source": "https://github.com/nikolaposa/rate-limit/tree/3.3.0"
             },
-            "time": "2024-05-17T14:39:51+00:00"
+            "time": "2026-06-24T07:30:17+00:00"
         },
         {
             "name": "openai-php/client",
@@ -5175,16 +5178,16 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v5.8.0",
+            "version": "v5.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "78d259d3b971c59a0cd719c270cc5cbb740c36a7"
+                "reference": "06594a114931ab6fea76b12f0207c5903cf01f8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/78d259d3b971c59a0cd719c270cc5cbb740c36a7",
-                "reference": "78d259d3b971c59a0cd719c270cc5cbb740c36a7",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/06594a114931ab6fea76b12f0207c5903cf01f8c",
+                "reference": "06594a114931ab6fea76b12f0207c5903cf01f8c",
                 "shasum": ""
             },
             "require": {
@@ -5239,7 +5242,7 @@
             "support": {
                 "forum": "https://github.com/smarty-php/smarty/discussions",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v5.8.0"
+                "source": "https://github.com/smarty-php/smarty/tree/v5.8.2"
             },
             "funding": [
                 {
@@ -5247,7 +5250,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-15T14:27:15+00:00"
+            "time": "2026-06-24T08:04:41+00:00"
         },
         {
             "name": "srmklive/paypal",
@@ -7936,16 +7939,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.10",
+            "version": "v3.95.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "93e1ab3e1f153024bd3ab23c8a349556063c6f17"
+                "reference": "35f98e1293283397824d7f349ce5afb8747c3cd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/93e1ab3e1f153024bd3ab23c8a349556063c6f17",
-                "reference": "93e1ab3e1f153024bd3ab23c8a349556063c6f17",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/35f98e1293283397824d7f349ce5afb8747c3cd5",
+                "reference": "35f98e1293283397824d7f349ce5afb8747c3cd5",
                 "shasum": ""
             },
             "require": {
@@ -7979,7 +7982,7 @@
             "require-dev": {
                 "facile-it/paraunit": "^1.3.1 || ^2.11.0",
                 "infection/infection": "^0.32.7",
-                "justinrainbow/json-schema": "^6.9.0",
+                "justinrainbow/json-schema": "^6.10.0",
                 "keradus/cli-executor": "^2.3",
                 "mikey179/vfsstream": "^1.6.12",
                 "php-coveralls/php-coveralls": "^2.9.1",
@@ -8029,7 +8032,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.10"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.11"
             },
             "funding": [
                 {
@@ -8037,7 +8040,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-19T14:45:22+00:00"
+            "time": "2026-06-25T14:17:04+00:00"
         },
         {
             "name": "league/container",
