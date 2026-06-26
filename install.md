@@ -155,18 +155,21 @@ mv /etc/nginx/sites-enabled/default /nginx-default
 
 ### **0x43 创建数据库**
 
-使用命令 `sudo mysql -u root -p` 並輸入密碼以後，即登录数据库，执行以下命令：
+使用命令 `sudo mysql -u root -p` 並輸入密碼 (或者直接回车) 以後，即登录数据库，在控制台提示符 `mysql>` 下执行以下命令：
 
 ```sql
-mysql> CREATE USER 'sspanel'@'localhost' IDENTIFIED BY 'password';
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'sspanel'@'localhost' WITH GRANT OPTION;
+CREATE USER 'sspanel'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'sspanel'@'localhost' WITH GRANT OPTION;
 
-mysql> CREATE DATABASE sspanel;
-mysql> USE sspanel;
+# 删除数据库（如果存在）
+drop database if exists sspanel;
 
-mysql> FLUSH PRIVILEGES;
+CREATE DATABASE sspanel;
+USE sspanel;
 
-mysql> exit
+FLUSH PRIVILEGES;
+
+exit
 ```
 
 這些命令創建名爲 `sspanel` 的數據庫，並創建一個用戶 `sspanel` ，密碼是 `password` ，並賦予其所有權限。
