@@ -18,9 +18,6 @@ final class ViewTest extends TestCase
         $this->user = new User();
     }
 
-    /**
-     * @covers App\Services\View::getTheme
-     */
     public function testGetTheme(): void
     {
         $this->user->isLogin = true;
@@ -38,9 +35,6 @@ final class ViewTest extends TestCase
         $this->assertEquals('not-tabler', $theme);
     }
 
-    /**
-     * @covers App\Services\View::getConfig
-     */
     public function testGetConfig(): void
     {
         $_ENV['appName'] = 'Test App';

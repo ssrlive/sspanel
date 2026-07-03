@@ -12,9 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class ResponseHelperTest extends TestCase
 {
-    /**
-     * @covers App\Utils\ResponseHelper::success
-     */
     public function testSuccess()
     {
         $guzzleFactory = new HttpFactory();
@@ -29,9 +26,6 @@ class ResponseHelperTest extends TestCase
         $this->assertEquals('{"ret":1,"msg":"Success message"}', (string) $result->getBody());
     }
 
-    /**
-     * @covers App\Utils\ResponseHelper::successWithData
-     */
     public function testSuccessWithData()
     {
         $guzzleFactory = new HttpFactory();
@@ -47,9 +41,6 @@ class ResponseHelperTest extends TestCase
         $this->assertEquals('{"ret":1,"msg":"Success message","data":{"foo":"bar"}}', (string) $result->getBody());
     }
 
-    /**
-     * @covers App\Utils\ResponseHelper::error
-     */
     public function testError()
     {
         $guzzleFactory = new HttpFactory();
@@ -64,9 +55,6 @@ class ResponseHelperTest extends TestCase
         $this->assertEquals('{"ret":0,"msg":"Error message"}', (string) $result->getBody());
     }
 
-    /**
-     * @covers App\Utils\ResponseHelper::errorWithData
-     */
     public function testErrorWithData()
     {
         $guzzleFactory = new HttpFactory();
@@ -82,10 +70,6 @@ class ResponseHelperTest extends TestCase
         $this->assertEquals('{"ret":0,"msg":"Error message","data":{"foo":"bar"}}', (string) $result->getBody());
     }
 
-    /**
-     * @covers App\Utils\ResponseHelper::successWithDataEtag
-     * @throws Exception
-     */
     public function testSuccessWithDataEtag()
     {
         $request = $this->createMock(ServerRequestInterface::class);

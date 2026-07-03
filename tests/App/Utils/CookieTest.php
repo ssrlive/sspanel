@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 final class CookieTest extends TestCase
 {
-    /**
-     * @covers App\Utils\Cookie::set
-     */
     public function testSet(): void
     {
         $data = ['testKey' => 'testValue'];
@@ -21,9 +18,6 @@ final class CookieTest extends TestCase
         $this->assertEquals('testValue', $_COOKIE['testKey']);
     }
 
-    /**
-     * @covers App\Utils\Cookie::setWithDomain
-     */
     public function testSetWithDomain(): void
     {
         $data = ['testKey' => 'testValue'];
@@ -35,9 +29,6 @@ final class CookieTest extends TestCase
         $this->assertEquals('testValue', $_COOKIE['testKey']);
     }
 
-    /**
-     * @covers App\Utils\Cookie::get
-     */
     public function testGet(): void
     {
         $data = ['testKey' => 'testValue'];

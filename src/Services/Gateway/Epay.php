@@ -137,7 +137,7 @@ final class Epay extends Base
                 return $response->withJson([
                     'ret' => 0,
                     'msg' => '请求支付失败，网关错误',
-                    //TODO: use syslog to log this error
+                    // NOTE: use syslog to log this error
                 ]);
             }
 

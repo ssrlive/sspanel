@@ -11,6 +11,7 @@ final class Cookie
         $secure = self::isSecure($server);
         foreach ($arg as $key => $value) {
             setcookie($key, $value, $time, path: '/', secure: $secure, httponly: true);
+            $_COOKIE[$key] = $value;
         }
     }
 
@@ -19,6 +20,7 @@ final class Cookie
         $secure = self::isSecure($server);
         foreach ($arg as $key => $value) {
             setcookie($key, $value, $time, path: '/', domain: $domain, secure: $secure, httponly: true);
+            $_COOKIE[$key] = $value;
         }
     }
 

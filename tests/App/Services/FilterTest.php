@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 final class FilterTest extends TestCase
 {
-    /**
-     * @covers App\Services\Filter::checkEmailFilter
-     */
     public function testCheckEmailFilter(): void
     {
         $_ENV['mail_filter'] = 1;

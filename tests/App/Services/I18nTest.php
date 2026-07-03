@@ -11,9 +11,6 @@ require_once __DIR__ . '/../../../app/predefine.php';
 
 final class I18nTest extends TestCase
 {
-    /**
-     * @covers App\Services\I18n::trans
-     */
     public function testTrans(): void
     {
         // exsisting locale
@@ -32,9 +29,6 @@ final class I18nTest extends TestCase
         $this->assertSame($key, $translation);
     }
 
-    /**
-     * @covers App\Services\I18n::getLocaleList
-     */
     public function testGetLocaleList(): void
     {
         $expectedLocales = ['en_US', 'ja_JP', 'zh_CN', 'zh_TW'];
@@ -44,9 +38,6 @@ final class I18nTest extends TestCase
         $this->assertSame($expectedLocales, $locales);
     }
 
-    /**
-     * @covers App\Services\I18n::getTranslator
-     */
     public function testGetTranslatorr(): void
     {
         $lang = 'en_US';

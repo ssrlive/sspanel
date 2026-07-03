@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class CacheTest extends TestCase
 {
-    /**
-     * @covers App\Services\Cache::getRedisConfig
-     */
     public function testGetRedisConfig()
     {
         // Scenario 1: All parameters are set

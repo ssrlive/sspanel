@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use PHPUnit\Framework\TestCase;
-
 class DBTest extends TestCase
 {
-    /**
-     * @covers App\Services\DB::getConfig
-     */
-    public function testGetConfig()
+     public function testGetConfig()
     {
         // Scenario 1: enable_db_rw_split is true
         $_ENV['enable_db_rw_split'] = true;

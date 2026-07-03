@@ -69,7 +69,10 @@ final class AuthController extends BaseController
         $password = $request->getParam('password');
         $rememberMe = $request->getParam('remember_me') === 'true' ? 1 : 0;
         $email = strtolower(trim($this->antiXss->xss_clean($request->getParam('email'))));
-        $redir = $this->antiXss->xss_clean(Cookie::get('redir', $request->getCookieParams())) ?? '/user';
+        $redir = $this->antiXss->xss_clean(Cookie::get('redir', $request->getCookieParams()));
+        if ($redir === '') {
+            $redir = '/user';
+        }
         $user = (new User())->where('email', $email)->first();
         $loginIp = new LoginIp();
 
@@ -103,7 +106,7 @@ final class AuthController extends BaseController
         $time = 3600;
 
         if ($rememberMe) {
-            $time = 86400 * (Env::get('rememberMeDuration') ?: 7);
+            $time = 86400 * Env::getInt('rememberMeDuration', 7);
         }
 
         Auth::login($user->id, $time, ['REMOTE_ADDR' => $remoteAddr]);

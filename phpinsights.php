@@ -10,15 +10,12 @@ return [
         NunoMaduro\PhpInsights\Domain\Insights\ClassMethodAverageCyclomaticComplexityIsHigh::class,
         NunoMaduro\PhpInsights\Domain\Insights\MethodCyclomaticComplexityIsHigh::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions::class,
-        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
         PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class,
-        PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff::class,
         PhpCsFixer\Fixer\Import\OrderedImportsFixer::class,
         SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff::class,
-        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
         SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
         SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class,
         SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff::class,
@@ -37,5 +34,7 @@ return [
 
     'exclude' => [
         'storage',
+        'config',
+        'db/migrations',
     ],
 ];

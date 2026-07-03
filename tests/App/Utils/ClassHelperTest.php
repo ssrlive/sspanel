@@ -15,9 +15,6 @@ final class ClassHelperTest extends TestCase
         $this->classHelper = new ClassHelper();
     }
 
-    /**
-     * @covers App\Utils\ClassHelper::getClassesByNamespace
-     */
     public function testGetClassesByNamespace(): void
     {
         $namespace = 'App\\Utils';
@@ -27,9 +24,6 @@ final class ClassHelperTest extends TestCase
         $this->assertContains('\App\Utils\ClassHelper', $classes);
     }
 
-    /**
-     * @covers App\Utils\ClassHelper::getClasses
-     */
     public function testGetClasses(): void
     {
         $classes = $this->classHelper->getClasses();

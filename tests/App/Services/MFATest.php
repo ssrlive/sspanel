@@ -11,10 +11,6 @@ use function strlen;
 
 class MFATest extends TestCase
 {
-    /**
-     * @covers App\Services\MFA::generateGaToken
-     * @throws Exception
-     */
     public function testGenerateGaToken()
     {
         $token = MFA::generateGaToken();
@@ -23,9 +19,6 @@ class MFATest extends TestCase
         $this->assertEquals(16, strlen($token));
     }
 
-    /**
-     * @covers App\Services\MFA::verifyGa
-     */
     public function testVerifyGa()
     {
         $user = new User();
@@ -35,9 +28,6 @@ class MFATest extends TestCase
         $this->assertFalse(MFA::verifyGa($user, '0'));
     }
 
-    /**
-     * @covers App\Services\MFA::getGaUrl
-     */
     public function testGetGaUrl()
     {
         $_ENV['appName'] = 'Test';

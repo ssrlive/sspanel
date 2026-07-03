@@ -348,7 +348,7 @@ final class Tools
 
     /**
      * 判断是否 JSON
-     * TODO: Remove this function when PHP 8.3 is minimum requirement and replace it with native function
+     * NOTE: remove this function when PHP 8.3 is minimum requirement and replace it with native function
      */
     public static function isJson(string $string): bool
     {
