@@ -23,6 +23,7 @@ final class AuthTest extends TestCase
         $_ENV['enable_login_bind_device'] = false;
 
         $_COOKIE = [];
+        $this->resetAuthStaticState();
 
         $this->capsule = new Capsule();
         $this->capsule->addConnection([
@@ -42,14 +43,18 @@ final class AuthTest extends TestCase
 
     protected function tearDown(): void
     {
+        $this->resetAuthStaticState();
+        $_COOKIE = [];
+    }
+
+    private function resetAuthStaticState(): void
+    {
         $reflection = new ReflectionClass(Auth::class);
 
         foreach (['user', 'server', 'cookies'] as $property) {
             $prop = $reflection->getProperty($property);
             $prop->setValue(null, $property === 'user' ? null : []);
         }
-
-        $_COOKIE = [];
     }
 
     public function testLoginUsesRequestContextAndRetrievesUser(): void

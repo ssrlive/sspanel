@@ -18,7 +18,7 @@ final class ClassHelper
     {
         self::$composer = null;
         self::$classes = [];
-        self::$composer = require __DIR__ . '/../../vendor/autoload.php';
+        self::$composer = require BASE_PATH . '/vendor/autoload.php';
 
         if (! is_null(self::$composer)) {
             self::$classes = array_keys(self::$composer->getClassMap());

@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config/.config.php';
-require_once __DIR__ . '/../config/appprofile.php';
 require_once __DIR__ . '/../app/predefine.php';
+require_once BASE_PATH . '/vendor/autoload.php';
+require_once BASE_PATH . '/config/.config.php';
+require_once BASE_PATH . '/config/appprofile.php';
 
 use App\Middleware\ErrorHandler;
 use App\Services\Auth;
@@ -32,7 +32,7 @@ $app = AppFactory::create($response_factory);
 
 $app->add(new ErrorHandler());
 
-$routes = require __DIR__ . '/../app/routes.php';
+$routes = require BASE_PATH . '/app/routes.php';
 $routes($app);
 
 $request = ServerRequest::fromGlobals();
