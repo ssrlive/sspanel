@@ -25,7 +25,6 @@ END;
     public function boot(): void
     {
         // 迁移配置
-        global $_ENV;
         $copy_result = copy(BASE_PATH . '/config/.config.php', BASE_PATH . '/config/.config.php.bak');
 
         if ($copy_result) {
@@ -39,7 +38,7 @@ END;
         //将旧config迁移到新config上
         $migrated = [];
 
-        foreach ($_ENV as $key => $value_reserve) {
+        foreach (\App\Utils\Env::all() as $key => $value_reserve) {
             $regex = '/_ENV\[\'' . $key . '\'\].*?;/s';
             $matches_new = [];
             preg_match($regex, $config_new, $matches_new);

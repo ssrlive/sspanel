@@ -109,4 +109,9 @@ final class Env
 
         return $default;
     }
+
+    public static function all(): array
+    {
+        return $_ENV;
+    }
 }

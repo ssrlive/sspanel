@@ -57,7 +57,7 @@ final class OrderController extends BaseController
     public function create(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $product_id = $this->antiXss->xss_clean($request->getQueryParams()['product_id']) ?? null;
-        $redir = Cookie::get('redir');
+        $redir = Cookie::get('redir', $request->getCookieParams()) ?? '/user';
 
         if ($redir !== '') {
             Cookie::set(['redir' => ''], time() - 1);

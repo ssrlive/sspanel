@@ -6,48 +6,48 @@ namespace App\Utils;
 
 final class Cookie
 {
-    public static function set(array $arg, int $time): void
+    public static function set(array $arg, int $time, array $server = []): void
     {
-        $secure = self::isSecure();
+        $secure = self::isSecure($server);
         foreach ($arg as $key => $value) {
             setcookie($key, $value, $time, path: '/', secure: $secure, httponly: true);
         }
     }
 
-    public static function setWithDomain(array $arg, int $time, string $domain): void
+    public static function setWithDomain(array $arg, int $time, string $domain, array $server = []): void
     {
-        $secure = self::isSecure();
+        $secure = self::isSecure($server);
         foreach ($arg as $key => $value) {
             setcookie($key, $value, $time, path: '/', domain: $domain, secure: $secure, httponly: true);
         }
     }
 
-    public static function get(string $key): string
+    public static function get(string $key, array $cookies = []): string
     {
-        return $_COOKIE[$key] ?? '';
+        return $cookies[$key] ?? '';
     }
 
-    private static function isSecure(): bool
+    private static function isSecure(array $server = []): bool
     {
-        if (isset($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'off') !== 0) {
+        if (isset($server['HTTPS']) ? strcasecmp($server['HTTPS'], 'off') !== 0 : false) {
             return true;
         }
 
-        return self::isSecureServerPort() || self::isForwardedProtoHttps() || self::isForwardedSslOn();
+        return self::isSecureServerPort($server) || self::isForwardedProtoHttps($server) || self::isForwardedSslOn($server);
     }
 
-    private static function isSecureServerPort(): bool
+    private static function isSecureServerPort(array $server = []): bool
     {
-        return isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443;
+        return isset($server['SERVER_PORT']) && (int) $server['SERVER_PORT'] === 443;
     }
 
-    private static function isForwardedProtoHttps(): bool
+    private static function isForwardedProtoHttps(array $server = []): bool
     {
-        return isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0;
+        return isset($server['HTTP_X_FORWARDED_PROTO']) && strcasecmp($server['HTTP_X_FORWARDED_PROTO'], 'https') === 0;
     }
 
-    private static function isForwardedSslOn(): bool
+    private static function isForwardedSslOn(array $server = []): bool
     {
-        return isset($_SERVER['HTTP_X_FORWARDED_SSL']) && strcasecmp($_SERVER['HTTP_X_FORWARDED_SSL'], 'on') === 0;
+        return isset($server['HTTP_X_FORWARDED_SSL']) && strcasecmp($server['HTTP_X_FORWARDED_SSL'], 'on') === 0;
     }
 }

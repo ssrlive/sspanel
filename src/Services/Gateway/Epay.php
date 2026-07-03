@@ -105,6 +105,7 @@ final class Epay extends Base
 
         $pl->save();
         //请求参数
+        $clientIp = $request->getServerParam('REMOTE_ADDR') ?? '';
         $data = [
             'pid' => trim($this->epay['partner']),
             'type' => $type,
@@ -114,7 +115,7 @@ final class Epay extends Base
             'name' => $pl->tradeno,
             'money' => $price,
             'sitename' => Env::get('appName'),
-            'clientip' => $_SERVER['REMOTE_ADDR'],
+            'clientip' => $clientIp,
         ];
 
         $epaySubmit = new EpaySubmit($this->epay);
@@ -151,12 +152,13 @@ final class Epay extends Base
 
     public function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
+        $params = $request->getQueryParams();
         $epayNotify = new EpayNotify($this->epay);
-        $verify_result = $epayNotify->verifyNotify();
+        $verify_result = $epayNotify->verifyNotify($params);
 
         if ($verify_result) {
-            if ($_GET['trade_status'] === 'TRADE_SUCCESS') {
-                $this->postPayment($_GET['out_trade_no']);
+            if (($params['trade_status'] ?? '') === 'TRADE_SUCCESS') {
+                $this->postPayment((string) ($params['out_trade_no'] ?? ''));
                 // EPay just fucking copied from Alipay's method of determining whether the payment is successful
                 // which is retarded
                 // https://pay.v8jisu.cn/doc.html

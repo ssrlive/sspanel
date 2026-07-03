@@ -13,45 +13,48 @@ use function time;
 
 final class Cookie extends Base
 {
-    public function login($uid, $time): void
+    public function login(int $uid, int $time, array $server = [], array $cookies = []): void
     {
         $user = (new User())->find($uid);
         $expire_in = $time + time();
 
-        $domain = $_SERVER['HTTP_HOST'];
+        $domain = $server['HTTP_HOST'] ?? '';
         if (str_contains($domain, ':')) {
             $domain = preg_replace('/:\d+$/', '', $domain);
         }
+
+        $remoteAddr = $server['REMOTE_ADDR'] ?? '';
+        $userAgent = $server['HTTP_USER_AGENT'] ?? '';
 
         CookieUtils::setWithDomain([
             'uid' => (string) $uid,
             'email' => $user->email,
             'key' => Hash::cookieHash($user->pass, $expire_in),
-            'ip' => Hash::ipHash($_SERVER['REMOTE_ADDR'], $uid, $expire_in),
-            'device' => Hash::deviceHash($_SERVER['HTTP_USER_AGENT'], $uid, $expire_in),
+            'ip' => Hash::ipHash($remoteAddr, $uid, $expire_in),
+            'device' => Hash::deviceHash($userAgent, $uid, $expire_in),
             'expire_in' => (string) $expire_in,
-        ], $expire_in, $domain);
+        ], $expire_in, $domain, $server);
     }
 
-    public function getUser(): User
+    public function getUser(array $server = [], array $cookies = []): User
     {
-        $uid = CookieUtils::get('uid');
-        $email = CookieUtils::get('email');
-        $key = CookieUtils::get('key');
-        $ipHash = CookieUtils::get('ip');
-        $deviceHash = CookieUtils::get('device');
-        $expire_in = CookieUtils::get('expire_in');
+        $uid = CookieUtils::get('uid', $cookies);
+        $email = CookieUtils::get('email', $cookies);
+        $key = CookieUtils::get('key', $cookies);
+        $ipHash = CookieUtils::get('ip', $cookies);
+        $deviceHash = CookieUtils::get('device', $cookies);
+        $expire_in = CookieUtils::get('expire_in', $cookies);
 
         $user = new User();
         $user->isLogin = false;
 
         if (
-            $uid === null ||
-            $email === null ||
-            $key === null ||
-            $ipHash === null ||
-            $deviceHash === null ||
-            $expire_in === null
+            $uid === '' ||
+            $email === '' ||
+            $key === '' ||
+            $ipHash === '' ||
+            $deviceHash === '' ||
+            $expire_in === ''
         ) {
             return $user;
         }
@@ -61,19 +64,19 @@ final class Cookie extends Base
             return $user;
         }
 
-        if (Env::get('enable_login_bind_ip')) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $node = (new Node())->where('ipv4', $ip)->orWhere('ipv6', $ip)->first();
+        $remoteAddr = $server['REMOTE_ADDR'] ?? '';
+        $userAgent = $server['HTTP_USER_AGENT'] ?? '';
 
-            if ($node === null && $ipHash !== Hash::ipHash($ip, (int) $uid, $expire_in)) {
+        if (Env::get('enable_login_bind_ip')) {
+            $node = (new Node())->where('ipv4', $remoteAddr)->orWhere('ipv6', $remoteAddr)->first();
+
+            if ($node === null && $ipHash !== Hash::ipHash($remoteAddr, (int) $uid, $expire_in)) {
                 return $user;
             }
         }
 
         if (Env::get('enable_login_bind_device')) {
-            $ua = $_SERVER['HTTP_USER_AGENT'];
-
-            if ($deviceHash !== Hash::deviceHash($ua, (int) $uid, $expire_in)) {
+            if ($deviceHash !== Hash::deviceHash($userAgent, (int) $uid, $expire_in)) {
                 return $user;
             }
         }
@@ -103,9 +106,9 @@ final class Cookie extends Base
         return $user;
     }
 
-    public function logout(): void
+    public function logout(array $server = []): void
     {
-        $domain = $_SERVER['HTTP_HOST'];
+        $domain = $server['HTTP_HOST'] ?? '';
         if (str_contains($domain, ':')) {
             $domain = preg_replace('/:\d+$/', '', $domain);
         }
@@ -117,6 +120,6 @@ final class Cookie extends Base
             'ip' => '',
             'device' => '',
             'expire_in' => '',
-        ], 0, $domain);
+        ], 0, $domain, $server);
     }
 }

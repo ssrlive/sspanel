@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Gateway\Epay;
 
-use function is_null;
-
 final class EpayNotify
 {
     private array $epay_config;
@@ -15,13 +13,13 @@ final class EpayNotify
         $this->epay_config = $epay_config;
     }
 
-    public function verifyNotify(): bool
+    public function verifyNotify(array $params): bool
     {
-        if (is_null($_GET)) { //判断POST来的数组是否为空
+        if (count($params) === 0 || ! isset($params['sign'])) {
             return false;
         }
 
-        if ($this->getSignVeryfy($_GET, $_GET['sign'])) {
+        if ($this->getSignVeryfy($params, (string) $params['sign'])) {
             return true;
         }
 

@@ -125,6 +125,8 @@ final class UserController extends BaseController
             $password = Tools::genRandomChar(16);
         }
 
+        $remoteAddr = $request->getServerParam('REMOTE_ADDR') ?? '';
+
         (new AuthController())->registerHelper(
             $response,
             'user',
@@ -134,6 +136,8 @@ final class UserController extends BaseController
             '0',
             '',
             $balance,
+            $remoteAddr,
+            $request->getCookieParams(),
             false
         );
         $user = (new User())->where('email', $email)->first();

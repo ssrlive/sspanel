@@ -129,9 +129,11 @@ final class AlipayF2F extends Base
     public function notify(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $api = $this->createApi();
+        $parsedBody = $request->getParsedBody();
+        $outTradeNo = is_array($parsedBody) ? ($parsedBody['out_trade_no'] ?? '') : '';
 
         $aliRequest = new AlipayTradeQueryModel();
-        $aliRequest->setOutTradeNo($_POST['out_trade_no']);
+        $aliRequest->setOutTradeNo($outTradeNo);
         $aliResponse = $api->query($aliRequest);
 
         if ($aliResponse->getTradeStatus() === 'TRADE_SUCCESS') {

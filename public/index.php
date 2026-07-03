@@ -15,6 +15,7 @@ require_once __DIR__ . '/../config/appprofile.php';
 require_once __DIR__ . '/../app/predefine.php';
 
 use App\Middleware\ErrorHandler;
+use App\Services\Auth;
 use App\Services\Boot;
 use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -36,5 +37,6 @@ $routes($app);
 
 $request = ServerRequest::fromGlobals();
 $request = new Slim\Http\ServerRequest($request);
+Auth::setRequestContext($request->getServerParams(), $request->getCookieParams());
 
 $app->run($request);

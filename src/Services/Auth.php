@@ -8,27 +8,36 @@ use App\Models\User;
 
 final class Auth
 {
-    private User $user;
+    private static ?User $user = null;
+    private static array $server = [];
+    private static array $cookies = [];
 
-    public static function login(int $uid, int $time): void
+    public static function setRequestContext(array $server, array $cookies): void
     {
-        self::getDriver()->login($uid, $time);
+        self::$server = $server;
+        self::$cookies = $cookies;
     }
 
-    public static function getUser(): User
+    public static function login(int $uid, int $time, array $server = []): void
     {
-        global $user;
+        self::getDriver()->login($uid, $time, $server === [] ? self::$server : $server);
+    }
 
-        if ($user === null) {
-            $user = self::getDriver()->getUser();
+    public static function getUser(array $server = [], array $cookies = []): User
+    {
+        if (self::$user === null) {
+            self::$user = self::getDriver()->getUser(
+                $server === [] ? self::$server : $server,
+                $cookies === [] ? self::$cookies : $cookies
+            );
         }
 
-        return $user;
+        return self::$user;
     }
 
-    public static function logout(): void
+    public static function logout(array $server = []): void
     {
-        self::getDriver()->logout();
+        self::getDriver()->logout($server === [] ? self::$server : $server);
     }
 
     private static function getDriver(): Auth\Cookie

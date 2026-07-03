@@ -45,6 +45,6 @@ final class CookieTest extends TestCase
 
         Cookie::set($data, $time);
 
-        $this->assertEquals('testValue', Cookie::get('testKey'));
+        $this->assertEquals('testValue', Cookie::get('testKey', $_COOKIE));
     }
 }

@@ -52,11 +52,11 @@ final class SubscribeLog extends Model
     /**
      * 记录订阅日志
      */
-    public function add(User $user, string $type, string $ua): void
+    public function add(User $user, string $type, string $ua, string $remoteAddr): void
     {
         $this->user_id = $user->id;
         $this->type = $type;
-        $this->request_ip = $_SERVER['REMOTE_ADDR'];
+        $this->request_ip = $remoteAddr;
         $this->request_user_agent = $ua;
         $this->request_time = time();
 

@@ -80,7 +80,8 @@ final class SubController extends BaseController
             (new SubscribeLog())->add(
                 $user,
                 $subtype,
-                $this->antiXss->xss_clean($request->getHeaderLine('User-Agent'))
+                $this->antiXss->xss_clean($request->getHeaderLine('User-Agent')),
+                $request->getServerParam('REMOTE_ADDR') ?? ''
             );
         }
 

@@ -64,16 +64,17 @@ final class AuthController extends BaseController
             ]);
         }
 
+        $remoteAddr = $request->getServerParam('REMOTE_ADDR') ?? '';
         $mfa_code = $this->antiXss->xss_clean($request->getParam('mfa_code'));
         $password = $request->getParam('password');
         $rememberMe = $request->getParam('remember_me') === 'true' ? 1 : 0;
         $email = strtolower(trim($this->antiXss->xss_clean($request->getParam('email'))));
-        $redir = $this->antiXss->xss_clean(Cookie::get('redir')) ?? '/user';
+        $redir = $this->antiXss->xss_clean(Cookie::get('redir', $request->getCookieParams())) ?? '/user';
         $user = (new User())->where('email', $email)->first();
         $loginIp = new LoginIp();
 
         if ($user === null) {
-            $loginIp->collectLoginIP($_SERVER['REMOTE_ADDR'], 1);
+            $loginIp->collectLoginIP($remoteAddr, 1);
 
             return $response->withJson([
                 'ret' => 0,
@@ -82,7 +83,7 @@ final class AuthController extends BaseController
         }
 
         if (! Hash::checkPassword($user->pass, $password)) {
-            $loginIp->collectLoginIP($_SERVER['REMOTE_ADDR'], 1, $user->id);
+            $loginIp->collectLoginIP($remoteAddr, 1, $user->id);
 
             return $response->withJson([
                 'ret' => 0,
@@ -91,7 +92,7 @@ final class AuthController extends BaseController
         }
 
         if ($user->ga_enable && (strlen($mfa_code) !== 6 || ! MFA::verifyGa($user, $mfa_code))) {
-            $loginIp->collectLoginIP($_SERVER['REMOTE_ADDR'], 1, $user->id);
+            $loginIp->collectLoginIP($remoteAddr, 1, $user->id);
 
             return $response->withJson([
                 'ret' => 0,
@@ -105,9 +106,9 @@ final class AuthController extends BaseController
             $time = 86400 * (Env::get('rememberMeDuration') ?: 7);
         }
 
-        Auth::login($user->id, $time);
+        Auth::login($user->id, $time, ['REMOTE_ADDR' => $remoteAddr]);
         // 记录登录成功
-        $loginIp->collectLoginIP($_SERVER['REMOTE_ADDR'], 0, $user->id);
+        $loginIp->collectLoginIP($remoteAddr, 0, $user->id);
         $user->last_login_time = time();
         $user->save();
 
@@ -202,9 +203,11 @@ final class AuthController extends BaseController
         string $imtype,
         string $imvalue,
         float $money,
+        string $remoteAddr,
+        array $cookies,
         bool $is_admin_reg
     ): ResponseInterface {
-        $redir = $this->antiXss->xss_clean(Cookie::get('redir')) ?? '/user';
+        $redir = $this->antiXss->xss_clean(Cookie::get('redir', $cookies)) ?? '/user';
         $configs = Config::getClass('reg');
         // do reg user
         $user = new User();
@@ -250,7 +253,7 @@ final class AuthController extends BaseController
         $user->node_iplimit = $configs['reg_ip_limit'];
         $user->node_speedlimit = $configs['reg_speed_limit'];
         $user->reg_date = date('Y-m-d H:i:s');
-        $user->reg_ip = $_SERVER['REMOTE_ADDR'];
+        $user->reg_ip = $remoteAddr;
         $user->theme = Env::get('theme');
         $user->locale = Env::get('locale');
         $random_group = Config::obtain('random_group');
@@ -268,8 +271,8 @@ final class AuthController extends BaseController
                 Reward::issueRegReward($user->id, $user->ref_by);
             }
 
-            Auth::login($user->id, 3600);
-            (new LoginIp())->collectLoginIP($_SERVER['REMOTE_ADDR'], 0, $user->id);
+            Auth::login($user->id, 3600, ['REMOTE_ADDR' => $remoteAddr]);
+            (new LoginIp())->collectLoginIP($remoteAddr, 0, $user->id);
 
             return $response->withHeader('HX-Redirect', $redir);
         }
@@ -356,7 +359,21 @@ final class AuthController extends BaseController
             $redis->del('email_verify:' . $email_verify_code);
         }
 
-        return $this->registerHelper($response, $name, $email, $password, $invite_code, $imtype, $imvalue, 0, false);
+        $remoteAddr = $request->getServerParam('REMOTE_ADDR') ?? '';
+
+        return $this->registerHelper(
+            $response,
+            $name,
+            $email,
+            $password,
+            $invite_code,
+            $imtype,
+            $imvalue,
+            0,
+            $remoteAddr,
+            $request->getCookieParams(),
+            false
+        );
     }
 
     public function logout(ServerRequest $request, Response $response, $next): Response
