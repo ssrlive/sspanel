@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\User;
+use App\Utils\Env;
 use Exception;
 use Vectorface\GoogleAuthenticator;
 
@@ -28,6 +29,6 @@ final class MFA
     public static function getGaUrl(User $user): string
     {
         return 'otpauth://totp/' .
-            rawurlencode($_ENV['appName'] . ' (' . $user->email . ')') . '?secret=' . $user->ga_token;
+            rawurlencode(Env::get('appName') . ' (' . $user->email . ')') . '?secret=' . $user->ga_token;
     }
 }

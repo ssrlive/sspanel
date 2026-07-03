@@ -13,6 +13,7 @@ use App\Models\Node;
 use App\Models\OnlineLog;
 use App\Models\User;
 use App\Services\DynamicRate;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Psr\Http\Message\ResponseInterface;
@@ -137,7 +138,7 @@ final class NodeApiV1Controller extends BaseController
                 $enable = false;
             }
 
-            if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d && ! $_ENV['keep_connect']) {
+            if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d && ! Env::get('keep_connect')) {
                 $enable = false;
             }
 

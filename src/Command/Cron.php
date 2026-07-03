@@ -7,6 +7,7 @@ namespace App\Command;
 use App\Models\Config;
 use App\Services\Cron as CronService;
 use App\Services\Detect;
+use App\Utils\Env;
 use Exception;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use function mktime;
@@ -46,7 +47,7 @@ EOL;
         // Run node related jobs
         $jobs->updateNodeIp();
 
-        if ($_ENV['enable_detect_offline']) {
+        if (Env::get('enable_detect_offline')) {
             $jobs->detectNodeOffline();
         }
 

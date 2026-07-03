@@ -17,6 +17,7 @@ use App\Services\MFA;
 use App\Services\RateLimit;
 use App\Services\Reward;
 use App\Utils\Cookie;
+use App\Utils\Env;
 use App\Utils\Hash;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
@@ -49,7 +50,7 @@ final class AuthController extends BaseController
         }
 
         $view = $this->view();
-        $view->assign('base_url', $_ENV['baseUrl'])
+        $view->assign('base_url', Env::get('baseUrl'))
             ->assign('captcha', $captcha);
         return $response->write($view->fetch('auth/login.tpl'));
     }
@@ -101,7 +102,7 @@ final class AuthController extends BaseController
         $time = 3600;
 
         if ($rememberMe) {
-            $time = 86400 * ($_ENV['rememberMeDuration'] ?: 7);
+            $time = 86400 * (Env::get('rememberMeDuration') ?: 7);
         }
 
         Auth::login($user->id, $time);
@@ -128,7 +129,7 @@ final class AuthController extends BaseController
 
         $view = $this->view();
         $view->assign('invite_code', $invite_code)
-            ->assign('base_url', $_ENV['baseUrl'])
+            ->assign('base_url', Env::get('baseUrl'))
             ->assign('captcha', $captcha);
         return $response->write($view->fetch('auth/register.tpl'));
     }
@@ -172,7 +173,7 @@ final class AuthController extends BaseController
             try {
                 Mail::send(
                     $email,
-                    $_ENV['appName'] . '- 验证邮件',
+                    Env::get('appName') . '- 验证邮件',
                     'verify_code.tpl',
                     [
                         'code' => $email_code,
@@ -250,8 +251,8 @@ final class AuthController extends BaseController
         $user->node_speedlimit = $configs['reg_speed_limit'];
         $user->reg_date = date('Y-m-d H:i:s');
         $user->reg_ip = $_SERVER['REMOTE_ADDR'];
-        $user->theme = $_ENV['theme'];
-        $user->locale = $_ENV['locale'];
+        $user->theme = Env::get('theme');
+        $user->locale = Env::get('locale');
         $random_group = Config::obtain('random_group');
 
         if ($random_group === '') {

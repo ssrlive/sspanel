@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Config;
 use App\Models\User;
+use App\Utils\Env;
 use Illuminate\Database\DatabaseManager;
 use Smarty\Smarty;
 use Twig\Environment;
@@ -54,7 +55,7 @@ final class View
         if ($user->isLogin) {
             $theme = $user->theme;
         } else {
-            $theme = $_ENV['theme'];
+            $theme = Env::getString('theme');
         }
 
         return $theme;
@@ -63,15 +64,15 @@ final class View
     public static function getConfig(): array
     {
         return [
-            'appName' => $_ENV['appName'],
-            'baseUrl' => $_ENV['baseUrl'],
-            'jump_delay' => $_ENV['jump_delay'],
-            'enable_kill' => $_ENV['enable_kill'],
-            'enable_change_email' => $_ENV['enable_change_email'],
-            'enable_r2_client_download' => $_ENV['enable_r2_client_download'],
-            'jsdelivr_url' => $_ENV['jsdelivr_url'],
+            'appName' => Env::getString('appName'),
+            'baseUrl' => Env::getString('baseUrl'),
+            'jump_delay' => Env::getString('jump_delay'),
+            'enable_kill' => Env::getBool('enable_kill'),
+            'enable_change_email' => Env::getBool('enable_change_email'),
+            'enable_r2_client_download' => Env::getBool('enable_r2_client_download'),
+            'jsdelivr_url' => Env::getString('jsdelivr_url'),
             // site default language
-            'locale' => $_ENV['locale'],
+            'locale' => Env::getString('locale'),
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace App\Services\Subscribe;
 
 use App\Models\User;
 use App\Services\Subscribe;
+use App\Utils\Env;
 use App\Utils\Tools;
 use function array_filter;
 use function array_merge;
@@ -17,7 +18,7 @@ final class SingBox extends Base
     public function getContent(User $user): string
     {
         $nodes = [];
-        $singbox_config = $_ENV['SingBox_Config'];
+        $singbox_config = Env::get('SingBox_Config');
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {
@@ -164,7 +165,7 @@ final class SingBox extends Base
         }
 
         $singbox_config['outbounds'] = array_merge($singbox_config['outbounds'], $nodes);
-        $singbox_config['experimental']['cache_file']['cache_id'] = $_ENV['appName'];
+        $singbox_config['experimental']['cache_file']['cache_id'] = Env::get('appName');
 
         return json_encode($singbox_config);
     }

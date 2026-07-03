@@ -7,6 +7,7 @@ namespace App\Services\Auth;
 use App\Models\Node;
 use App\Models\User;
 use App\Utils\Cookie as CookieUtils;
+use App\Utils\Env;
 use App\Utils\Hash;
 use function time;
 
@@ -60,7 +61,7 @@ final class Cookie extends Base
             return $user;
         }
 
-        if ($_ENV['enable_login_bind_ip']) {
+        if (Env::get('enable_login_bind_ip')) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $node = (new Node())->where('ipv4', $ip)->orWhere('ipv6', $ip)->first();
 
@@ -69,7 +70,7 @@ final class Cookie extends Base
             }
         }
 
-        if ($_ENV['enable_login_bind_device']) {
+        if (Env::get('enable_login_bind_device')) {
             $ua = $_SERVER['HTTP_USER_AGENT'];
 
             if ($deviceHash !== Hash::deviceHash($ua, (int) $uid, $expire_in)) {

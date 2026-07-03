@@ -17,22 +17,22 @@ final class Hash
 {
     public static function cookieHash(string $pass, int $expire_in): string
     {
-        return substr(hash('sha3-256', $pass . $_ENV['key'] . $expire_in), 5, 45);
+        return substr(hash('sha3-256', $pass . Env::get('key') . $expire_in), 5, 45);
     }
 
     public static function ipHash(string $ip, int $uid, int $expire_in): string
     {
-        return substr(hash('sha3-256', $ip . $_ENV['key'] . $uid . $expire_in), 5, 45);
+        return substr(hash('sha3-256', $ip . Env::get('key') . $uid . $expire_in), 5, 45);
     }
 
     public static function deviceHash(string $ua, int $uid, int $expire_in): string
     {
-        return substr(hash('sha3-256', $ua . $_ENV['key'] . $uid . $expire_in), 5, 45);
+        return substr(hash('sha3-256', $ua . Env::get('key') . $uid . $expire_in), 5, 45);
     }
 
     public static function checkPassword(string $hashedPassword, string $password): bool
     {
-        if (in_array($_ENV['pwdMethod'], ['bcrypt', 'argon2i', 'argon2id'])) {
+        if (in_array(Env::get('pwdMethod'), ['bcrypt', 'argon2i', 'argon2id'])) {
             return password_verify($password, $hashedPassword);
         }
 
@@ -41,7 +41,7 @@ final class Hash
 
     public static function passwordHash(string $pass): string
     {
-        $method = $_ENV['pwdMethod'];
+        $method = Env::get('pwdMethod');
 
         return match ($method) {
             'sha256' => self::sha256WithSalt($pass),
@@ -54,11 +54,11 @@ final class Hash
 
     public static function sha256WithSalt(string $pwd): string
     {
-        return hash('sha256', $pwd . $_ENV['salt']);
+        return hash('sha256', $pwd . Env::get('salt'));
     }
 
     public static function sha3WithSalt(string $pwd): string
     {
-        return hash('sha3-256', $pwd . $_ENV['salt']);
+        return hash('sha3-256', $pwd . Env::get('salt'));
     }
 }

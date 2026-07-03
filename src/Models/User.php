@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Services\IM;
 use App\Services\IM\Telegram;
+use App\Utils\Env;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Query\Builder;
@@ -290,7 +291,7 @@ final class User extends Model
 
             (new EmailQueue())->add(
                 $this->email,
-                $_ENV['appName'] . '-每日流量报告以及公告',
+                Env::get('appName') . '-每日流量报告以及公告',
                 'traffic_report.tpl',
                 [
                     'user' => $this,

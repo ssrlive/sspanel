@@ -9,6 +9,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Services\LLM;
 use App\Services\Notification;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
@@ -82,8 +83,8 @@ final class TicketController extends BaseController
         try {
             Notification::notifyUser(
                 (new User())->find($ticket->userid),
-                $_ENV['appName'] . '-工单被回复',
-                '你好，有人回复了<a href="' . $_ENV['baseUrl'] . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
+                Env::get('appName') . '-工单被回复',
+                '你好，有人回复了<a href="' . Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
             );
         } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');
@@ -149,8 +150,8 @@ final class TicketController extends BaseController
         try {
             Notification::notifyUser(
                 (new User())->find($ticket->userid),
-                $_ENV['appName'] . '-工单被回复',
-                '你好，AI助理回复了<a href="' . $_ENV['baseUrl'] . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
+                Env::get('appName') . '-工单被回复',
+                '你好，AI助理回复了<a href="' . Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
             );
         } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');

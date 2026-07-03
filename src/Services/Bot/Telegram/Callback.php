@@ -13,6 +13,7 @@ use App\Models\SubscribeLog;
 use App\Models\User;
 use App\Services\Reward;
 use App\Services\Subscribe;
+use App\Utils\Env;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
 use Telegram\Bot\Api;
@@ -924,7 +925,7 @@ final class Callback
                 $code = (new InviteCode())->add($this->user->id);
             }
 
-            $inviteUrl = $_ENV['baseUrl'] . '/auth/register?code=' . $code->code;
+            $inviteUrl = Env::get('baseUrl') . '/auth/register?code=' . $code->code;
             $text = '<a href="' . $inviteUrl . '">' . $inviteUrl . '</a>';
 
             $sendMessage = [

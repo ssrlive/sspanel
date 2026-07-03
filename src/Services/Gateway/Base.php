@@ -10,6 +10,7 @@ use App\Models\Paylist;
 use App\Models\User;
 use App\Models\UserMoneyLog;
 use App\Services\Reward;
+use App\Utils\Env;
 use App\Utils\Tools;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -98,12 +99,12 @@ abstract class Base
 
     protected static function getCallbackUrl(): string
     {
-        return $_ENV['baseUrl'] . '/payment/notify/' . get_called_class()::_name();
+        return Env::get('baseUrl') . '/payment/notify/' . get_called_class()::_name();
     }
 
     protected static function getUserReturnUrl(): string
     {
-        return $_ENV['baseUrl'] . '/user/payment/return/' . get_called_class()::_name();
+        return Env::get('baseUrl') . '/user/payment/return/' . get_called_class()::_name();
     }
 
     protected static function getActiveGateway(string $key): bool

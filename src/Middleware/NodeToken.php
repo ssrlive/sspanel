@@ -6,6 +6,7 @@ namespace App\Middleware;
 
 use App\Models\Node;
 use App\Services\RateLimit;
+use App\Utils\Env;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -36,7 +37,7 @@ final class NodeToken implements MiddlewareInterface
         $antiXss = new AntiXSS();
 
         if (
-            $_ENV['enable_rate_limit'] &&
+            Env::get('enable_rate_limit') &&
             (! (new RateLimit())->checkRateLimit('webapi_ip', $request->getServerParams()['REMOTE_ADDR'] ?? '') ||
                 ! (new RateLimit())->checkRateLimit('webapi_key', $antiXss->xss_clean($key)))
         ) {
@@ -49,9 +50,9 @@ final class NodeToken implements MiddlewareInterface
         }
 
         if (
-            ! $_ENV['webAPI'] ||
-            $key !== $_ENV['muKey'] ||
-            'https://' . $request->getHeaderLine('Host') !== $_ENV['webAPIUrl']
+            ! Env::get('webAPI') ||
+            $key !== Env::get('muKey') ||
+            'https://' . $request->getHeaderLine('Host') !== Env::get('webAPIUrl')
         ) {
             /** @var Response $response */
             $response = AppFactory::determineResponseFactory()->createResponse(401);
@@ -61,7 +62,7 @@ final class NodeToken implements MiddlewareInterface
             ]);
         }
 
-        if ($_ENV['checkNodeIp']) {
+        if (Env::get('checkNodeIp')) {
             $ip = $request->getServerParams()['REMOTE_ADDR'] ?? '';
 
             if (

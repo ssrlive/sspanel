@@ -6,6 +6,7 @@ namespace App\Services\Subscribe;
 
 use App\Models\User;
 use App\Services\Subscribe;
+use App\Utils\Env;
 use App\Utils\Tools;
 use function array_filter;
 use function array_merge;
@@ -17,7 +18,7 @@ final class V2RayJson extends Base
     public function getContent(User $user): string
     {
         $nodes = [];
-        $v2rayjson_config = $_ENV['V2RayJson_Config'];
+        $v2rayjson_config = Env::get('V2RayJson_Config');
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {

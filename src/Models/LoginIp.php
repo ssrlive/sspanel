@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Services\Notification;
+use App\Utils\Env;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Query\Builder;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -65,7 +66,7 @@ final class LoginIp extends Model
                 try {
                     Notification::notifyUser(
                         (new User())->where('id', $user_id)->first(),
-                        $_ENV['appName'] . '-新登录通知',
+                        Env::get('appName') . '-新登录通知',
                         '你的账号于 ' . date('Y-m-d H:i:s') . ' 通过 ' . $this->ip . ' 地址登录了用户面板',
                     );
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {

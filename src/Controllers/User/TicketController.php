@@ -9,6 +9,7 @@ use App\Models\Config;
 use App\Models\Ticket;
 use App\Services\Notification;
 use App\Services\RateLimit;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
@@ -92,7 +93,7 @@ final class TicketController extends BaseController
 
         if (Config::obtain('mail_ticket')) {
             Notification::notifyAdmin(
-                $_ENV['appName'] . '-新工单被开启',
+                Env::get('appName') . '-新工单被开启',
                 '管理员，有人开启了新的工单，请你及时处理。'
             );
         }
@@ -141,9 +142,9 @@ final class TicketController extends BaseController
 
         if (Config::obtain('mail_ticket')) {
             Notification::notifyAdmin(
-                $_ENV['appName'] . '-工单被回复',
+                Env::get('appName') . '-工单被回复',
                 '管理员，有人回复了 <a href="' .
-                    $_ENV['baseUrl'] . '/admin/ticket/' . $ticket->id . '/view">#' . $ticket->id .
+                    Env::get('baseUrl') . '/admin/ticket/' . $ticket->id . '/view">#' . $ticket->id .
                     '</a> 工单，请你及时处理。'
             );
         }

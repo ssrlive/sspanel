@@ -6,6 +6,7 @@ namespace App\Services\Subscribe;
 
 use App\Models\User;
 use App\Services\Subscribe;
+use App\Utils\Env;
 
 final class Json extends Base
 {
@@ -15,7 +16,7 @@ final class Json extends Base
 
         return json_encode([
             'version' => 4,
-            'sub_name' => $_ENV['appName'],
+            'sub_name' => Env::get('appName'),
             'email' => $user->email,
             'user_name' => $user->user_name,
             'class' => $user->class,

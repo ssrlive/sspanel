@@ -16,6 +16,7 @@ use App\Services\Subscribe\SS;
 use App\Services\Subscribe\Trojan;
 use App\Services\Subscribe\V2Ray;
 use App\Services\Subscribe\V2RayJson;
+use App\Utils\Env;
 use App\Utils\Tools;
 use Illuminate\Support\Collection;
 
@@ -33,7 +34,7 @@ final class Subscribe
             $token->save();
         }
 
-        return $_ENV['subUrl'] . '/sub/' . $token->token;
+        return Env::get('subUrl') . '/sub/' . $token->token;
     }
 
     public static function getUserNodes(User $user, bool $show_all_nodes = false): Collection

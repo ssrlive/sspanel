@@ -9,6 +9,7 @@ use App\Models\Link;
 use App\Models\SubscribeLog;
 use App\Services\RateLimit;
 use App\Services\Subscribe;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -34,9 +35,9 @@ final class SubController extends BaseController
         $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan'];
 
         if (
-            ! $_ENV['Subscribe'] ||
+            ! Env::get('Subscribe') ||
             ! in_array($subtype, $subtype_list) ||
-            'https://' . $request->getHeaderLine('Host') !== $_ENV['subUrl']
+            'https://' . $request->getHeaderLine('Host') !== Env::get('subUrl')
         ) {
             return ResponseHelper::error($response, $err_msg);
         }
@@ -44,7 +45,7 @@ final class SubController extends BaseController
         $token = $this->antiXss->xss_clean($args['token']);
 
         if (
-            $_ENV['enable_rate_limit'] &&
+            Env::get('enable_rate_limit') &&
             (! (new RateLimit())->checkRateLimit('sub_ip', $request->getServerParam('REMOTE_ADDR')) ||
                 ! (new RateLimit())->checkRateLimit('sub_token', $token))
         ) {
@@ -71,9 +72,9 @@ final class SubController extends BaseController
             . '; total=' . $user->transfer_enable
             . '; expire=' . strtotime($user->class_expire);
         // Clash specific
-        $sub_content_disposition = 'attachment; filename=' . $_ENV['appName'];
+        $sub_content_disposition = 'attachment; filename=' . Env::get('appName');
         $sub_profile_update_interval = 6;
-        $sub_profile_web_page_url = $_ENV['baseUrl'];
+        $sub_profile_web_page_url = Env::get('baseUrl');
 
         if (Config::obtain('subscribe_log')) {
             (new SubscribeLog())->add(

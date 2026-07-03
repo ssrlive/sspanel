@@ -11,6 +11,7 @@ use App\Services\Auth;
 use App\Services\Cache;
 use App\Services\Filter;
 use App\Services\MFA;
+use App\Utils\Env;
 use App\Utils\Hash;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
@@ -53,7 +54,7 @@ final class InfoController extends BaseController
         $user = $this->user;
         $old_email = $user->email;
 
-        if (! $_ENV['enable_change_email'] || $user->is_shadow_banned) {
+        if (! Env::get('enable_change_email') || $user->is_shadow_banned) {
             return ResponseHelper::error($response, '修改失败');
         }
 
@@ -307,7 +308,7 @@ final class InfoController extends BaseController
             return ResponseHelper::error($response, '密码错误');
         }
 
-        if ($_ENV['enable_kill']) {
+        if (Env::get('enable_kill')) {
             Auth::logout();
             $user->kill();
 

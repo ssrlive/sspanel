@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Utils\Env;
 use function date_default_timezone_set;
 use function microtime;
 use function Sentry\init;
@@ -12,7 +13,7 @@ final class Boot
 {
     public static function setTime(): void
     {
-        date_default_timezone_set($_ENV['timeZone']);
+        date_default_timezone_set(Env::getString('timeZone'));
         View::$beginTime = microtime(true);
     }
 
@@ -23,9 +24,11 @@ final class Boot
 
     public static function bootSentry(): void
     {
-        if ($_ENV['sentry_dsn'] !== '') {
+        $dsn = Env::getString('sentry_dsn');
+
+        if ($dsn !== '') {
             init([
-                'dsn' => $_ENV['sentry_dsn'],
+                'dsn' => $dsn,
             ]);
         }
     }

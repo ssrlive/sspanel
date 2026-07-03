@@ -18,6 +18,7 @@ use App\Services\Gateway\Epay\EpayNotify;
 use App\Services\Gateway\Epay\EpaySubmit;
 use App\Services\Gateway\Epay\EpayTool;
 use App\Services\View;
+use App\Utils\Env;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -112,7 +113,7 @@ final class Epay extends Base
             'return_url' => $redir,
             'name' => $pl->tradeno,
             'money' => $price,
-            'sitename' => $_ENV['appName'],
+            'sitename' => Env::get('appName'),
             'clientip' => $_SERVER['REMOTE_ADDR'],
         ];
 

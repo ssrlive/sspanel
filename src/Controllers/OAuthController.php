@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Models\Config;
 use App\Models\User;
 use App\Services\Cache;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use GuzzleHttp\Client;
@@ -58,7 +59,7 @@ final class OAuthController extends BaseController
             $redis->setex('slack_state:' . $user->id, 300, $state);
             $client_id = Config::obtain('slack_client_id');
             $team_id = Config::obtain('slack_team_id');
-            $redirect_uri = $_ENV['baseUrl'] . '/oauth/slack';
+            $redirect_uri = Env::get('baseUrl') . '/oauth/slack';
 
             return $response->withJson([
                 'ret' => 1,
@@ -87,7 +88,7 @@ final class OAuthController extends BaseController
             'client_secret' => Config::obtain('slack_client_secret'),
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => $_ENV['baseUrl'] . '/oauth/slack',
+            'redirect_uri' => Env::get('baseUrl') . '/oauth/slack',
         ];
 
         $code_response = $client->post($slack_api_url, [
@@ -116,7 +117,7 @@ final class OAuthController extends BaseController
         $user->im_value = $slack_user_id;
         $user->save();
 
-        return $response->withRedirect($_ENV['baseUrl'] . '/user/edit');
+        return $response->withRedirect(Env::get('baseUrl') . '/user/edit');
     }
 
     /**
@@ -132,7 +133,7 @@ final class OAuthController extends BaseController
             $state = Tools::genRandomChar(16);
             $redis->setex('discord_state:' . $user->id, 300, $state);
             $client_id = Config::obtain('discord_client_id');
-            $redirect_uri = $_ENV['baseUrl'] . '/oauth/discord';
+            $redirect_uri = Env::get('baseUrl') . '/oauth/discord';
 
             return $response->withJson([
                 'ret' => 1,
@@ -161,7 +162,7 @@ final class OAuthController extends BaseController
             'client_secret' => Config::obtain('discord_client_secret'),
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => $_ENV['baseUrl'] . '/oauth/discord',
+            'redirect_uri' => Env::get('baseUrl') . '/oauth/discord',
         ];
 
         $code_response = $client->post($discord_api_url, [
@@ -221,7 +222,7 @@ final class OAuthController extends BaseController
             ]);
         }
 
-        return $response->withRedirect($_ENV['baseUrl'] . '/user/edit');
+        return $response->withRedirect(Env::get('baseUrl') . '/user/edit');
     }
 
     public function telegram(ServerRequest $request, Response $response, array $args): ResponseInterface

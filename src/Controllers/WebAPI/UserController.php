@@ -12,6 +12,7 @@ use App\Models\Node;
 use App\Models\OnlineLog;
 use App\Models\User;
 use App\Services\DynamicRate;
+use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Psr\Http\Message\ResponseInterface;
@@ -91,7 +92,7 @@ final class UserController extends BaseController
 
         foreach ($users_raw as $user_raw) {
             if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {
-                if ($_ENV['keep_connect']) {
+                if (Env::get('keep_connect')) {
                     // 流量耗尽用户限速至 1Mbps
                     $user_raw->node_speedlimit = 1;
                 } else {

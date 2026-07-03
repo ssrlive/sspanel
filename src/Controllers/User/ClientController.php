@@ -6,6 +6,7 @@ namespace App\Controllers\User;
 
 use App\Controllers\BaseController;
 use App\Services\Cloudflare;
+use App\Utils\Env;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -17,7 +18,7 @@ final class ClientController extends BaseController
     {
         $clientName = $this->antiXss->xss_clean($args['name']);
 
-        if (! $_ENV['enable_r2_client_download'] || $clientName === '' || $clientName === null) {
+        if (! Env::get('enable_r2_client_download') || $clientName === '' || $clientName === null) {
             return $response->withStatus(404);
         }
 

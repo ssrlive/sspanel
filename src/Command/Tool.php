@@ -9,6 +9,7 @@ use App\Models\Link;
 use App\Models\Node;
 use App\Models\User as ModelsUser;
 use App\Services\MFA;
+use App\Utils\Env;
 use App\Utils\Hash;
 use App\Utils\Tools;
 use danielsreichenbach\GeoIP2Update\Client;
@@ -384,8 +385,8 @@ EOL;
             $user->class = 0;
             $user->node_iplimit = 0;
             $user->node_speedlimit = 0;
-            $user->theme = $_ENV['theme'];
-            $user->locale = $_ENV['locale'];
+            $user->theme = Env::get('theme');
+            $user->locale = Env::get('locale');
 
             $user->ga_token = MFA::generateGaToken();
             $user->ga_enable = 0;
@@ -402,12 +403,12 @@ EOL;
 
     public function updateGeoIP2(): void
     {
-        if ($_ENV['maxmind_account_id'] !== '' && $_ENV['maxmind_license_key'] !== '') {
+        if (Env::get('maxmind_account_id') !== '' && Env::get('maxmind_license_key') !== '') {
             echo 'Updating GeoIP2 database...' . PHP_EOL;
 
             $client = new Client([
-                'account_id' => $_ENV['maxmind_account_id'],
-                'license_key' => $_ENV['maxmind_license_key'],
+                'account_id' => Env::get('maxmind_account_id'),
+                'license_key' => Env::get('maxmind_license_key'),
                 'dir' => BASE_PATH . '/storage/',
                 'editions' => ['GeoLite2-City', 'GeoLite2-Country'],
             ]);

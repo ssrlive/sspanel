@@ -9,6 +9,7 @@ use App\Models\Config;
 use App\Models\Node;
 use App\Services\I18n;
 use App\Services\Notification;
+use App\Utils\Env;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
@@ -134,7 +135,7 @@ final class NodeController extends BaseController
                     str_replace(
                         '%node_name%',
                         $request->getParam('name'),
-                        I18n::trans('bot.node_added', $_ENV['locale'])
+                        I18n::trans('bot.node_added', Env::get('locale'))
                     )
                 );
             } catch (TelegramSDKException | GuzzleException) {
@@ -225,7 +226,7 @@ final class NodeController extends BaseController
                     str_replace(
                         '%node_name%',
                         $request->getParam('name'),
-                        I18n::trans('bot.node_updated', $_ENV['locale'])
+                        I18n::trans('bot.node_updated', Env::get('locale'))
                     )
                 );
             } catch (TelegramSDKException | GuzzleException) {
@@ -286,7 +287,7 @@ final class NodeController extends BaseController
                     str_replace(
                         '%node_name%',
                         $node->name,
-                        I18n::trans('bot.node_deleted', $_ENV['locale'])
+                        I18n::trans('bot.node_deleted', Env::get('locale'))
                     )
                 );
             } catch (TelegramSDKException | GuzzleException) {

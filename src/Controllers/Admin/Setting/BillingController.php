@@ -7,6 +7,7 @@ namespace App\Controllers\Admin\Setting;
 use App\Controllers\BaseController;
 use App\Models\Config;
 use App\Services\Payment;
+use App\Utils\Env;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -86,7 +87,7 @@ final class BillingController extends BaseController
 
         try {
             WebhookEndpoint::create([
-                'url' => $_ENV['baseUrl'] . '/payment/notify/stripe',
+                'url' => Env::get('baseUrl') . '/payment/notify/stripe',
                 'enabled_events' => [
                     'payment_intent.succeeded',
                 ],
@@ -124,7 +125,7 @@ final class BillingController extends BaseController
         try {
             $pp = new PayPal($gateway_config);
             $pp->getAccessToken();
-            $pp->createWebHook($_ENV['baseUrl'] . '/payment/notify/paypal', ['PAYMENT.CAPTURE.COMPLETED']);
+            $pp->createWebHook(Env::get('baseUrl') . '/payment/notify/paypal', ['PAYMENT.CAPTURE.COMPLETED']);
         } catch (Throwable $e) {
             return $response->withJson([
                 'ret' => 0,

@@ -8,6 +8,7 @@ use App\Controllers\BaseController;
 use App\Models\Config;
 use App\Models\InviteCode;
 use App\Models\Payback;
+use App\Utils\Env;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -41,7 +42,7 @@ final class InviteController extends BaseController
             $paybacks_sum = 0;
         }
 
-        $invite_url = $_ENV['baseUrl'] . '/auth/register?code=' . $code;
+        $invite_url = Env::get('baseUrl') . '/auth/register?code=' . $code;
         $invite_reward_rate = Config::obtain('invite_reward_rate') * 100;
 
         $view = $this->view();
@@ -62,7 +63,7 @@ final class InviteController extends BaseController
             'ret' => 1,
             'msg' => '重置成功',
             'data' => [
-                'invite-url' => $_ENV['baseUrl'] . '/auth/register?code=' . $code,
+                'invite-url' => Env::get('baseUrl') . '/auth/register?code=' . $code,
             ],
         ]);
     }

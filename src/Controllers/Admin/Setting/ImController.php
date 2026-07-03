@@ -10,6 +10,7 @@ use App\Services\I18n;
 use App\Services\IM\Discord;
 use App\Services\IM\Slack;
 use App\Services\IM\Telegram;
+use App\Utils\Env;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
@@ -88,7 +89,7 @@ final class ImController extends BaseController
         $type = $args['type'];
 
         if ($type === 'telegram') {
-            $webhook_url = $_ENV['baseUrl'] . '/callback/telegram?token=' . Config::obtain('telegram_webhook_token');
+            $webhook_url = Env::get('baseUrl') . '/callback/telegram?token=' . Config::obtain('telegram_webhook_token');
 
             try {
                 $telegram = new Api($request->getParam('bot_token'));
@@ -118,7 +119,7 @@ final class ImController extends BaseController
         try {
             (new Telegram())->send(
                 (int) $request->getParam('telegram_chat_id'),
-                I18n::trans('bot.test_message', $_ENV['locale']),
+                I18n::trans('bot.test_message', Env::get('locale')),
             );
         } catch (TelegramSDKException | \Exception $e) {
             return $response->withJson([
@@ -138,7 +139,7 @@ final class ImController extends BaseController
         try {
             (new Discord())->send(
                 (int) $request->getParam('discord_channel_id'),
-                I18n::trans('bot.test_message', $_ENV['locale']),
+                I18n::trans('bot.test_message', Env::get('locale')),
             );
         } catch (GuzzleException | \Exception $e) {
             return $response->withJson([
@@ -158,7 +159,7 @@ final class ImController extends BaseController
         try {
             (new Slack())->send(
                 (int) $request->getParam('slack_channel_id'),
-                I18n::trans('bot.test_message', $_ENV['locale']),
+                I18n::trans('bot.test_message', Env::get('locale')),
             );
         } catch (GuzzleException | \Exception $e) {
             return $response->withJson([

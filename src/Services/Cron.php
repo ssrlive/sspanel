@@ -17,6 +17,7 @@ use App\Models\Paylist;
 use App\Models\SubscribeLog;
 use App\Models\User;
 use App\Models\UserMoneyLog;
+use App\Utils\Env;
 use App\Utils\Tools;
 use DateTime;
 use Exception;
@@ -91,7 +92,7 @@ final class Cron
 
                 try {
                     Notification::notifyAdmin(
-                        $_ENV['appName'] . '-系统警告',
+                        Env::get('appName') . '-系统警告',
                         '管理员你好，系统发现节点 ' . $node->name . ' 掉线了，请你及时处理。'
                     );
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
@@ -104,7 +105,7 @@ final class Cron
                             str_replace(
                                 '%node_name%',
                                 $node->name,
-                                I18n::trans('bot.node_offline', $_ENV['locale'])
+                                I18n::trans('bot.node_offline', Env::get('locale'))
                             ),
                         );
                     } catch (TelegramSDKException | GuzzleException $e) {
@@ -123,7 +124,7 @@ final class Cron
 
                 try {
                     Notification::notifyAdmin(
-                        $_ENV['appName'] . '-系统提示',
+                        Env::get('appName') . '-系统提示',
                         '管理员你好，系统发现节点 ' . $node->name . ' 恢复上线了。'
                     );
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
@@ -136,7 +137,7 @@ final class Cron
                             str_replace(
                                 '%node_name%',
                                 $node->name,
-                                I18n::trans('bot.node_online', $_ENV['locale'])
+                                I18n::trans('bot.node_online', Env::get('locale'))
                             ),
                         );
                     } catch (TelegramSDKException | GuzzleException $e) {
@@ -159,7 +160,7 @@ final class Cron
         foreach ($paidUsers as $user) {
             if (strtotime($user->class_expire) < time()) {
                 $text = '你好，系统发现你的账号等级已经过期了。';
-                $reset_traffic = $_ENV['class_expire_reset_traffic'];
+                $reset_traffic = Env::get('class_expire_reset_traffic');
 
                 if ($reset_traffic >= 0) {
                     $user->transfer_enable = Tools::gbToB($reset_traffic);
@@ -167,7 +168,7 @@ final class Cron
                 }
 
                 try {
-                    Notification::notifyUser($user, $_ENV['appName'] . '-你的账号等级已经过期了', $text);
+                    Notification::notifyUser($user, Env::get('appName') . '-你的账号等级已经过期了', $text);
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
                     echo $e->getMessage() . PHP_EOL;
                 }
@@ -466,7 +467,7 @@ final class Cron
             try {
                 Notification::notifyUser(
                     $user,
-                    $_ENV['appName'] . '-免费流量重置通知',
+                    Env::get('appName') . '-免费流量重置通知',
                     '你好，你的免费流量已经被重置为' . $user->auto_reset_bandwidth . 'GB。'
                 );
             } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
@@ -587,14 +588,14 @@ final class Cron
             $unit_text = '';
 
             if (
-                $_ENV['notify_limit_mode'] === 'per' &&
-                $user_traffic_left / $user->transfer_enable * 100 < $_ENV['notify_limit_value']
+                Env::get('notify_limit_mode') === 'per' &&
+                $user_traffic_left / $user->transfer_enable * 100 < Env::get('notify_limit_value')
             ) {
                 $under_limit = true;
                 $unit_text = '%';
             } elseif (
-                $_ENV['notify_limit_mode'] === 'mb' &&
-                Tools::bToMB($user_traffic_left) < $_ENV['notify_limit_value']
+                Env::get('notify_limit_mode') === 'mb' &&
+                Tools::bToMB($user_traffic_left) < Env::get('notify_limit_value')
             ) {
                 $under_limit = true;
                 $unit_text = 'MB';
@@ -604,8 +605,8 @@ final class Cron
                 try {
                     Notification::notifyUser(
                         $user,
-                        $_ENV['appName'] . '-你的剩余流量过低',
-                        '你好，系统发现你剩余流量已经低于 ' . $_ENV['notify_limit_value'] . $unit_text . ' 。',
+                        Env::get('appName') . '-你的剩余流量过低',
+                        '你好，系统发现你剩余流量已经低于 ' . Env::get('notify_limit_value') . $unit_text . ' 。',
                     );
 
                     $user->traffic_notified = true;
@@ -649,7 +650,7 @@ final class Cron
     {
         try {
             Notification::notifyUserGroup(
-                I18n::trans('bot.daily_job_run', $_ENV['locale'])
+                I18n::trans('bot.daily_job_run', Env::get('locale'))
             );
         } catch (TelegramSDKException | GuzzleException $e) {
             echo $e->getMessage() . PHP_EOL;
@@ -671,7 +672,7 @@ final class Cron
                         Analytics::getTodayCheckinUser(),
                         Analytics::getTodayTrafficUsage(),
                     ],
-                    I18n::trans('bot.diary', $_ENV['locale'])
+                    I18n::trans('bot.diary', Env::get('locale'))
                 )
             );
         } catch (TelegramSDKException | GuzzleException $e) {

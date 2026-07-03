@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\IM;
 
 use App\Models\Config;
+use App\Utils\Env;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -29,7 +30,7 @@ final class Discord extends Base
     {
         $headers = [
             'Authorization' => "Bot {$this->token}",
-            'User-Agent' => 'DiscordBot (' . $_ENV['appName'] . ', ' . PANEL_VERSION . ')',
+            'User-Agent' => 'DiscordBot (' . Env::get('appName') . ', ' . PANEL_VERSION . ')',
             'Content-Type' => 'application/json',
         ];
 

@@ -10,6 +10,7 @@ use App\Models\Paylist;
 use App\Services\Auth;
 use App\Services\Exchange;
 use App\Services\View;
+use App\Utils\Env;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -124,8 +125,8 @@ final class Stripe extends Base
                         'trade_no' => $pl->tradeno,
                     ],
                 ],
-                'success_url' => $_ENV['baseUrl'] . '/user/invoice/' . $invoice_id . '/view',
-                'cancel_url' => $_ENV['baseUrl'] . '/user/invoice/' . $invoice_id . '/view',
+                'success_url' => Env::get('baseUrl') . '/user/invoice/' . $invoice_id . '/view',
+                'cancel_url' => Env::get('baseUrl') . '/user/invoice/' . $invoice_id . '/view',
             ]);
         } catch (ApiErrorException) {
             return $response->withJson([

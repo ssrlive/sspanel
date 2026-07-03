@@ -7,6 +7,7 @@ namespace App\Services\Bot\Telegram\Commands;
 use App\Models\Config;
 use App\Services\Bot\Telegram\Message;
 use App\Services\I18n;
+use App\Utils\Env;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -50,7 +51,7 @@ final class UnbindCommand extends Command
                 // 回送信息
                 $this->replyWithMessage(
                     [
-                        'text' => I18n::trans('bot.user_not_bind', $_ENV['locale']),
+                        'text' => I18n::trans('bot.user_not_bind', Env::get('locale')),
                         'parse_mode' => 'Markdown',
                     ]
                 );

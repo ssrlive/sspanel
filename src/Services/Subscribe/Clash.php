@@ -6,6 +6,7 @@ namespace App\Services\Subscribe;
 
 use App\Models\User;
 use App\Services\Subscribe;
+use App\Utils\Env;
 use App\Utils\Tools;
 use function array_merge;
 use function json_decode;
@@ -17,9 +18,9 @@ final class Clash extends Base
     public function getContent(User $user): string
     {
         $nodes = [];
-        $clash_config = $_ENV['Clash_Config'];
-        $clash_group_indexes = $_ENV['Clash_Group_Indexes'];
-        $clash_group_config = $_ENV['Clash_Group_Config'];
+        $clash_config = Env::get('Clash_Config');
+        $clash_group_indexes = Env::get('Clash_Group_Indexes');
+        $clash_group_config = Env::get('Clash_Group_Config');
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {

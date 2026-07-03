@@ -6,6 +6,7 @@ namespace App\Middleware;
 
 use App\Services\Auth as AuthService;
 use App\Services\View;
+use App\Utils\Env;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -53,11 +54,11 @@ final class ErrorHandler implements MiddlewareInterface
         } catch (Throwable $e) {
             $response_factory = AppFactory::determineResponseFactory();
 
-            if ($_ENV['sentry_dsn'] !== '') {
+            if (Env::get('sentry_dsn') !== '') {
                 captureException($e);
             }
 
-            if ($_ENV['debug']) {
+            if (Env::get('debug')) {
                 $callable_resolver = new CallableResolver(null);
                 $error_handler = new SlimErrorHandler($callable_resolver, $response_factory);
                 $response = $error_handler($request, $e, true, true, false);

@@ -7,6 +7,8 @@ return [
     'remove' => [
         NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
         NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ClassMethodAverageCyclomaticComplexityIsHigh::class,
+        NunoMaduro\PhpInsights\Domain\Insights\MethodCyclomaticComplexityIsHigh::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants::class,
         NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals::class,

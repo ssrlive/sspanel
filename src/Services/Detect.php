@@ -9,6 +9,7 @@ use App\Models\DetectBanLog;
 use App\Models\DetectLog;
 use App\Models\Node;
 use App\Models\User;
+use App\Utils\Env;
 use App\Utils\Tools;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -34,8 +35,8 @@ final class Detect
         foreach ($nodes as $node) {
             $api_url = str_replace(
                 ['{ip}', '{port}'],
-                [$node->ipv4, $_ENV['detect_gfw_port']],
-                $_ENV['detect_gfw_url']
+                [$node->ipv4, Env::get('detect_gfw_port')],
+                Env::get('detect_gfw_url')
             );
 
             $json_tcping = json_decode(file_get_contents($api_url), true);
@@ -52,7 +53,7 @@ final class Detect
 
                 try {
                     Notification::notifyAdmin(
-                        $_ENV['appName'] . '-系统警告',
+                        Env::get('appName') . '-系统警告',
                         '管理员你好，系统发现节点 ' . $node->name . ' 被墙了。'
                     );
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
@@ -65,7 +66,7 @@ final class Detect
                             str_replace(
                                 '%node_name%',
                                 $node->name,
-                                I18n::trans('bot.node_gfwed', $_ENV['locale'])
+                                I18n::trans('bot.node_gfwed', Env::get('locale'))
                             ),
                         );
                     } catch (TelegramSDKException | GuzzleException $e) {
@@ -85,7 +86,7 @@ final class Detect
 
                 try {
                     Notification::notifyAdmin(
-                        $_ENV['appName'] . '-系统提示',
+                        Env::get('appName') . '-系统提示',
                         '管理员你好，系统发现节点 ' . $node->name . ' 溜出墙了。'
                     );
                 } catch (GuzzleException | ClientExceptionInterface | TelegramSDKException $e) {
@@ -98,7 +99,7 @@ final class Detect
                             str_replace(
                                 '%node_name%',
                                 $node->name,
-                                I18n::trans('bot.node_ungfwed', $_ENV['locale'])
+                                I18n::trans('bot.node_ungfwed', Env::get('locale'))
                             ),
                         );
                     } catch (TelegramSDKException | GuzzleException $e) {
@@ -135,8 +136,8 @@ final class Detect
 
             if (
                 $user->is_banned === 1 ||
-                ($user->is_admin && $_ENV['auto_detect_ban_allow_admin']) ||
-                in_array($user->id, $_ENV['auto_detect_ban_allow_users'])
+                ($user->is_admin && Env::get('auto_detect_ban_allow_admin')) ||
+                in_array($user->id, Env::get('auto_detect_ban_allow_users'))
             ) {
                 continue;
             }
@@ -148,7 +149,7 @@ final class Detect
             $last_all_detect_number = ((int) $last_DetectBanLog?->all_detect_number);
             $detect_number = $user->all_detect_number - $last_all_detect_number;
 
-            if ($detect_number >= $_ENV['auto_detect_ban_number']) {
+            if ($detect_number >= Env::get('auto_detect_ban_number')) {
                 $last_detect_ban_time = $user->last_detect_ban_time;
                 $user->is_banned = 1;
                 $user->banned_reason = 'DetectBan';
@@ -157,7 +158,7 @@ final class Detect
                 $DetectBanLog = new DetectBanLog();
                 $DetectBanLog->user_id = $user->id;
                 $DetectBanLog->detect_number = $detect_number;
-                $DetectBanLog->ban_time = $_ENV['auto_detect_ban_time'];
+                $DetectBanLog->ban_time = Env::get('auto_detect_ban_time');
                 $DetectBanLog->start_time = strtotime($last_detect_ban_time);
                 $DetectBanLog->end_time = time();
                 $DetectBanLog->all_detect_number = $user->all_detect_number;

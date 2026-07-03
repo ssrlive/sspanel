@@ -8,6 +8,7 @@ use App\Models\Config;
 use App\Services\Bot\Telegram\Message;
 use App\Services\I18n;
 use App\Services\Reward;
+use App\Utils\Env;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use function in_array;
@@ -60,7 +61,7 @@ final class CheckinCommand extends Command
             // 回送信息
             $response = $this->replyWithMessage(
                 [
-                    'text' => I18n::trans('bot.user_not_bind', $_ENV['locale']),
+                    'text' => I18n::trans('bot.user_not_bind', Env::get('locale')),
                     'parse_mode' => 'Markdown',
                     'reply_to_message_id' => $message->messageId,
                 ]
