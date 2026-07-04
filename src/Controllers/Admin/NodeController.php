@@ -118,7 +118,7 @@ final class NodeController extends BaseController
         $node->type = $request->getParam('type') === 'true' ? 1 : 0;
         $node->sort = $request->getParam('sort');
         $node->node_class = $request->getParam('node_class');
-        $node->node_bandwidth_limit = Tools::gbToB($request->getParam('node_bandwidth_limit'));
+        $node->node_bandwidth_limit = Tools::gbToB((int) $request->getParam('node_bandwidth_limit'));
         $node->bandwidthlimit_resetday = $request->getParam('bandwidthlimit_resetday');
         $node->password = Tools::genRandomChar(32);
 
@@ -210,7 +210,7 @@ final class NodeController extends BaseController
         $node->type = $request->getParam('type') === 'true' ? 1 : 0;
         $node->sort = $request->getParam('sort');
         $node->node_class = $request->getParam('node_class');
-        $node->node_bandwidth_limit = Tools::gbToB($request->getParam('node_bandwidth_limit'));
+        $node->node_bandwidth_limit = Tools::gbToB((int) $request->getParam('node_bandwidth_limit'));
         $node->bandwidthlimit_resetday = $request->getParam('bandwidthlimit_resetday');
 
         if (! $node->save()) {
