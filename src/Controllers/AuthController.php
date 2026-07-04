@@ -109,7 +109,7 @@ final class AuthController extends BaseController
             $time = 86400 * Env::getInt('rememberMeDuration', 7);
         }
 
-        Auth::login($user->id, $time, ['REMOTE_ADDR' => $remoteAddr]);
+        Auth::login($user->id, $time, $request->getServerParams());
         // 记录登录成功
         $loginIp->collectLoginIP($remoteAddr, 0, $user->id);
         $user->last_login_time = time();
@@ -208,6 +208,7 @@ final class AuthController extends BaseController
         float $money,
         string $remoteAddr,
         array $cookies,
+        array $server,
         bool $is_admin_reg
     ): ResponseInterface {
         $redir = $this->antiXss->xss_clean(Cookie::get('redir', $cookies)) ?? '/user';
@@ -274,7 +275,7 @@ final class AuthController extends BaseController
                 Reward::issueRegReward($user->id, $user->ref_by);
             }
 
-            Auth::login($user->id, 3600, ['REMOTE_ADDR' => $remoteAddr]);
+            Auth::login($user->id, 3600, $server);
             (new LoginIp())->collectLoginIP($remoteAddr, 0, $user->id);
 
             return $response->withHeader('HX-Redirect', $redir);
@@ -375,6 +376,7 @@ final class AuthController extends BaseController
             0,
             $remoteAddr,
             $request->getCookieParams(),
+            $request->getServerParams(),
             false
         );
     }

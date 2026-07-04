@@ -138,6 +138,7 @@ final class UserController extends BaseController
             $balance,
             $remoteAddr,
             $request->getCookieParams(),
+            $request->getServerParams(),
             false
         );
         $user = (new User())->where('email', $email)->first();
