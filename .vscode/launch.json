@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Built-in web server",
+            "type": "php",
+            "request": "launch",
+            "runtimeArgs": [
+                "-dxdebug.mode=debug",
+                "-dxdebug.start_with_request=yes",
+                "-S",
+                "localhost:8080",
+                "-t",
+                "${workspaceRoot}/public"
+            ],
+            "program": "",
+            "cwd": "${workspaceRoot}",
+            "port": 9003,
+
+            "pathMappings": {
+                "/var/www/sspanel": "${workspaceFolder}"
+            },
+
+            "serverReadyAction": {
+                "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
+                "uriFormat": "http://localhost:%s",
+                "action": "openExternally"
+            },
+            
+            "log": true,
+            "xdebugSettings": {
+                "max_depth": 5,
+                "max_children": 128
+            }
+        }
+    ]
+}
