@@ -49,10 +49,13 @@ final class NodeToken implements MiddlewareInterface
             ]);
         }
 
+        $requestHostUrl = 'https://' . trim($request->getHeaderLine('Host'), '/');
+        $configuredWebApiUrl = rtrim((string) Env::get('webAPIUrl'), '/');
+
         if (
             ! Env::get('webAPI') ||
             $key !== Env::get('muKey') ||
-            'https://' . $request->getHeaderLine('Host') !== Env::get('webAPIUrl')
+            $requestHostUrl !== $configuredWebApiUrl
         ) {
             /** @var Response $response */
             $response = AppFactory::determineResponseFactory()->createResponse(401);
