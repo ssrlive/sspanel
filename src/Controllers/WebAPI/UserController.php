@@ -181,20 +181,33 @@ final class UserController extends BaseController
             $u = $log?->u;
             $d = $log?->d;
             $user_id = $log?->user_id;
+            $client_uuid = $log?->client_id;
+            $user = null;
+
+            if (! $user_id && $client_uuid !== null) {
+                $user = (new User())->where('uuid', $client_uuid)->first();
+                if ($user !== null) {
+                    $user_id = $user->id;
+                }
+            }
 
             if ($user_id) {
                 $billed_u = $u * $rate;
                 $billed_d = $d * $rate;
 
-                $user = (new User())->find($user_id);
+                if ($user === null) {
+                    $user = (new User())->find($user_id);
+                }
 
-                $user->update([
-                    'last_use_time' => time(),
-                    'u' => $user->u + $billed_u,
-                    'd' => $user->d + $billed_d,
-                    'transfer_total' => $user->transfer_total + $u + $d,
-                    'transfer_today' => $user->transfer_today + $billed_u + $billed_d,
-                ]);
+                if ($user !== null) {
+                    $user->update([
+                        'last_use_time' => time(),
+                        'u' => $user->u + $billed_u,
+                        'd' => $user->d + $billed_d,
+                        'transfer_total' => $user->transfer_total + $u + $d,
+                        'transfer_today' => $user->transfer_today + $billed_u + $billed_d,
+                    ]);
+                }
             }
 
             if ($is_traffic_log) {
