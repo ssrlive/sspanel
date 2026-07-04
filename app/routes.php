@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Middleware\Admin;
 use App\Middleware\Guest;
-use App\Middleware\NodeApi;
 use App\Middleware\NodeToken;
 use App\Middleware\User;
 use Slim\Routing\RouteCollectorProxy;
@@ -328,16 +327,4 @@ return static function (Slim\App $app): void {
     //$app->group('/user/api/v1', function (RouteCollectorProxy $group): void {
     //    $group->post('/{action}', App\Controllers\Api\UserApiV1Controller::class . ':actionHandler');
     //})->add(new UserApi());
-
-    // WebAPI V2(Aka Node API V1)
-    $app->group('/node/api/v1', static function (RouteCollectorProxy $group): void {
-        $group->put('/heartbeat', App\Controllers\Api\NodeApiV1Controller::class . ':getHeartbeat');
-        $group->get('/info', App\Controllers\Api\NodeApiV1Controller::class . ':getInfo');
-        $group->get('/user', App\Controllers\Api\NodeApiV1Controller::class . ':getUser');
-        $group->get('/getUsers', App\Controllers\Api\NodeApiV1Controller::class . ':getUsers');
-        $group->get('/detect_rule', App\Controllers\Api\NodeApiV1Controller::class . ':getDetectRule');
-        $group->post('/user/traffic', App\Controllers\Api\NodeApiV1Controller::class . ':addUserTraffic');
-        $group->post('/user/online_ip', App\Controllers\Api\NodeApiV1Controller::class . ':addUserOnlineIp');
-        $group->post('/user/detect_log', App\Controllers\Api\NodeApiV1Controller::class . ':addUserDetectLog');
-    })->add(new NodeApi());
 };
