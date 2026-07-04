@@ -1,49 +1,67 @@
+<!doctype html>
+<html lang="{$user->locale}"
+    data-bs-theme="{$user->is_dark_mode === 1 ? 'dark' : ($user->is_dark_mode === 2 ? 'auto' : 'light')}">
+
 {include file='user/header.tpl'}
 
-<div class="page-wrapper">
-    <div class="container-xl">
-        <div class="page-header d-print-none text-white">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h2 class="page-title">
-                        <span class="home-title">站点公告</span>
-                    </h2>
-                    <div class="page-pretitle my-3">
-                        <span class="home-subtitle">管理员发布的所有公告</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="page-body">
-        <div class="container-xl">
-            <div class="row row-deck row-cards">
-                <div class="col-sm-12 col-lg-12">
-                    <div class="card">
-                        <div class="table-responsive">
-                            <table class="table table-vcenter card-table">
-                                <thead>
-                                    <tr>
-                                        <th>公告ID</th>
-                                        <th>发布日期</th>
-                                        <th>公告内容</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {foreach $anns as $ann}
-                                        <tr>
-                                            <td>{$ann->id}</td>
-                                            <td>{$ann->date}</td>
-                                            <td>{$ann->content}</td>
-                                        </tr>
-                                    {/foreach}
-                                </tbody>
-                            </table>
+<body {if $user->is_dark_mode === 1}data-bs-theme="dark" {elseif $user->is_dark_mode === 2}data-bs-theme="auto" {/if}>
+    <div class="page">
+        {include file='user/body-prefix.tpl'}
+
+        <div class="page-wrapper">
+            <div class="container-xl">
+                <div class="page-header d-print-none text-white">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                <span class="home-title">站点公告</span>
+                            </h2>
+                            <div class="page-pretitle my-3">
+                                <span class="home-subtitle">管理员发布的所有公告</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter card-table">
+                                        <thead>
+                                            <tr>
+                                                <th>公告ID</th>
+                                                <th>发布日期</th>
+                                                <th>公告内容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {foreach $anns as $ann}
+                                                <tr>
+                                                    <td>{$ann->id}</td>
+                                                    <td>{$ann->date}</td>
+                                                    <td>{$ann->content}</td>
+                                                </tr>
+                                            {/foreach}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {include file='user/footer.tpl'}
         </div>
     </div>
 
-{include file='user/footer.tpl'}
+    {include file="user/footer-scripts.tpl"}
+
+    {include file='live_chat.tpl'}
+
+</body>
+
+</html>

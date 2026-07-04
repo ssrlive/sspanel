@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="{$config['locale']}" data-bs-theme="auto">
+
 {include file='header.tpl'}
 
 <body class="border-top-wide border-primary d-flex flex-column">
@@ -19,4 +22,7 @@
         </div>
     </div>
 
-{include file='footer.tpl'}
+    {include file='footer.tpl'}
+</body>
+
+</html>

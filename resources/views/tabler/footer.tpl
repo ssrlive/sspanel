@@ -74,7 +74,3 @@
 </script>
 
 {include file='live_chat.tpl'}
-
-</body>
-
-</html>
