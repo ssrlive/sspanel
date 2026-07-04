@@ -68,7 +68,7 @@ final class Cookie extends Base
         $userAgent = $server['HTTP_USER_AGENT'] ?? '';
 
         if (Env::get('enable_login_bind_ip')) {
-            $node = (new Node())->where('ipv4', $remoteAddr)->orWhere('ipv6', $remoteAddr)->first();
+            $node = (new Node())->where('server', $remoteAddr)->first();
 
             if ($node === null && $ipHash !== Hash::ipHash($remoteAddr, (int) $uid, $expire_in)) {
                 return $user;

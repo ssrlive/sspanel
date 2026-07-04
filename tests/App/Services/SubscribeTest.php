@@ -43,8 +43,6 @@ final class SubscribeTest extends TestCase
             $table->string('name');
             $table->integer('online');
             $table->integer('node_speedlimit');
-            $table->integer('ipv4');
-            $table->string('ipv6');
             $table->integer('gfw_block');
             $table->string('server')->default('127.0.0.1');
         });
@@ -106,8 +104,6 @@ final class SubscribeTest extends TestCase
             'name' => 'node1',
             'online' => 1,
             'node_speedlimit' => 0,
-            'ipv4' => '127.0.0.1',
-            'ipv6' => '::1',
             'gfw_block' => 0,
             'server' => '127.0.0.1',
         ]);

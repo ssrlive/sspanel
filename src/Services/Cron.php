@@ -681,16 +681,4 @@ final class Cron
 
         echo Tools::toDateTime(time()) . ' Successfully sent diary notification' . PHP_EOL;
     }
-
-    public static function updateNodeIp(): void
-    {
-        $nodes = (new Node())->where('type', 1)->get();
-
-        foreach ($nodes as $node) {
-            $node->updateNodeIp();
-            $node->save();
-        }
-
-        echo Tools::toDateTime(time()) . ' 更新节点 IP 完成' . PHP_EOL;
-    }
 }

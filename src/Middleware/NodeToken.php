@@ -70,7 +70,7 @@ final class NodeToken implements MiddlewareInterface
 
             if (
                 $ip !== '127.0.0.1' && $ip !== '::1' && $ip !== '0:0:0:0:0:0:0:1' &&
-                ! (new Node())->where('ipv4', $ip)->orWhere('ipv6', $ip)->exists()
+                ! (new Node())->where('server', $ip)->exists()
             ) {
                 /** @var Response $response */
                 $response = AppFactory::determineResponseFactory()->createResponse(401);

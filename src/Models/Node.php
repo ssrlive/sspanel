@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Utils\Tools;
-use Exception;
 use Illuminate\Database\Query\Builder;
-use function dns_get_record;
 use function time;
-use const DNS_A;
-use const DNS_AAAA;
 
 /**
  * @property int    $id                      节点ID
@@ -30,8 +25,6 @@ use const DNS_AAAA;
  * @property int    $bandwidthlimit_resetday 流量重置日
  * @property int    $node_heartbeat          节点心跳
  * @property int    $online_user             节点在线用户
- * @property string $ipv4                    IPv4地址
- * @property string $ipv6                    IPv6地址
  * @property int    $node_group              节点群组
  * @property int    $online                  在线状态
  * @property int    $gfw_block               是否被GFW封锁
@@ -59,12 +52,6 @@ final class Node extends Model
             1 => 'green',
             default => 'red',
         };
-    }
-
-    public function getConnectionTypeAttribute(): int
-    {
-        // 0 = IPv4, 1 = IPv6, 2 = DualStack
-        return $this->ipv6 !== '::1' && $this->ipv4 !== '127.0.0.1' ? 2 : ($this->ipv4 !== '127.0.0.1' ? 0 : 1);
     }
 
     /**
@@ -114,28 +101,5 @@ final class Node extends Model
     public function getNodeOnlineStatus(): int
     {
         return $this->node_heartbeat === 0 ? 0 : ($this->node_heartbeat + 600 > time() ? 1 : -1);
-    }
-
-    /**
-     * 更新节点 IP
-     */
-    public function updateNodeIp(): void
-    {
-        if (Tools::isIPv4($this->server)) {
-            $this->ipv4 = $this->server;
-            $this->ipv6 = '::1';
-        } elseif (Tools::isIPv6($this->server)) {
-            $this->ipv4 = '127.0.0.1';
-            $this->ipv6 = $this->server;
-        } else {
-            try {
-                $result = dns_get_record($this->server, DNS_A + DNS_AAAA);
-                $this->ipv4 = $result[0]['ip'] ?? '127.0.0.1';
-                $this->ipv6 = $result[1]['ipv6'] ?? '::1';
-            } catch (Exception) {
-                $this->ipv4 = '127.0.0.1';
-                $this->ipv6 = '::1';
-            }
-        }
     }
 }

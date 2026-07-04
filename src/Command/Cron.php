@@ -44,9 +44,6 @@ EOL;
         $jobs->expirePaidUserAccount();
         $jobs->sendPaidUserUsageLimitNotification();
 
-        // Run node related jobs
-        $jobs->updateNodeIp();
-
         if (Env::get('enable_detect_offline')) {
             $jobs->detectNodeOffline();
         }
