@@ -17,7 +17,6 @@ use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
-use Ramsey\Uuid\Uuid;
 use RedisException;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -174,7 +173,6 @@ final class InfoController extends BaseController
     {
         $user = $this->user;
         $user->passwd = Tools::genRandomChar(16);
-        $user->uuid = Uuid::uuid4();
 
         if (! $user->save()) {
             return ResponseHelper::error($response, '重置失败');
@@ -185,7 +183,6 @@ final class InfoController extends BaseController
             'msg' => '重置成功',
             'data' => [
                 'passwd' => $user->passwd,
-                'uuid' => $user->uuid,
             ],
         ]);
     }

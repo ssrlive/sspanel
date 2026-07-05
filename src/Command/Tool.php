@@ -44,7 +44,6 @@ final class Tool extends Command
 │ ├─ resetPassword       - 重置所有用户登录密码
 │ ├─ resetPasswd         - 重置所有用户连接密码
 │ ├─ clearSubToken       - 清除用户 Sub Token
-│ ├─ generateUUID        - 为所有用户生成新的 UUID
 │ ├─ generateGa          - 为所有用户生成新的 Ga Secret
 │ ├─ generateApiToken    - 为所有用户生成新的 API Token
 │ ├─ setTheme            - 为所有用户设置新的主题
@@ -251,21 +250,6 @@ EOL;
         Link::query()->truncate();
 
         echo '已清除所有用户 Sub Token' . PHP_EOL;
-    }
-
-    /**
-     * 为所有用户生成新的 UUID
-     */
-    public function generateUUID(): void
-    {
-        $users = ModelsUser::all();
-
-        foreach ($users as $user) {
-            $user->uuid = Uuid::uuid4();
-            $user->save();
-        }
-
-        echo '已为所有用户生成新的 UUID' . PHP_EOL;
     }
 
     /**

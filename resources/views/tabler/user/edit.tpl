@@ -363,7 +363,7 @@
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <h3 class="card-title">重置连接密码</h3>
-                                                            <p>重置连接密码与UUID ，重置后需更新订阅，才能继续使用</p>
+                                                            <p>重置连接密码，重置后需更新订阅，才能继续使用</p>
                                                             <p>当前连接密码 <code id="passwd"
                                                                     class="spoiler">{$user->passwd}</code>
                                                             </p>
