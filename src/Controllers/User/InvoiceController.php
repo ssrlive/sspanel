@@ -140,6 +140,15 @@ final class InvoiceController extends BaseController
             $invoice->update_time = time();
             $invoice->pay_time = time();
             $invoice->save();
+
+            if ($invoice->status === 'paid_balance') {
+                $order = (new \App\Models\Order())->find($invoice->order_id);
+                if ($order !== null && $order->status === 'pending_payment') {
+                    $order->status = 'pending_activation';
+                    $order->update_time = time();
+                    $order->save();
+                }
+            }
         } else {
             return $response->withJson([
                 'ret' => 0,

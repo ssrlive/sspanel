@@ -257,23 +257,21 @@ sudo -u www-data /usr/bin/php xcat ClientDownload
 执行 `crontab -e` 指令设置 SSPanel 的基本 cron 任务：
 
 ```bash
-*/1 * * * * /usr/local/php/bin/php /sspanel/xcat  Job CheckJob
-0 */1 * * * /usr/local/php/bin/php /sspanel/xcat  Job UserJob
-0 0 * * * /usr/local/php/bin/php -n /sspanel/xcat Job DailyJob
+*/1 * * * * /usr/bin/php /var/www/sspanel/xcat Cron
 ```
 
-设置财务报表：
+当前版本的 `Cron` 命令已经包含：
+
+- 订单处理与激活
+- 用户到期检查
+- 日常/每周/每月财务报表
+- GFW 检测
+- 站点邮箱队列处理
+
+如果你需要单独触发财务邮件或 GFW 检测，也可以直接使用：
 
 ```bash
-5 0 * * * /usr/local/php/bin/php /sspanel/xcat FinanceMail day
-6 0 * * 0 /usr/local/php/bin/php /sspanel/xcat FinanceMail week
-7 0 1 * * /usr/local/php/bin/php /sspanel/xcat FinanceMail month
-```
-
-设置节点 GFW 检测：
-
-```bash
-*/1 * * * * /usr/local/php/bin/php /sspanel/xcat DetectGFW
+/usr/bin/php /var/www/sspanel/xcat Cron
 ```
 
 ### **0x48** 如何同步更新
@@ -288,8 +286,8 @@ git pull
 
 ```bash
 composer update
-vendor/bin/phinx migrate
-php xcat Tool importAllSettings
+php xcat Migration latest
+php xcat Tool importSetting
 ```
 
 同时需要注意有没有什么参数在 `.config.example.php` 文件中有，

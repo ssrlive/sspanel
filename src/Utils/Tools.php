@@ -151,22 +151,34 @@ final class Tools
         return round(pow(1000, $base - floor($base)), $precision) . $units[(int) floor($base)];
     }
 
-    public static function mbToB(int $traffic): int
+    public static function mbToB(int|string $traffic): int
     {
+        if (! is_numeric($traffic)) {
+            return 0;
+        }
+
+        $traffic = (int) $traffic;
+
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
         }
 
-        return (int) $traffic * 1048576;
+        return $traffic * 1048576;
     }
 
-    public static function gbToB(int $traffic): int
+    public static function gbToB(int|string $traffic): int
     {
+        if (! is_numeric($traffic)) {
+            return 0;
+        }
+
+        $traffic = (int) $traffic;
+
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
         }
 
-        return (int) $traffic * 1073741824;
+        return $traffic * 1073741824;
     }
 
     public static function bToMB(int $traffic): float

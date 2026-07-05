@@ -6,6 +6,7 @@ namespace App\Services\Gateway;
 
 use App\Models\Config;
 use App\Models\Invoice;
+use App\Models\Order;
 use App\Models\Paylist;
 use App\Models\User;
 use App\Models\UserMoneyLog;
@@ -70,6 +71,13 @@ abstract class Base
             $invoice->update_time = time();
             $invoice->pay_time = time();
             $invoice->save();
+
+            $order = (new Order())->find($invoice->order_id);
+            if ($order !== null && $order->status === 'pending_payment') {
+                $order->status = 'pending_activation';
+                $order->update_time = time();
+                $order->save();
+            }
         }
 
         $user = (new User())->find($paylist?->userid);
