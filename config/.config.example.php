@@ -12,7 +12,6 @@ $_ENV['baseUrl'] = 'https://example.com';   // 站点地址，必须以 https://
 // WebAPI
 $_ENV['webAPI'] = true;                // 是否开启 WebAPI 功能
 $_ENV['webAPIUrl'] = $_ENV['baseUrl']; // WebAPI 地址，如需和站点地址相同，请不要修改
-$_ENV['muKey'] = 'ChangeMe';           // WebAPI 密钥，用于节点服务端与面板通信，请务必修改此 key 为随机字符串
 $_ENV['checkNodeIp'] = true;           // 是否 webapi 验证节点 ip
 
 // 数据库设置 -------------------------------------------------------------------------------------------------------
