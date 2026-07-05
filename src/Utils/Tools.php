@@ -89,8 +89,14 @@ final class Tools
     /**
      * 根据流量值自动转换单位输出
      */
-    public static function autoBytes(int $size, int $precision = 2): string
+    public static function autoBytes(int|string $size, int $precision = 2): string
     {
+        if (! is_numeric($size)) {
+            return '0B';
+        }
+
+        $size = (int) $size;
+
         if ($size <= 0) {
             return '0B';
         }
@@ -181,8 +187,14 @@ final class Tools
         return $traffic * 1073741824;
     }
 
-    public static function bToMB(int $traffic): float
+    public static function bToMB(int|string $traffic): float
     {
+        if (! is_numeric($traffic)) {
+            return 0;
+        }
+
+        $traffic = (int) $traffic;
+
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
         }
@@ -190,8 +202,14 @@ final class Tools
         return round($traffic / 1048576, 2);
     }
 
-    public static function bToGB(int $traffic): float
+    public static function bToGB(int|string $traffic): float
     {
+        if (! is_numeric($traffic)) {
+            return 0;
+        }
+
+        $traffic = (int) $traffic;
+
         if ($traffic <= 0 || $traffic > PHP_INT_MAX) {
             return 0;
         }
