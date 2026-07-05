@@ -140,7 +140,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row g-2">
-                                                                    {if $tabp->stock === -1 || $tabp->stock > 0}
+                                                                    {if $tabp->stock !== 0}
                                                                         <div class="col">
                                                                             <a href="/user/order/create?product_id={$tabp->id}"
                                                                                 class="btn btn-primary w-100 my-3">购买</a>
@@ -189,7 +189,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row g-2">
-                                                                    {if $bandwidth->stock === -1 || $bandwidth->stock > 0}
+                                                                    {if $bandwidth->stock !== 0}
                                                                         <div class="col">
                                                                             <a href="/user/order/create?product_id={$bandwidth->id}"
                                                                                 class="btn btn-primary w-100 my-3">购买</a>
@@ -284,7 +284,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row g-2">
-                                                                    {if $time->stock === -1 || $time->stock > 0}
+                                                                    {if $time->stock !== 0}
                                                                         <div class="col">
                                                                             <a href="/user/order/create?product_id={$time->id}"
                                                                                 class="btn btn-primary w-100 my-3">购买</a>
