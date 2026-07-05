@@ -123,6 +123,7 @@ final class UserController extends BaseController
                 unset($user_raw->$key);
             }
 
+            $user_raw->client_id = $user_raw->uuid;
             $users[] = $user_raw;
         }
 
@@ -180,8 +181,8 @@ final class UserController extends BaseController
         foreach ($data as $log) {
             $u = $log?->u;
             $d = $log?->d;
-            $user_id = $log?->user_id;
-            $client_uuid = $log?->client_id;
+            $user_id = property_exists($log, 'user_id') ? $log->user_id : null;
+            $client_uuid = property_exists($log, 'client_id') ? $log->client_id : null;
             $user = null;
 
             if (! $user_id && $client_uuid !== null) {
