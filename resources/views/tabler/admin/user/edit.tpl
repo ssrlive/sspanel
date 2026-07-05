@@ -34,7 +34,7 @@
             <div class="page-body">
                 <div class="container-xl">
                     <div class="row row-deck row-cards">
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-5 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
                                     <h3 class="card-title">账户信息</h3>
@@ -52,6 +52,15 @@
                                         <div class="col">
                                             <input id="user_name" type="text" class="form-control"
                                                 value="{$edit_user->user_name}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-3 row">
+                                        <label class="form-label col-3 col-form-label">用户标识符</label>
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <input id="user_uuid" type="text" class="form-control"
+                                                    value="{$edit_user->uuid}" disabled />
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
@@ -133,7 +142,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
                                     <h3 class="card-title">使用限制</h3>
@@ -212,7 +221,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-md-3 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
                                     <h3 class="card-title">其他设置</h3>
