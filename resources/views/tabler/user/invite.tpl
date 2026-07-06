@@ -54,7 +54,7 @@
                                                     hx-swap="none">
                                                     重置
                                                 </button>
-                                                <button data-clipboard-text="{$invite_url}"
+                                                <button id="invite-copy" data-clipboard-text="{$invite_url}"
                                                     class="copy btn btn-primary ms-auto">复制</button>
                                             </div>
                                         </div>
@@ -104,6 +104,36 @@
     </div>
 
     {include file="user/footer-scripts.tpl"}
+
+    <script>
+        htmx.on("htmx:afterRequest", function(evt) {
+            if (evt.detail.xhr.getResponseHeader('HX-Refresh') === 'true' ||
+                evt.detail.xhr.getResponseHeader('HX-Redirect') ||
+                evt.detail.xhr.getResponseHeader('HX-Trigger')) {
+                return;
+            }
+
+            let res;
+            try {
+                res = JSON.parse(evt.detail.xhr.response);
+            } catch (e) {
+                return;
+            }
+
+            if (typeof res.data !== 'undefined' && typeof res.data['invite-url'] !== 'undefined') {
+                const inviteUrlValue = res.data['invite-url'];
+                const inviteCopyButton = document.getElementById('invite-copy');
+                if (inviteCopyButton) {
+                    inviteCopyButton.setAttribute('data-clipboard-text', inviteUrlValue);
+                }
+
+                const inviteUrlInput = document.getElementById('invite-url');
+                if (inviteUrlInput) {
+                    inviteUrlInput.value = inviteUrlValue;
+                }
+            }
+        });
+    </script>
 
     {include file='live_chat.tpl'}
 
