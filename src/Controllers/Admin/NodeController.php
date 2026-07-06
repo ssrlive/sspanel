@@ -252,6 +252,9 @@ final class NodeController extends BaseController
         return $response->withJson([
             'ret' => 1,
             'msg' => '重置节点通讯密钥成功',
+            'data' => [
+                'password' => $node->password,
+            ],
         ]);
     }
 
@@ -264,6 +267,9 @@ final class NodeController extends BaseController
         return $response->withJson([
             'ret' => 1,
             'msg' => '重置节点流量成功',
+            'data' => [
+                'node_bandwidth' => $node->node_bandwidth,
+            ],
         ]);
     }
 

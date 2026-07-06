@@ -255,6 +255,9 @@
                     dataType: "json",
                     success: function(data) {
                         if (data.ret === 1) {
+                            if (data.data && typeof data.data.node_bandwidth !== 'undefined') {
+                                $('#node_bandwidth').val(data.data.node_bandwidth);
+                            }
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
                         } else {
@@ -272,6 +275,10 @@
                     dataType: "json",
                     success: function(data) {
                         if (data.ret === 1) {
+                            if (data.data && typeof data.data.password !== 'undefined') {
+                                $('#password').val(data.data.password);
+                                $('#copy-password').attr('data-clipboard-text', data.data.password);
+                            }
                             $('#success-message').text(data.msg);
                             $('#success-dialog').modal('show');
                         } else {
