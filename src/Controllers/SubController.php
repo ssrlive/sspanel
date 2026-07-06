@@ -35,6 +35,10 @@ final class SubController extends BaseController
         $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan'];
 
         if (
+            ($subtype === 'json' && Config::obtain('enable_json_sub') === false) ||
+            ($subtype === 'clash' && Config::obtain('enable_clash_sub') === false) ||
+            ($subtype === 'singbox' && Config::obtain('enable_singbox_sub') === false) ||
+            ($subtype === 'v2rayjson' && Config::obtain('enable_v2rayjson_sub') === false) ||
             ! Env::get('Subscribe') ||
             ! in_array($subtype, $subtype_list) ||
             'https://' . $request->getHeaderLine('Host') !== Env::get('subUrl')

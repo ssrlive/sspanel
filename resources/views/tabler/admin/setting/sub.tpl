@@ -102,6 +102,78 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
+                                                        Enable Json Subscription
+                                                    </label>
+                                                    <div class="col">
+                                                        <select id="enable_json_sub" class="col form-select"
+                                                            value="{$settings.enable_json_sub|default:1}">
+                                                            <option value="0"
+                                                                {if $settings.enable_json_sub|default:1 == 0}selected{/if}>
+                                                                False
+                                                            </option>
+                                                            <option value="1"
+                                                                {if $settings.enable_json_sub|default:1 == 1}selected{/if}>
+                                                                True
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3 row">
+                                                    <label class="form-label col-3 col-form-label">
+                                                        Enable Clash Subscription
+                                                    </label>
+                                                    <div class="col">
+                                                        <select id="enable_clash_sub" class="col form-select"
+                                                            value="{$settings.enable_clash_sub|default:1}">
+                                                            <option value="0"
+                                                                {if $settings.enable_clash_sub|default:1 == 0}selected{/if}>
+                                                                False
+                                                            </option>
+                                                            <option value="1"
+                                                                {if $settings.enable_clash_sub|default:1 == 1}selected{/if}>
+                                                                True
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3 row">
+                                                    <label class="form-label col-3 col-form-label">
+                                                        Enable SingBox Subscription
+                                                    </label>
+                                                    <div class="col">
+                                                        <select id="enable_singbox_sub" class="col form-select"
+                                                            value="{$settings.enable_singbox_sub|default:1}">
+                                                            <option value="0"
+                                                                {if $settings.enable_singbox_sub|default:1 == 0}selected{/if}>
+                                                                False
+                                                            </option>
+                                                            <option value="1"
+                                                                {if $settings.enable_singbox_sub|default:1 == 1}selected{/if}>
+                                                                True
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3 row">
+                                                    <label class="form-label col-3 col-form-label">
+                                                        Enable V2Ray Json Subscription
+                                                    </label>
+                                                    <div class="col">
+                                                        <select id="enable_v2rayjson_sub" class="col form-select"
+                                                            value="{$settings.enable_v2rayjson_sub|default:1}">
+                                                            <option value="0"
+                                                                {if $settings.enable_v2rayjson_sub|default:1 == 0}selected{/if}>
+                                                                False
+                                                            </option>
+                                                            <option value="1"
+                                                                {if $settings.enable_v2rayjson_sub|default:1 == 1}selected{/if}>
+                                                                True
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3 row">
+                                                    <label class="form-label col-3 col-form-label">
                                                         修改账户登录密码时重置订阅地址
                                                     </label>
                                                     <div class="col">

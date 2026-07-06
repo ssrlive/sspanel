@@ -27,9 +27,13 @@ final class Config extends Model
     protected $connection = 'default';
     protected $table = 'config';
 
-    public static function obtain(string $item): bool|int|array|string
+    public static function obtain(string $item, mixed $default = null): bool|int|array|string|null
     {
         $config = (new Config())->where('item', $item)->first();
+
+        if ($config === null) {
+            return $default;
+        }
 
         return match ($config->type) {
             'bool' => (bool) $config->value,
