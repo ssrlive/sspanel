@@ -62,12 +62,47 @@ final class AuthCookieTest extends TestCase
         $this->assertNotEmpty($_COOKIE['key']);
         $this->assertMatchesRegularExpression('/^\d+$/', $_COOKIE['expire_in']);
         $this->assertGreaterThan(time(), (int) $_COOKIE['expire_in']);
+        $this->assertSame('3600', $_COOKIE['expire_duration']);
 
         $loggedUser = $authCookie->getUser($server, $_COOKIE);
 
         $this->assertTrue($loggedUser->isLogin);
         $this->assertSame($user->id, $loggedUser->id);
         $this->assertSame('test@example.com', $loggedUser->email);
+    }
+
+    public function testGetUserRefreshesExpireInWhenUserIsActive(): void
+    {
+        $user = User::create([
+            'email' => 'test@example.com',
+            'pass' => Hash::passwordHash('password'),
+        ]);
+
+        $server = [
+            'HTTP_HOST' => 'localhost',
+            'REMOTE_ADDR' => '127.0.0.1',
+            'HTTP_USER_AGENT' => 'unit-test-agent',
+        ];
+
+        $expireDuration = 3600;
+        $oldExpireIn = time() + $expireDuration - 10;
+
+        $_COOKIE = [
+            'uid' => (string) $user->id,
+            'email' => $user->email,
+            'expire_in' => (string) $oldExpireIn,
+            'expire_duration' => (string) $expireDuration,
+            'ip' => Hash::ipHash($server['REMOTE_ADDR'], $user->id, $oldExpireIn),
+            'device' => Hash::deviceHash($server['HTTP_USER_AGENT'], $user->id, $oldExpireIn),
+            'key' => Hash::cookieHash($user->pass, $oldExpireIn),
+        ];
+
+        $loggedUser = (new AuthCookie())->getUser($server, $_COOKIE);
+
+        $this->assertTrue($loggedUser->isLogin);
+        $this->assertSame($user->id, $loggedUser->id);
+        $this->assertNotSame($oldExpireIn, (int) $_COOKIE['expire_in']);
+        $this->assertGreaterThan($oldExpireIn, (int) $_COOKIE['expire_in']);
     }
 
     public function testLogoutClearsCookieValues(): void

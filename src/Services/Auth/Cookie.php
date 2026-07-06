@@ -18,22 +18,7 @@ final class Cookie extends Base
         $user = (new User())->find($uid);
         $expire_in = $time + time();
 
-        $domain = $server['HTTP_HOST'] ?? '';
-        if (str_contains($domain, ':')) {
-            $domain = preg_replace('/:\d+$/', '', $domain);
-        }
-
-        $remoteAddr = $server['REMOTE_ADDR'] ?? '';
-        $userAgent = $server['HTTP_USER_AGENT'] ?? '';
-
-        CookieUtils::setWithDomain([
-            'uid' => (string) $uid,
-            'email' => $user->email,
-            'key' => Hash::cookieHash($user->pass, $expire_in),
-            'ip' => Hash::ipHash($remoteAddr, $uid, $expire_in),
-            'device' => Hash::deviceHash($userAgent, $uid, $expire_in),
-            'expire_in' => (string) $expire_in,
-        ], $expire_in, $domain, $server);
+        $this->setLoginCookie($user, $expire_in, $time, $server);
     }
 
     public function getUser(array $server = [], array $cookies = []): User
@@ -44,6 +29,7 @@ final class Cookie extends Base
         $ipHash = CookieUtils::get('ip', $cookies);
         $deviceHash = CookieUtils::get('device', $cookies);
         $expire_in = CookieUtils::get('expire_in', $cookies);
+        $expire_duration = CookieUtils::get('expire_duration', $cookies);
 
         $user = new User();
         $user->isLogin = false;
@@ -103,6 +89,13 @@ final class Cookie extends Base
 
         $user->isLogin = true;
 
+        if ($expire_duration !== '') {
+            $expire_duration = (int) $expire_duration;
+            if ($expire_duration > 0) {
+                $this->setLoginCookie($user, time() + $expire_duration, $expire_duration, $server);
+            }
+        }
+
         return $user;
     }
 
@@ -121,5 +114,26 @@ final class Cookie extends Base
             'device' => '',
             'expire_in' => '',
         ], 0, $domain, $server);
+    }
+
+    private function setLoginCookie(User $user, int $expire_in, int $expire_duration, array $server = []): void
+    {
+        $domain = $server['HTTP_HOST'] ?? '';
+        if (str_contains($domain, ':')) {
+            $domain = preg_replace('/:\d+$/', '', $domain);
+        }
+
+        $remoteAddr = $server['REMOTE_ADDR'] ?? '';
+        $userAgent = $server['HTTP_USER_AGENT'] ?? '';
+
+        CookieUtils::setWithDomain([
+            'uid' => (string) $user->id,
+            'email' => $user->email,
+            'key' => Hash::cookieHash($user->pass, $expire_in),
+            'ip' => Hash::ipHash($remoteAddr, $user->id, $expire_in),
+            'device' => Hash::deviceHash($userAgent, $user->id, $expire_in),
+            'expire_in' => (string) $expire_in,
+            'expire_duration' => (string) $expire_duration,
+        ], $expire_in, $domain, $server);
     }
 }
