@@ -98,6 +98,8 @@
             </div>
 
             {include file='user/footer.tpl'}
+
+            {include file='copy-to-clipboard.tpl'}
         </div>
     </div>
 

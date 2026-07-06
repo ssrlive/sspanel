@@ -8,8 +8,6 @@
     <div class="page">
         {include file='user/body-prefix.tpl'}
 
-        <script src="//{$config['jsdelivr_url']}/npm/jquery/dist/jquery.min.js"></script>
-
         <div class="page-wrapper">
             <div class="container-xl">
                 <div class="page-header d-print-none text-white">
@@ -369,6 +367,11 @@
                                                             </p>
                                                             <p>当前 UUID <code id="uuid"
                                                                     class="spoiler">{$user->uuid}</code>
+                                                                <button class="btn btn-outline-secondary copy"
+                                                                    type="button" data-clipboard-text="{$user->uuid}"
+                                                                    aria-label="复制用户UUID">
+                                                                    <i class="ti ti-copy"></i>
+                                                                </button>
                                                             </p>
                                                         </div>
                                                         <div class="card-footer">
@@ -667,6 +670,7 @@
             </script>
 
             {include file='user/footer.tpl'}
+            {include file='copy-to-clipboard.tpl'}
         </div>
     </div>
 

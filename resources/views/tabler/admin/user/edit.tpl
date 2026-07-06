@@ -60,6 +60,10 @@
                                             <div class="input-group">
                                                 <input id="user_uuid" type="text" class="form-control"
                                                     value="{$edit_user->uuid}" disabled />
+                                                <button class="btn btn-outline-secondary copy" type="button"
+                                                    data-clipboard-text="{$edit_user->uuid}" aria-label="复制用户UUID">
+                                                    <i class="ti ti-copy"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -326,6 +330,8 @@
         </script>
 
         {include file='admin/footer.tpl'}
+
+        {include file='copy-to-clipboard.tpl'}
     </div>
 
     {include file='admin/footer-scripts.tpl'}

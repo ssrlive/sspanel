@@ -4,12 +4,6 @@
     let successDialog = new bootstrap.Modal(document.getElementById('success-dialog'));
     let failDialog = new bootstrap.Modal(document.getElementById('fail-dialog'));
 
-    let clipboard = new ClipboardJS('.copy');
-    clipboard.on('success', function() {
-        document.getElementById("success-message").innerHTML = '已复制到剪切板';
-        successDialog.show();
-    });
-
     htmx.on("htmx:afterRequest", function(evt) {
         if (evt.detail.xhr.getResponseHeader('HX-Refresh') === 'true' ||
             evt.detail.xhr.getResponseHeader('HX-Redirect') ||

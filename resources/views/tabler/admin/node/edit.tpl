@@ -241,12 +241,6 @@
         </div>
 
         <script>
-            let clipboard = new ClipboardJS('.copy');
-            clipboard.on('success', function(e) {
-                $('#success-message').text('已复制到剪切板');
-                $('#success-dialog').modal('show');
-            });
-
             const container = document.getElementById('custom_config');
             let options = {
                 modes: ['code', 'tree'],
@@ -316,6 +310,8 @@
         </script>
 
         {include file='admin/footer.tpl'}
+
+        {include file='copy-to-clipboard.tpl'}
     </div>
 
     {include file='admin/footer-scripts.tpl'}
