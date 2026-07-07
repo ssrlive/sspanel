@@ -20,16 +20,21 @@
                                 <span class="home-subtitle">你可以在这里查看工单消息并添加回复</span>
                             </div>
                         </div>
-                        {if $ticket->status !== 'closed'}
-                            <div class="col-auto">
-                                <div class="btn-list">
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-reply">
-                                        <i class="icon ti ti-plus"></i>
-                                        添加回复
-                                    </a>
-                                </div>
+                        <div class="col-auto">
+                            <div class="btn-list">
+                                {if $ticket->raw_status !== 'closed'}
+                                    <button class="btn btn-danger" hx-post="/user/ticket/{$ticket->id}/close" hx-swap="none"
+                                        onclick="return confirm('确认关闭此工单？');">
+                                        关闭
+                                    </button>
+                                {/if}
+                                <a href="#" class="btn btn-primary ms-2" data-bs-toggle="modal"
+                                    data-bs-target="#add-reply">
+                                    <i class="icon ti ti-plus"></i>
+                                    添加回复
+                                </a>
                             </div>
-                        {/if}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,7 +56,7 @@
                                     <div class="d-flex align-items-center">
                                         <div class="subheader">工单状态</div>
                                     </div>
-                                    <div class="h1 mb-3">{$ticket->status}</div>
+                                    <div class="h1 mb-3">{$ticket->status_text}</div>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +66,7 @@
                                     <div class="d-flex align-items-center">
                                         <div class="subheader">工单类型</div>
                                     </div>
-                                    <div class="h1 mb-3">{$ticket->type}</div>
+                                    <div class="h1 mb-3">{$ticket->type_text}</div>
                                 </div>
                             </div>
                         </div>

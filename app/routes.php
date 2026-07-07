@@ -56,6 +56,7 @@ return static function (Slim\App $app): void {
         $group->post('/ticket', App\Controllers\User\TicketController::class . ':add');
         $group->get('/ticket/{id:[0-9]+}/view', App\Controllers\User\TicketController::class . ':detail');
         $group->post('/ticket/{id:[0-9]+}', App\Controllers\User\TicketController::class . ':reply');
+        $group->post('/ticket/{id:[0-9]+}/close', App\Controllers\User\TicketController::class . ':close');
         // 资料编辑
         $group->get('/edit', App\Controllers\User\InfoController::class . ':index');
         $group->post('/edit/email', App\Controllers\User\InfoController::class . ':updateEmail');

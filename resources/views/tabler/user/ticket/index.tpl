@@ -61,11 +61,22 @@
                                                     </p>
                                                 </div>
                                                 <div class="card-footer">
-                                                    <div class="d-flex">
-                                                        <span class="status status-grey">{$ticket->status}</span>
-                                                        <span class="status status-grey">{$ticket->type}</span>
-                                                        <a href="/user/ticket/{$ticket->id}/view"
-                                                            class="btn btn-primary ms-auto">查看</a>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="status status-grey">{$ticket->status_text}</span>
+                                                        <span class="status status-grey ms-2">{$ticket->type_text}</span>
+                                                        <div class="ms-auto">
+                                                            {if $ticket->raw_status !== 'closed'}
+                                                                <button class="btn btn-danger btn-sm me-2"
+                                                                    hx-post="/user/ticket/{$ticket->id}/close" hx-swap="none"
+                                                                    onclick="return confirm('确认关闭此工单？');">
+                                                                    关闭
+                                                                </button>
+                                                            {/if}
+                                                            <a href="/user/ticket/{$ticket->id}/view"
+                                                                class="btn btn-primary btn-sm">
+                                                                查看
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

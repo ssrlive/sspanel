@@ -40,8 +40,9 @@ final class TicketController extends BaseController
         $tickets = (new Ticket())->where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
 
         foreach ($tickets as $ticket) {
-            $ticket->status = $ticket->status();
-            $ticket->type = $ticket->type();
+            $ticket->raw_status = $ticket->status;
+            $ticket->status_text = $ticket->status();
+            $ticket->type_text = $ticket->type();
             $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
         }
 
@@ -152,6 +153,29 @@ final class TicketController extends BaseController
         return $response->withHeader('HX-Refresh', 'true');
     }
 
+    public function close(ServerRequest $request, Response $response, array $args): ResponseInterface
+    {
+        $id = $args['id'];
+        $ticket = (new Ticket())->where('id', '=', $id)->where('userid', $this->user->id)->first();
+
+        if ($ticket === null) {
+            return ResponseHelper::error($response, '工单不存在');
+        }
+
+        if ($ticket->status === 'closed') {
+            return ResponseHelper::error($response, '工单已关闭，无需重复操作');
+        }
+
+        $ticket->status = 'closed';
+        $ticket->save();
+
+        return $response->withHeader('HX-Refresh', 'true')
+            ->withJson([
+                'ret' => 1,
+                'msg' => '工单关闭成功',
+            ]);
+    }
+
     /**
      * @throws Exception
      */
@@ -175,8 +199,9 @@ final class TicketController extends BaseController
             $comment->datetime = Tools::toDateTime((int) $comment->datetime);
         }
 
-        $ticket->status = $ticket->status();
-        $ticket->type = $ticket->type();
+        $ticket->raw_status = $ticket->status;
+        $ticket->status_text = $ticket->status();
+        $ticket->type_text = $ticket->type();
         $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
 
         $view = $this->view();
