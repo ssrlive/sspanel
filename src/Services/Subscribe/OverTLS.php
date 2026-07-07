@@ -19,7 +19,7 @@ final class OverTLS extends Base
 
         foreach ($nodes_raw as $node_raw) {
             /** @var Node $node_raw */
-            if ((int) $node_raw->sort !== 4) {
+            if ($node_raw->sort() !== "OverTLS") {
                 continue;
             }
 
@@ -27,50 +27,13 @@ final class OverTLS extends Base
                 continue;
             }
 
-            $node_custom_config = json_decode($node_raw->custom_config, true);
-            if (! is_array($node_custom_config)) {
-                $node_custom_config = [];
-            }
-
-            $otPath = $node_custom_config['tunnel_path'] ?? '';
-            if ($otPath === '') {
+            $nodeUrl = self::assembleNodeUrl($node_raw, $user->uuid);
+            if ($nodeUrl === '') {
                 continue;
             }
 
-            $host = $node_custom_config['client_settings']['server_host'] ?? $node_raw->server;
-
-            $port = $node_custom_config['client_settings']['server_port'] ??
-                $node_custom_config['server_settings']['listen_port'] ?? 443;
-
-            $protocol = 'origin';
-            $method = 'none';
-            $obfs = 'plain';
-            $password = 'password';
-
-            $remarks = $node_custom_config['remarks'] ?? $node_raw->name;
-
-            $otDomain = $node_custom_config['client_settings']['server_domain'] ?? '';
-
-            $clientId = $user->uuid;
-
-            $query = [
-                'remarks' => $this->base64UrlEncode($remarks),
-                'ot_enable' => '1',
-                'ot_path' => $this->base64UrlEncode($otPath),
-            ];
-
-            if ($otDomain !== '') {
-                $query['ot_domain'] = $this->base64UrlEncode($otDomain);
-            }
-
-            if ($clientId !== null && $clientId !== '') {
-                $query['client_id'] = $clientId;
-            }
-
-            $base64Pass = $this->base64UrlEncode($password);
-            $rawUrl = $host . ':' . $port . ':' . $protocol . ':' . $method . ':' . $obfs . ':' . $base64Pass . '/?' . http_build_query($query);
             $servers[] = [
-                'url' => 'ssr://' . $this->base64UrlEncode($rawUrl),
+                'url' => $nodeUrl,
                 'type' => 'overtls',
             ];
         }
@@ -85,7 +48,65 @@ final class OverTLS extends Base
         return json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
-    private function base64UrlEncode(string $data): string
+    public static function assembleNodeUrl(Node $node, string $userUuid): string
+    {
+        if ($node->sort() !== "OverTLS") {
+            return '';
+        }
+
+        $node_custom_config = json_decode($node->custom_config, true);
+        if (! is_array($node_custom_config)) {
+            $node_custom_config = [];
+        }
+
+        $otPath = $node_custom_config['tunnel_path'] ?? '';
+        if ($otPath === '') {
+            return '';
+        }
+
+        $clientSettings = is_array($node_custom_config['client_settings'] ?? null)
+            ? $node_custom_config['client_settings'] : [];
+
+        $serverSettings = is_array($node_custom_config['server_settings'] ?? null)
+            ? $node_custom_config['server_settings'] : [];
+
+        $host = $clientSettings['server_host'] ?? $node->server;
+        if ($host === '') {
+            return '';
+        }
+
+        $port = $clientSettings['server_port'] ?? $serverSettings['listen_port'] ?? 443;
+
+        $protocol = 'origin';
+        $method = 'none';
+        $obfs = 'plain';
+        $password = 'password';
+
+        $remarks = $node_custom_config['remarks'] ?? $node->name;
+
+        $otDomain = $clientSettings['server_domain'] ?? '';
+
+        $clientId = $userUuid;
+
+        $query = [
+            'remarks' => self::base64UrlEncode($remarks),
+            'ot_enable' => '1',
+            'ot_path' => self::base64UrlEncode($otPath),
+        ];
+
+        if ($otDomain !== '') {
+            $query['ot_domain'] = self::base64UrlEncode($otDomain);
+        }
+
+        if ($clientId !== null && $clientId !== '') {
+            $query['client_id'] = $clientId;
+        }
+
+        $base64Pass = self::base64UrlEncode($password);
+        return 'ssr://' . self::base64UrlEncode($host . ':' . $port . ':' . $protocol . ':' . $method . ':' . $obfs . ':' . $base64Pass . '/?' . http_build_query($query));
+    }
+
+    private static function base64UrlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
