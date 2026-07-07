@@ -70,7 +70,7 @@ final class SubController extends BaseController
 
         $content_type = match ($subtype) {
             'clash' => 'application/yaml',
-            'json', 'sip008', 'singbox', 'v2rayjson' => 'application/json',
+            'json', 'sip008', 'singbox', 'v2rayjson', 'overtls' => 'application/json',
             default => 'text/plain',
         };
 
