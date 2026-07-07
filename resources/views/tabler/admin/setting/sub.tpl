@@ -129,6 +129,18 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
+                                                        Enable OverTLS Subscription
+                                                    </label>
+                                                    <div class="col-auto">
+                                                        <label class="form-check form-check-single form-switch">
+                                                            <input id="enable_overtls_sub" class="form-check-input"
+                                                                type="checkbox"
+                                                                {if $settings.enable_overtls_sub|default:1}checked{/if}>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3 row">
+                                                    <label class="form-label col-3 col-form-label">
                                                         修改账户登录密码时重置订阅地址
                                                     </label>
                                                     <div class="col-auto">

@@ -9,6 +9,7 @@ use App\Models\Node;
 use App\Models\User;
 use App\Services\Subscribe\Clash;
 use App\Services\Subscribe\Json;
+use App\Services\Subscribe\OverTLS;
 use App\Services\Subscribe\SingBox;
 use App\Services\Subscribe\SIP002;
 use App\Services\Subscribe\SIP008;
@@ -63,7 +64,7 @@ final class Subscribe
         return self::getClient($type)->getContent($user);
     }
 
-    public static function getClient(string $type): Json|SS|SIP002|V2Ray|Trojan|Clash|SIP008|SingBox|V2RayJson
+    public static function getClient(string $type): Json|SS|SIP002|V2Ray|Trojan|Clash|SIP008|SingBox|V2RayJson|OverTLS
     {
         return match ($type) {
             'ss' => new SS(),
@@ -74,6 +75,7 @@ final class Subscribe
             'sip008' => new SIP008(),
             'singbox' => new SingBox(),
             'v2rayjson' => new V2RayJson(),
+            'overtls' => new OverTLS(),
             default => new Json(),
         };
     }

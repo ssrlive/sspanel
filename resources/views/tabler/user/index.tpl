@@ -245,6 +245,16 @@
                                                             复制通用订阅（SIP008）
                                                         </a>
                                                     {/if}
+                                                    {if $public_setting.enable_overtls_sub|default:1}
+                                                        <p>
+                                                            通用订阅（OverTLS）：<code
+                                                                class="spoiler">{$UniversalSub}/overtls</code>
+                                                        </p>
+                                                        <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                            class="copy btn btn-primary">
+                                                            复制通用订阅（OverTLS）
+                                                        </a>
+                                                    {/if}
                                                 </div>
                                             </div>
                                         </div>
@@ -289,6 +299,16 @@
                                                         <a data-clipboard-text="{$UniversalSub}/trojan"
                                                             class="copy btn btn-primary">
                                                             复制客户端订阅（Trojan）
+                                                        </a>
+                                                    {/if}
+                                                    {if $public_setting['enable_overtls_sub']|default:1}
+                                                        <p>
+                                                            客户端订阅（OverTLS）：<code
+                                                                class="spoiler">{$UniversalSub}/overtls</code>
+                                                        </p>
+                                                        <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                            class="copy btn btn-primary">
+                                                            复制客户端订阅（OverTLS）
                                                         </a>
                                                     {/if}
                                                 </div>
@@ -341,6 +361,15 @@
                                                             </a>
                                                         </div>
                                                     </div>
+                                                {/if}
+                                                {if $public_setting['enable_overtls_sub']|default:1}
+                                                    <p>
+                                                        适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    </p>
+                                                    <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                        class="copy btn btn-primary">
+                                                        复制客户端 OverTLS 订阅
+                                                    </a>
                                                 {/if}
                                             </div>
                                         </div>
@@ -407,6 +436,15 @@
                                                     </div>
                                                 </div>
                                             {/if}
+                                            {if $public_setting['enable_overtls_sub']|default:1}
+                                                <p>
+                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 OverTLS 订阅
+                                                </a>
+                                            {/if}
                                         </div>
                                         <div class="tab-pane" id="android">
                                             {if $public_setting.enable_clash_sub|default:1}
@@ -470,6 +508,15 @@
                                                     </div>
                                                 </div>
                                             {/if}
+                                            {if $public_setting['enable_overtls_sub']|default:1}
+                                                <p>
+                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 OverTLS 订阅
+                                                </a>
+                                            {/if}
                                         </div>
                                         <div class="tab-pane" id="ios">
                                             {if $public_setting.enable_singbox_sub|default:1}
@@ -490,6 +537,15 @@
                                                         导入 SFI
                                                     </a>
                                                 </div>
+                                            {/if}
+                                            {if $public_setting['enable_overtls_sub']|default:1}
+                                                <p>
+                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 OverTLS 订阅
+                                                </a>
                                             {/if}
                                         </div>
                                         <div class="tab-pane" id="linux">
@@ -537,6 +593,15 @@
                                                         </a>
                                                     </div>
                                                 </div>
+                                            {/if}
+                                            {if $public_setting['enable_overtls_sub']|default:1}
+                                                <p>
+                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/overtls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 OverTLS 订阅
+                                                </a>
                                             {/if}
                                         </div>
                                         <div class="tab-pane" id="config">

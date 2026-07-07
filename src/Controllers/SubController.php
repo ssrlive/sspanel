@@ -32,16 +32,19 @@ final class SubController extends BaseController
     {
         $err_msg = '订阅链接无效';
         $subtype = $args['subtype'];
-        $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan'];
+        $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan', 'overtls'];
+
+        $subUrl = preg_replace('/^https?:\/\//', '', Env::get('subUrl'));
 
         if (
             ($subtype === 'json' && Config::obtain('enable_json_sub') === false) ||
             ($subtype === 'clash' && Config::obtain('enable_clash_sub') === false) ||
             ($subtype === 'singbox' && Config::obtain('enable_singbox_sub') === false) ||
             ($subtype === 'v2rayjson' && Config::obtain('enable_v2rayjson_sub') === false) ||
+            ($subtype === 'overtls' && Config::obtain('enable_overtls_sub') === false) ||
             ! Env::get('Subscribe') ||
             ! in_array($subtype, $subtype_list) ||
-            'https://' . $request->getHeaderLine('Host') !== Env::get('subUrl')
+            $subUrl !== $request->getHeaderLine('Host')
         ) {
             return ResponseHelper::error($response, $err_msg);
         }
