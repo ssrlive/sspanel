@@ -224,13 +224,14 @@
                                                                 </div>
                                                                 <div class="col-md-9">
                                                                     <div class="mb-3">
-                                                                        <select id="ga-enable" class="form-select">
-                                                                            <option value="0">不使用</option>
-                                                                            <option value="1"
-                                                                                {if $user->ga_enable === '1'}selected{/if}>
-                                                                                使用两步认证登录
-                                                                            </option>
-                                                                        </select>
+                                                                        <label class="form-check form-switch">
+                                                                            <input id="ga-enable"
+                                                                                class="form-check-input" type="checkbox"
+                                                                                value="1"
+                                                                                {if $user->ga_enable === '1'}checked{/if}>
+                                                                            <span
+                                                                                class="form-check-label">使用两步认证登录</span>
+                                                                        </label>
                                                                     </div>
                                                                     <div class="mb-3">
                                                                         <input id="ga-test-code" type="text"
@@ -260,7 +261,7 @@
                                                                 </button>
                                                                 <button class="btn btn-primary ms-auto"
                                                                     hx-post="/user/ga_set" hx-swap="none"
-                                                                    hx-vals='js:{ enable: document.getElementById("ga-enable").value }'>
+                                                                    hx-vals='js:{ enable: document.getElementById("ga-enable").checked ? 1 : 0 }'>
                                                                     设置
                                                                 </button>
                                                             </div>
@@ -678,6 +679,44 @@
 
     {include file='live_chat.tpl'}
 
+    <script>
+        htmx.on("htmx:afterRequest", function(evt) {
+            if (!evt.detail || !evt.detail.xhr) {
+                return;
+            }
+
+            var url = evt.detail.xhr.responseURL || '';
+            if (url.indexOf('/user/edit/passwd_reset') !== -1) {
+                try {
+                    var res = JSON.parse(evt.detail.xhr.response);
+                    if (res && res.ret === 1 && res.data && typeof res.data.passwd !== 'undefined') {
+                        var passwdElement = document.getElementById('passwd');
+                        if (passwdElement) {
+                            passwdElement.innerHTML = res.data.passwd;
+                        }
+                    }
+                } catch (e) {
+                    // ignore invalid JSON
+                }
+                return;
+            }
+
+            if (url.indexOf('/user/ga_reset') !== -1) {
+                try {
+                    var res = JSON.parse(evt.detail.xhr.response);
+                    if (res && res.ret === 1 && res.data) {
+                        var gaTokenElement = document.getElementById('ga-token');
+                        if (gaTokenElement && typeof res.data['ga-token'] !== 'undefined') {
+                            gaTokenElement.innerHTML = res.data['ga-token'];
+                        }
+                    }
+                } catch (e) {
+                    // ignore invalid JSON
+                }
+                return;
+            }
+        });
+    </script>
 </body>
 
 </html>
