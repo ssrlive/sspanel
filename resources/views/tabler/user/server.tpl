@@ -5,6 +5,37 @@
 {include file="user/header.tpl"}
 
 <body {if $user->is_dark_mode === 1}data-bs-theme="dark" {elseif $user->is_dark_mode === 2}data-bs-theme="auto" {/if}>
+    <style>
+        .overtls-qrcode-popup {
+            display: none;
+            position: fixed;
+            width: 260px;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+            pointer-events: none;
+            z-index: 99999;
+        }
+
+        [data-bs-theme='dark'] .overtls-qrcode-popup {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+        }
+
+        .overtls-qrcode-caption {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        [data-bs-theme='dark'] .overtls-qrcode-caption {
+            color: #cbd5e1;
+        }
+    </style>
     <div class="page">
         {include file="user/body-prefix.tpl"}
 
@@ -33,7 +64,9 @@
                                         <div class="row row-deck row-cards">
                                             {foreach $servers as $server}
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
-                                                    <div class="card">
+                                                    <div class="card{if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''} overtls-card{/if}"
+                                                        {if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''}
+                                                        data-overtls-url="{$server.overtls_url|escape:'html'}" {/if}>
                                                         {if $server['class'] === 0}
                                                             <div class="ribbon bg-blue">免费</div>
                                                         {else}
@@ -69,8 +102,21 @@
                                                                                 {$server['traffic_rate']} 倍
                                                                             {/if}
                                                                         </span>
-                                                                        <span
-                                                                            class="badge bg-blue-lt">{$server['sort']}</span>
+                                                                        {if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''}
+                                                                            <span class="overtls-badge-wrapper">
+                                                                                <span class="badge bg-teal-lt overtls-badge"
+                                                                                    data-overtls-url="{$server.overtls_url|escape:'html'}">
+                                                                                    {$server['sort']}
+                                                                                </span>
+                                                                                <div class="overtls-qrcode-popup"></div>
+                                                                            </span>
+                                                                        {elseif $server['sort'] === 'OverTLS'}
+                                                                            <span
+                                                                                class="badge bg-blue-lt">{$server['sort']}</span>
+                                                                        {else}
+                                                                            <span
+                                                                                class="badge bg-blue-lt">{$server['sort']}</span>
+                                                                        {/if}
                                                                         {if $server['connection_type'] !== 0}
                                                                             <span class="badge bg-blue-lt">IPv6</span>
                                                                         {/if}
@@ -107,6 +153,52 @@
     </div>
 
     {include file="user/footer-scripts.tpl"}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.overtls-card').forEach(function(card) {
+                var url = card.dataset.overtlsUrl || '';
+                if (!url) {
+                    return;
+                }
+
+                var popup = document.createElement('div');
+                popup.className = 'overtls-qrcode-popup';
+                document.body.appendChild(popup);
+
+                var qrRendered = false;
+
+                card.addEventListener('mouseenter', function() {
+                    if (!qrRendered) {
+                        popup.innerHTML = '';
+                        var qrBox = document.createElement('div');
+                        popup.appendChild(qrBox);
+                        new QRCode(qrBox, {
+                            text: url,
+                            width: 240,
+                            height: 240,
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                        var caption = document.createElement('div');
+                        caption.className = 'overtls-qrcode-caption';
+                        caption.textContent = 'OverTLS 订阅二维码';
+                        popup.appendChild(caption);
+                        qrRendered = true;
+                    }
+                    popup.style.display = 'block';
+                });
+
+                card.addEventListener('mousemove', function(event) {
+                    popup.style.left = event.clientX + 16 + 'px';
+                    popup.style.top = event.clientY + 16 + 'px';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    popup.style.display = 'none';
+                });
+            });
+        });
+    </script>
 
     {include file='live_chat.tpl'}
 

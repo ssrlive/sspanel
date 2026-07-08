@@ -19,7 +19,7 @@ final class OverTLS extends Base
 
         foreach ($nodes_raw as $node_raw) {
             /** @var Node $node_raw */
-            if ($node_raw->sort() !== "OverTLS") {
+            if ($node_raw->sort() !== 'OverTLS') {
                 continue;
             }
 
@@ -50,7 +50,7 @@ final class OverTLS extends Base
 
     public static function assembleNodeUrl(Node $node, string $userUuid): string
     {
-        if ($node->sort() !== "OverTLS") {
+        if ($node->sort() !== 'OverTLS') {
             return '';
         }
 
