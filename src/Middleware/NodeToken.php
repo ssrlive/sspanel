@@ -131,7 +131,10 @@ final class NodeToken implements MiddlewareInterface
     {
         $host = $this->normalizeServerHost($server);
 
-        if ($ip === $host) {
+        $normalizedPeerIp = $this->normalizeIp($ip);
+        $normalizedHost = $this->normalizeIp($host);
+
+        if ($normalizedPeerIp !== null && $normalizedHost !== null && $normalizedPeerIp === $normalizedHost) {
             return true;
         }
 
@@ -146,14 +149,37 @@ final class NodeToken implements MiddlewareInterface
         }
 
         foreach ($records as $record) {
-            if (($record['type'] === 'A' && $record['ip'] === $ip) ||
-                ($record['type'] === 'AAAA' && $record['ipv6'] === $ip)
-            ) {
-                return true;
+            if ($record['type'] === 'A' && $normalizedPeerIp !== null) {
+                $recordIp = $this->normalizeIp($record['ip']);
+                if ($recordIp !== null && $recordIp === $normalizedPeerIp) {
+                    return true;
+                }
+            }
+
+            if ($record['type'] === 'AAAA' && $normalizedPeerIp !== null) {
+                $recordIp = $this->normalizeIp($record['ipv6']);
+                if ($recordIp !== null && $recordIp === $normalizedPeerIp) {
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    private function normalizeIp(string $ip): ?string
+    {
+        $ip = preg_replace('/%.+$/', '', $ip);
+        if (! filter_var($ip, FILTER_VALIDATE_IP)) {
+            return null;
+        }
+
+        $packed = inet_pton($ip);
+        if ($packed === false) {
+            return null;
+        }
+
+        return inet_ntop($packed);
     }
 
     private function normalizeServerHost(string $server): string
