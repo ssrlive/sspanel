@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use App\Models\Node;
+use App\Services\Cache;
 use App\Services\RateLimit;
 use App\Utils\Env;
 use App\Utils\Tools;
@@ -12,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Redis;
 use RedisException;
 use Slim\Factory\AppFactory;
 use Slim\Http\Response;
@@ -130,21 +132,37 @@ final class NodeToken implements MiddlewareInterface
     private function isIpAllowedForServer(string $ip, string $server): bool
     {
         $host = $this->normalizeServerHost($server);
+        $cacheKey = $this->getNodeTokenCacheKey($host, $ip);
+
+        $redis = $this->initRedis();
+        if ($redis !== null) {
+            try {
+                $cached = $redis->get($cacheKey);
+                if ($cached !== false) {
+                    return $cached === '1';
+                }
+            } catch (RedisException $e) {
+                $this->ignoreRedisException($e);
+            }
+        }
 
         $normalizedPeerIp = $this->normalizeIp($ip);
         $normalizedHost = $this->normalizeIp($host);
 
         if ($normalizedPeerIp !== null && $normalizedHost !== null && $normalizedPeerIp === $normalizedHost) {
+            $this->saveNodeTokenCache($redis, $cacheKey, true);
             return true;
         }
 
         if (Tools::isIPv4($host) || Tools::isIPv6($host)) {
+            $this->saveNodeTokenCache($redis, $cacheKey, false);
             return false;
         }
 
         try {
             $records = dns_get_record($host, DNS_A + DNS_AAAA);
         } catch (\Exception $e) {
+            $this->saveNodeTokenCache($redis, $cacheKey, false);
             return false;
         }
 
@@ -152,6 +170,7 @@ final class NodeToken implements MiddlewareInterface
             if ($record['type'] === 'A' && $normalizedPeerIp !== null) {
                 $recordIp = $this->normalizeIp($record['ip']);
                 if ($recordIp !== null && $recordIp === $normalizedPeerIp) {
+                    $this->saveNodeTokenCache($redis, $cacheKey, true);
                     return true;
                 }
             }
@@ -159,12 +178,51 @@ final class NodeToken implements MiddlewareInterface
             if ($record['type'] === 'AAAA' && $normalizedPeerIp !== null) {
                 $recordIp = $this->normalizeIp($record['ipv6']);
                 if ($recordIp !== null && $recordIp === $normalizedPeerIp) {
+                    $this->saveNodeTokenCache($redis, $cacheKey, true);
                     return true;
                 }
             }
         }
 
+        $this->saveNodeTokenCache($redis, $cacheKey, false);
         return false;
+    }
+
+    private function initRedis(): ?Redis
+    {
+        try {
+            return (new Cache())->initRedis();
+        } catch (RedisException) {
+            return null;
+        }
+    }
+
+    private function getNodeTokenCacheKey(string $server, string $ip): string
+    {
+        return 'node_token_allowed:' . md5($server . '|' . $ip);
+    }
+
+    private function saveNodeTokenCache(?Redis $redis, string $cacheKey, bool $allowed): void
+    {
+        if ($redis === null) {
+            return;
+        }
+
+        // Node reports every ~10 seconds, so keep DNS/IP cache short but not too short.
+        // 120 seconds can significantly reduce repeated checks while still allowing for relatively quick detection of node IP/domain changes.
+        $ttl = 120;
+
+        try {
+            $redis->setex($cacheKey, $ttl, $allowed ? '1' : '0');
+        } catch (RedisException $e) {
+            $this->ignoreRedisException($e);
+        }
+    }
+
+    private function ignoreRedisException(RedisException $e): void
+    {
+        // Redis is an optional performance cache for NodeToken.
+        // If Redis fails, continue without caching.
     }
 
     private function normalizeIp(string $ip): ?string
