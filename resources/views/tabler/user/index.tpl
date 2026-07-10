@@ -245,17 +245,18 @@
                                                             复制通用订阅（SIP008）
                                                         </a>
                                                     {/if}
-                                                    {if $public_setting.enable_overtls_sub|default:1}
-                                                        <p>
-                                                            通用订阅（OverTLS）：<code
-                                                                class="spoiler">{$UniversalSub}/overtls</code>
-                                                        </p>
+                                                </div>
+                                                {if $public_setting.enable_overtls_sub|default:1}
+                                                    <p>
+                                                        通用订阅（OverTLS）：<code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    </p>
+                                                    <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/overtls"
                                                             class="copy btn btn-primary">
                                                             复制通用订阅（OverTLS）
                                                         </a>
-                                                    {/if}
-                                                </div>
+                                                    </div>
+                                                {/if}
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="client-sub">
@@ -301,17 +302,18 @@
                                                             复制客户端订阅（Trojan）
                                                         </a>
                                                     {/if}
-                                                    {if $public_setting['enable_overtls_sub']|default:1}
-                                                        <p>
-                                                            客户端订阅（OverTLS）：<code
-                                                                class="spoiler">{$UniversalSub}/overtls</code>
-                                                        </p>
+                                                </div>
+                                                {if $public_setting['enable_overtls_sub']|default:1}
+                                                    <p>
+                                                        客户端订阅（OverTLS）：<code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    </p>
+                                                    <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/overtls"
                                                             class="copy btn btn-primary">
                                                             复制客户端订阅（OverTLS）
                                                         </a>
-                                                    {/if}
-                                                </div>
+                                                    </div>
+                                                {/if}
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="windows">
