@@ -9,8 +9,8 @@
         .overtls-qrcode-popup {
             display: none;
             position: fixed;
-            width: 260px;
-            padding: 0.75rem;
+            min-width: 280px;
+            padding: 1rem;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
@@ -24,6 +24,12 @@
             background: rgba(15, 23, 42, 0.95);
             border-color: rgba(255, 255, 255, 0.08);
             color: #f8fafc;
+        }
+
+        .overtls-qrcode-box {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto;
         }
 
         .overtls-qrcode-caption {
@@ -172,6 +178,7 @@
                     if (!qrRendered) {
                         popup.innerHTML = '';
                         var qrBox = document.createElement('div');
+                        qrBox.className = 'overtls-qrcode-box';
                         popup.appendChild(qrBox);
                         new QRCode(qrBox, {
                             text: url,
