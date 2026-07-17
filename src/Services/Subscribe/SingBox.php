@@ -247,7 +247,7 @@ final class SingBox extends Base
             }
 
             // 读取并匹配美国组
-            $sb_us_group = $_ENV['Clash_US_Group_Index'] ?? '美国节点';
+            $sb_us_group = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
 
             foreach ($singbox_config['outbounds'] as $key => $outbound) {
                 if (($outbound['type'] ?? '') === 'selector' || ($outbound['type'] ?? '') === 'urltest') {
@@ -255,6 +255,20 @@ final class SingBox extends Base
                         if (str_contains($node_raw->name, '美国') || stripos($node_raw->name, 'US') !== false || stripos($node_raw->name, 'States') !== false || str_contains($node_raw->name, '美')) {
                             $singbox_config['outbounds'][$key]['outbounds'][] = $node_raw->name;
                         }
+                    }
+                }
+            }
+        }
+
+        // 【修复】Sing-Box 出站防爆空值校验逻辑
+        $sb_us_group = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
+        foreach ($singbox_config['outbounds'] as $key => $outbound) {
+            if ($outbound['tag'] === $sb_us_group) {
+                if (empty($singbox_config['outbounds'][$key]['outbounds'])) {
+                    if (!empty($nodes)) {
+                        $singbox_config['outbounds'][$key]['outbounds'][] = $nodes[0]['tag'];
+                    } else {
+                        $singbox_config['outbounds'][$key]['outbounds'][] = 'direct';
                     }
                 }
             }
