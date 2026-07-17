@@ -23,7 +23,7 @@ final class Clash extends Base
         $clash_group_indexes = $_ENV['Clash_Group_Indexes'] ?? [];
         $clash_group_config = $_ENV['Clash_Group_Config'] ?? [];
         
-        // 仅保留美国组标签读取（安全默认值防报错）
+        // 增加美国组标签读取
         $clash_us_group_name = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
         
         $nodes_raw = Subscribe::getUserNodes($user);
