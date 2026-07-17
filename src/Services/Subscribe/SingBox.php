@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
-use App\Models\User;
 use App\Services\Subscribe;
 use App\Utils\Tools;
 use function array_filter;
@@ -16,14 +15,14 @@ use function stripos;
 
 final class SingBox extends Base
 {
-    public function getContent(User $user): string
+    public function getContent($user): string
     {
         $nodes = [];
-        $singbox_config = $_ENV['SingBox_Config'];
+        $singbox_config = $_ENV['SingBox_Config'] ?? [];
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {
-            $node_custom_config = json_decode($node_raw->custom_config, true);
+            $node_custom_config = json_decode($node_raw->custom_config, true) ?? [];
 
             switch ((int) $node_raw->sort) {
                 case 0:
@@ -57,7 +56,7 @@ final class SingBox extends Base
                         'server' => $node_raw->server,
                         'server_port' => (int) $ss_2022_port,
                         'method' => $method,
-                        'password' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
+                        'password' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
                         'udp_over_tcp' => (bool) $uot,
                     ];
 
@@ -66,7 +65,7 @@ final class SingBox extends Base
                     $tuic_port = $node_custom_config['offset_port_user'] ??
                         ($node_custom_config['offset_port_node'] ?? 443);
                     $host = $node_custom_config['host'] ?? '';
-                    $allow_insecure = $node_custom_config['allow_insecure'] ?? false;
+                    $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $congestion_control = $node_custom_config['congestion_control'] ?? 'bbr';
 
                     $node = [
@@ -81,7 +80,7 @@ final class SingBox extends Base
                         'tls' => [
                             'enabled' => true,
                             'server_name' => $host,
-                            'insecure' => (bool) $allow_insecure,
+                            'insecure' => $allow_insecure,
                         ],
                     ];
 
@@ -97,7 +96,7 @@ final class SingBox extends Base
                     $path = $node_custom_config['header']['request']['path'][0] ?? $node_custom_config['path'] ?? '';
                     $headers = $node_custom_config['header']['request']['headers'] ?? [];
                     $service_name = $node_custom_config['servicename'] ?? '';
-                    $utls = $node_custom_config['utls'] ?? false;
+                    $utls = filter_var($node_custom_config['utls'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $method = $node_custom_config['method'] ?? '';
                     $max_early_data = $node_custom_config['max_early_data'] ?? '';
                     $early_data_header_name = $node_custom_config['early_data_header_name'] ?? '';
@@ -113,10 +112,6 @@ final class SingBox extends Base
                         'tls' => [
                             'enabled' => true,
                             'server_name' => $host,
-                            'utls' => [
-                                'enabled' => $utls,
-                                'fingerprint' => 'chrome',
-                            ],
                         ],
                         'packet_encoding' => 'xudp',
                         'global_padding' => true,
@@ -132,6 +127,13 @@ final class SingBox extends Base
                         ],
                     ];
 
+                    if ($utls) {
+                        $node['tls']['utls'] = [
+                            'enabled' => true,
+                            'fingerprint' => 'chrome',
+                        ];
+                    }
+
                     $node['tls'] = array_filter($node['tls']);
                     $node['transport'] = array_filter($node['transport']);
 
@@ -140,7 +142,7 @@ final class SingBox extends Base
                     $trojan_port = $node_custom_config['offset_port_user'] ??
                         ($node_custom_config['offset_port_node'] ?? 443);
                     $host = $node_custom_config['host'] ?? '';
-                    $allow_insecure = $node_custom_config['allow_insecure'] ?? '0';
+                    $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $transport = $node_custom_config['network'] ?? '';
                     $path = $node_custom_config['header']['request']['path'][0] ?? $node_custom_config['path'] ?? '';
                     $headers = $node_custom_config['header']['request']['headers'] ?? [];
@@ -155,7 +157,7 @@ final class SingBox extends Base
                         'tls' => [
                             'enabled' => true,
                             'server_name' => $host,
-                            'insecure' => (bool) $allow_insecure,
+                            'insecure' => $allow_insecure,
                         ],
                         'transport' => [
                             'type' => $transport,
@@ -169,7 +171,7 @@ final class SingBox extends Base
                     $node['transport'] = array_filter($node['transport']);
 
                     break;
-                case 16: // ➕ 完美集成 VLESS 协议支持
+                case 16:
                     $vless_port = $node_custom_config['offset_port_user'] ??
                         ($node_custom_config['offset_port_node'] ?? 443);
                     $security = $node_custom_config['security'] ?? 'none';
@@ -180,8 +182,8 @@ final class SingBox extends Base
                     $headers = $node_custom_config['header']['request']['headers'] ?? [];
                     $service_name = $node_custom_config['servicename'] ?? '';
                     $flow = $node_custom_config['flow'] ?? '';
-                    $allow_insecure = $node_custom_config['allow_insecure'] ?? false;
-                    $utls = $node_custom_config['utls'] ?? false;
+                    $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
+                    $utls = filter_var($node_custom_config['utls'] ?? false, FILTER_VALIDATE_BOOLEAN);
 
                     $node = [
                         'type' => 'vless',
@@ -189,16 +191,11 @@ final class SingBox extends Base
                         'server' => $node_raw->server,
                         'server_port' => (int) $vless_port,
                         'uuid' => $user->uuid,
-                        'flow' => $flow !== '' ? $flow : null,
                         'packet_encoding' => 'xudp',
                         'tls' => [
                             'enabled' => $security === 'tls' || $security === 'reality',
                             'server_name' => $host,
-                            'insecure' => (bool) $allow_insecure,
-                            'utls' => [
-                                'enabled' => $utls,
-                                'fingerprint' => 'chrome',
-                            ],
+                            'insecure' => $allow_insecure,
                         ],
                         'transport' => [
                             'type' => $transport,
@@ -208,7 +205,10 @@ final class SingBox extends Base
                         ],
                     ];
 
-                    // 处理 REALITY 特有配置
+                    if ($flow !== '') {
+                        $node['flow'] = $flow;
+                    }
+
                     if ($security === 'reality') {
                         $node['tls']['reality'] = [
                             'enabled' => true,
@@ -217,11 +217,14 @@ final class SingBox extends Base
                         ];
                     }
 
-                    // 规范化过滤
-                    $node['tls'] = array_filter($node['tls']);
-                    if (isset($node['tls']['utls'])) {
-                        $node['tls']['utls'] = array_filter($node['tls']['utls']);
+                    if ($utls) {
+                        $node['tls']['utls'] = [
+                            'enabled' => true,
+                            'fingerprint' => 'chrome',
+                        ];
                     }
+
+                    $node['tls'] = array_filter($node['tls']);
                     $node['transport'] = array_filter($node['transport']);
 
                     break;
@@ -236,7 +239,6 @@ final class SingBox extends Base
 
             $nodes[] = $node;
 
-            // 1. 注入默认全局策略组
             if (isset($singbox_config['outbounds'][0]['outbounds'])) {
                 $singbox_config['outbounds'][0]['outbounds'][] = $node_raw->name;
             }
@@ -244,29 +246,11 @@ final class SingBox extends Base
                 $singbox_config['outbounds'][1]['outbounds'][] = $node_raw->name;
             }
 
-            // 2. 从环境变量读取带 Emoji 的国家策略组 Tag 名字
-            $sb_hk_group = $_ENV['Clash_HK_Group_Index'] ?? '香港节点';
-            $sb_jp_group = $_ENV['Clash_JP_Group_Index'] ?? '日本节点';
+            // 读取并匹配美国组
             $sb_us_group = $_ENV['Clash_US_Group_Index'] ?? '美国节点';
 
-            // 3. 动态匹配节点名称并塞入对应的 SingBox 国家选择组
             foreach ($singbox_config['outbounds'] as $key => $outbound) {
                 if (($outbound['type'] ?? '') === 'selector' || ($outbound['type'] ?? '') === 'urltest') {
-                    // 匹配香港组
-                    if ($outbound['tag'] === $sb_hk_group) {
-                        if (str_contains($node_raw->name, '香港') || stripos($node_raw->name, 'HK') !== false || stripos($node_raw->name, 'HongKong') !== false) {
-                            $singbox_config['outbounds'][$key]['outbounds'][] = $node_raw->name;
-                        }
-                    }
-
-                    // 匹配日本组
-                    if ($outbound['tag'] === $sb_jp_group) {
-                        if (str_contains($node_raw->name, '日本') || stripos($node_raw->name, 'JP') !== false || stripos($node_raw->name, 'Japan') !== false) {
-                            $singbox_config['outbounds'][$key]['outbounds'][] = $node_raw->name;
-                        }
-                    }
-
-                    // 匹配美国组
                     if ($outbound['tag'] === $sb_us_group) {
                         if (str_contains($node_raw->name, '美国') || stripos($node_raw->name, 'US') !== false || stripos($node_raw->name, 'States') !== false || str_contains($node_raw->name, '美')) {
                             $singbox_config['outbounds'][$key]['outbounds'][] = $node_raw->name;
@@ -277,7 +261,7 @@ final class SingBox extends Base
         }
 
         $singbox_config['outbounds'] = array_merge($singbox_config['outbounds'], $nodes);
-        $singbox_config['experimental']['cache_file']['cache_id'] = $_ENV['appName'];
+        $singbox_config['experimental']['cache_file']['cache_id'] = $_ENV['appName'] ?? 'ss-panel';
 
         return json_encode($singbox_config);
     }
