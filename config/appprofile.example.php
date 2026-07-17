@@ -432,15 +432,15 @@ $_ENV['Clash_Group_Indexes'] = [0, 1, 2, 3, 4, 6, 8, 13];
 $_ENV['Clash_Group_Config'] = [
     'proxy-groups' => [
         ['name' => '🔰 手动选择', 'type' => 'select', 'proxies' => ['♻️ 自动选择', '🎯 Direct']],
-        ['name' => '♻️ 自动选择', 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
+        ['name' => '♻️ 自动选择', 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => ['🎯 Direct']],
         ['name' => '🎥 Netflix', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
         ['name' => '🎧 TikTok', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🇺🇸美国节点', '🎯 Direct']],
         ['name' => '🌍 主流媒体', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
         ['name' => '🇨🇳 中国媒体', 'type' => 'select', 'proxies' => ['🎯 Direct', '🔰 手动选择', '♻️ 自动选择']],
         ['name' => '📲 Telegram', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],
+        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],        
         ['name' => '🍎 Apple', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
-        ['name' => $_ENV['Clash_US_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
+        ['name' => $_ENV['Clash_US_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => ['🎯 Direct']],
         ['name' => '🎯 Direct', 'type' => 'select', 'proxies' => ['DIRECT']],
         ['name' => '🛑 Block', 'type' => 'select', 'proxies' => ['REJECT']],
         ['name' => '⛔️ 广告拦截', 'type' => 'select', 'proxies' => ['🛑 Block', '🎯 Direct', '🔰 手动选择']],
