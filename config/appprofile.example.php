@@ -39,14 +39,12 @@ $_ENV['V2RayJson_Config'] = [
             'listen'   => '127.0.0.1',
         ],
     ],
-    'outbounds' => [], // 后端会自动通过 V2RayJson.php 动态追加节点
+    'outbounds' => [], 
 ];
 
 // =========================================================================
-// 2. 全局本地化变量定义 (支持国旗 Emoji)
+// 2. 全局本地化变量定义 (增加美国节点组)
 // =========================================================================
-$_ENV['Clash_HK_Group_Index'] = '🇭🇰香港节点';
-$_ENV['Clash_JP_Group_Index'] = '🇯🇵日本节点';
 $_ENV['Clash_US_Group_Index'] = '🇺🇸美国节点';
 
 // =========================================================================
@@ -93,17 +91,17 @@ $_ENV['SingBox_Config'] = [
             ],
             [
                 'tag'             => 'mine_853',
-                'type'            => $_ENV['dns_type_853'],
-                'server'          => $_ENV['dns_server_853'],
-                'server_port'     => $_ENV['dns_server_port_853'],
+                'type'            => $_ENV['dns_type_853'] ?? 'tls',
+                'server'          => $_ENV['dns_server_853'] ?? '1.1.1.1',
+                'server_port'     => $_ENV['dns_server_port_853'] ?? 853,
                 'domain_resolver' => 'alidns',
             ],
             [
                 'tag'             => 'mine_443',
-                'type'            => $_ENV['dns_type_443'],
-                'server'          => $_ENV['dns_server_443'],
-                'server_port'     => $_ENV['dns_server_port_443'],
-                'path'            => $_ENV['dns_path_443'],
+                'type'            => $_ENV['dns_type_443'] ?? 'https',
+                'server'          => $_ENV['dns_server_443'] ?? '1.1.1.1',
+                'server_port'     => $_ENV['dns_server_port_443'] ?? 443,
+                'path'            => $_ENV['dns_path_443'] ?? '/dns-query',
                 'domain_resolver' => 'alidns',
             ],
             [
@@ -121,17 +119,9 @@ $_ENV['SingBox_Config'] = [
             ],
             [
                 'domain_keyword' => [
-                    'telemetry',
-                    'analytics',
-                    'analysis',
-                    'tracking',
-                    'log-upload',
-                    'metrics',
-                    'adservice',
-                    'adsystem',
-                    'tongji',
-                    'p2p',
-                    'strategy'
+                    'telemetry', 'analytics', 'analysis', 'tracking', 
+                    'log-upload', 'metrics', 'adservice', 'adsystem', 
+                    'tongji', 'p2p', 'strategy'
                 ],
                 'action'         => 'predefined',
                 'rcode'          => 'REFUSED',
@@ -167,7 +157,7 @@ $_ENV['SingBox_Config'] = [
                     ],
                 ],
                 'action'        => 'route',
-                'server'        => $_ENV['dns_select'],
+                'server'        => $_ENV['dns_select'] ?? 'local',
                 'disable_cache' => true,
                 'client_subnet' => '111.222.0.0',
             ],
@@ -216,17 +206,6 @@ $_ENV['SingBox_Config'] = [
             'idle_timeout'                => '30m',
             'interrupt_exist_connections' => true,
         ],
-        // 动态绑定全局变量的国家策略组
-        [
-            'type'      => 'selector',
-            'tag'       => $_ENV['Clash_HK_Group_Index'],
-            'outbounds' => [],
-        ],
-        [
-            'type'      => 'urltest',
-            'tag'       => $_ENV['Clash_JP_Group_Index'],
-            'outbounds' => [],
-        ],
         [
             'type'      => 'selector',
             'tag'       => $_ENV['Clash_US_Group_Index'],
@@ -259,17 +238,9 @@ $_ENV['SingBox_Config'] = [
             ],
             [
                 'domain_keyword' => [
-                    'telemetry',
-                    'analytics',
-                    'analysis',
-                    'tracking',
-                    'log-upload',
-                    'metrics',
-                    'adservice',
-                    'adsystem',
-                    'tongji',
-                    'p2p',
-                    'strategy'
+                    'telemetry', 'analytics', 'analysis', 'tracking', 
+                    'log-upload', 'metrics', 'adservice', 'adsystem', 
+                    'tongji', 'p2p', 'strategy'
                 ],
                 'action'         => 'reject',
                 'method'         => 'default',
@@ -356,7 +327,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geoip-cn',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -364,7 +335,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-cn',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -372,7 +343,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-category-ads-all',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -380,7 +351,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-geolocation-cn',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-cn.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-cn.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -388,7 +359,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-geolocation-!cn',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -396,7 +367,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-netease',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-netease.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-netease.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -404,7 +375,7 @@ $_ENV['SingBox_Config'] = [
                 'tag'             => 'geosite-bilibili',
                 'type'            => 'remote',
                 'format'          => 'binary',
-                'url'             => 'https://' . $_ENV['jsdelivr_url'] . '/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili.srs',
+                'url'             => 'https://' . ($_ENV['jsdelivr_url'] ?? 'fastly.jsdelivr.net') . '/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili.srs',
                 'download_detour' => 'rules_download',
                 'update_interval' => '1d',
             ],
@@ -436,31 +407,23 @@ $_ENV['Clash_Config'] = [
     'mode'                => 'Rule',
     'ipv6'                => true,
     'log-level'           => 'error',
-    'tcp-concurrent'      => $_ENV['tcp_concurrent'],
+    'tcp-concurrent'      => $_ENV['tcp_concurrent'] ?? true,
     'external-controller' => '0.0.0.0:9091',
 ];
 
-$_ENV['Clash_Group_Indexes'] = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 21];
+$_ENV['Clash_Group_Indexes'] = [0, 1, 2, 3, 4, 6, 8, 13];
 
 $_ENV['Clash_Group_Config'] = [
     'proxy-groups' => [
         ['name' => '🔰 手动选择', 'type' => 'select', 'proxies' => ['♻️ 自动选择', '🎯 Direct']],
         ['name' => '♻️ 自动选择', 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
-        ['name' => '💬 OpenAI', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🇯🇵日本节点', '🇺🇸美国节点', '🎯 Direct']],
-        ['name' => 'LinkedIn', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => '🎥 Netflix', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => '🎧 TikTok', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🇯🇵日本节点', '🇺🇸美国节点', '🎯 Direct']],
+        ['name' => '🎥 Netflix', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
+        ['name' => '🎧 TikTok', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🇺🇸美国节点', '🎯 Direct']],
         ['name' => '🌍 主流媒体', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
         ['name' => '🇨🇳 中国媒体', 'type' => 'select', 'proxies' => ['🎯 Direct', '🔰 手动选择', '♻️ 自动选择']],
-        ['name' => '📲 Telegram', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => '📲 whatsapp', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],
+        ['name' => '📲 Telegram', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
+        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],        
         ['name' => '🍎 Apple', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
-        ['name' => 'Google FCM', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
-        ['name' => 'Google play', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => 'Google', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_HK_Group_Index'], $_ENV['Clash_JP_Group_Index'], $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => $_ENV['Clash_HK_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
-        ['name' => $_ENV['Clash_JP_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
         ['name' => $_ENV['Clash_US_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
         ['name' => '🎯 Direct', 'type' => 'select', 'proxies' => ['DIRECT']],
         ['name' => '🛑 Block', 'type' => 'select', 'proxies' => ['REJECT']],
@@ -472,58 +435,39 @@ $_ENV['Clash_Group_Config'] = [
         'GEOSITE,category-ads-all,⛔️ 广告拦截',
         'GEOIP,ad,⛔️ 广告拦截',
 
-        // 最强防追踪/恶意上传关键词补强
-        'DOMAIN-KEYWORD,telemetry,🛑 Block',
-        'DOMAIN-KEYWORD,analytics,🛑 Block',
-        'DOMAIN-KEYWORD,analysis,🛑 Block',
-        'DOMAIN-KEYWORD,tracking,🛑 Block',
-        'DOMAIN-KEYWORD,log-upload,🛑 Block',
-        'DOMAIN-KEYWORD,metrics,🛑 Block',
-        'DOMAIN-KEYWORD,adservice,🛑 Block',
-        'DOMAIN-KEYWORD,adsystem,🛑 Block',
-        'DOMAIN-KEYWORD,tongji,🛑 Block',
-        'DOMAIN-KEYWORD,p2p,🛑 Block',
-        'DOMAIN-KEYWORD,strategy,🛑 Block',
-
-        // ====== 2. 特殊及高频代理分流 ======
-        'GEOSITE,okx,🔰 手动选择',
-        'DOMAIN-SUFFIX,adblock360.com,🎯 Direct',
-        'GEOSITE,linkedin,LinkedIn',
-
+        // 防追踪/广告域名
+        'DOMAIN-KEYWORD,telemetry,🛑 Block',   
+        'DOMAIN-KEYWORD,analytics,🛑 Block',   
+        'DOMAIN-KEYWORD,analysis,🛑 Block',    
+        'DOMAIN-KEYWORD,tracking,🛑 Block',    
+        'DOMAIN-KEYWORD,log-upload,🛑 Block',  
+        'DOMAIN-KEYWORD,metrics,🛑 Block',     
+        'DOMAIN-KEYWORD,adservice,🛑 Block',   
+        'DOMAIN-KEYWORD,adsystem,🛑 Block',    
+        'DOMAIN-KEYWORD,tongji,🛑 Block',      
+        'DOMAIN-KEYWORD,p2p,🛑 Block',         
+        'DOMAIN-KEYWORD,strategy,🛑 Block',    
+        
         // Microsoft
         'GEOSITE,microsoft,Ⓜ️ Microsoft',
         'GEOSITE,microsoft-dev,Ⓜ️ Microsoft',
         'GEOSITE,microsoft-pki,Ⓜ️ Microsoft',
-
-        // Google 生态
-        'GEOSITE,googlefcm,Google FCM',
-        'GEOSITE,google-play,Google play',
-        'GEOSITE,youtube,Google',
-        'GEOSITE,google,Google',
-        'GEOIP,google,Google',
-
-        // ChatGPT / OpenAI
-        'GEOSITE,anthropic,💬 OpenAI',
-        'GEOSITE,openai,💬 OpenAI',
-        'GEOIP,openai,💬 OpenAI',
-
+        
         // 苹果、电报及流媒体分流
         'GEOSITE,apple,🍎 Apple',
         'GEOSITE,telegram,📲 Telegram',
         'GEOIP,telegram,📲 Telegram',
-        'GEOSITE,whatsapp,📲 whatsapp',
-        'GEOIP,whatsapp,📲 whatsapp',
         'GEOSITE,tiktok,🎧 TikTok',
         'GEOIP,tiktok,🎧 TikTok',
         'GEOSITE,netflix,🎥 Netflix',
         'GEOIP,netflix,🎥 Netflix',
         'GEOSITE,category-media,🌍 主流媒体',
-
+        
         // ====== 3. 国内直连层 ======
         'GEOSITE,category-media-cn,🇨🇳 中国媒体',
-
-        // 常用 P2P/下载/远程工具关键词直连
-        'DOMAIN-KEYWORD,oray,🎯 Direct',
+        
+        // 常用 P2P/下载直连
+        'DOMAIN-KEYWORD,oray,🎯 Direct', 
         'DOMAIN-KEYWORD,todesk,🎯 Direct',
         'DOMAIN-KEYWORD,onedrive,🎯 Direct',
         'DOMAIN-KEYWORD,Thunder,🎯 Direct',
@@ -536,8 +480,8 @@ $_ENV['Clash_Group_Config'] = [
         'DOMAIN-KEYWORD,xmr,🎯 Direct',
         'DOMAIN-KEYWORD,xunlei,🎯 Direct',
         'DOMAIN-KEYWORD,yunpan,🎯 Direct',
-
-        // 常用直连高频端口
+        
+        // 常用直连端口
         'DST-PORT,10300,🎯 Direct',
         'DST-PORT,10343,🎯 Direct',
         'DST-PORT,18080,🎯 Direct',
@@ -549,14 +493,14 @@ $_ENV['Clash_Group_Config'] = [
         'DST-PORT,8888,🎯 Direct',
         'DST-PORT,9000,🎯 Direct',
         'DST-PORT,9999,🎯 Direct',
-
-        // 大陆域名/路由表直连（使用高效的 no-resolve 模式）
+        
+        // 大陆路由直连
         'GEOSITE,apple-cn,🎯 Direct',
         'GEOSITE,cn,🎯 Direct',
         'GEOIP,private,🎯 Direct,no-resolve',
         'GEOIP,CN,🎯 Direct,no-resolve',
-
-        // 常用下载器进程直连
+        
+        // 常用下载进程
         'PROCESS-NAME,DownloadService,🎯 Direct',
         'PROCESS-NAME,Folx,🎯 Direct',
         'PROCESS-NAME,Motrix,🎯 Direct',
@@ -570,7 +514,7 @@ $_ENV['Clash_Group_Config'] = [
         'PROCESS-NAME,fdm,🎯 Direct',
         'PROCESS-NAME,qbittorrent,🎯 Direct',
         'PROCESS-NAME,uTorrent,🎯 Direct',
-
+        
         // ====== 4. 终极兜底层 ======
         'MATCH,🐟 漏网之鱼',
     ],
