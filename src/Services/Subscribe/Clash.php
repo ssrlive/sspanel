@@ -277,21 +277,6 @@ final class Clash extends Base
             }
         }
 
-        // =========================================================================
-        // 保证所有策略组都不为空
-        // =========================================================================
-        foreach ($clash_group_config['proxy-groups'] as $key => $group) {
-            // 如果该组的 proxies 列表为空，进行兜底
-            if (! isset($clash_group_config['proxy-groups'][$key]['proxies']) || $clash_group_config['proxy-groups'][$key]['proxies'] === []) {
-                // 如果用户有任何可用节点，就把第 1 个可用节点作为兜底；否则直接塞入 DIRECT
-                if ($nodes !== []) {
-                    $clash_group_config['proxy-groups'][$key]['proxies'][] = $nodes[0]['name'];
-                } else {
-                    $clash_group_config['proxy-groups'][$key]['proxies'][] = 'DIRECT';
-                }
-            }
-        }
-
         $final_clash = [];
         foreach ($clash_config as $key => $value) {
             if (! in_array($key, ['proxies', 'proxy-groups', 'rules'])) {
