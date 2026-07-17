@@ -39,7 +39,7 @@ $_ENV['V2RayJson_Config'] = [
             'listen'   => '127.0.0.1',
         ],
     ],
-    'outbounds' => [], 
+    'outbounds' => [],
 ];
 
 // =========================================================================
@@ -119,9 +119,17 @@ $_ENV['SingBox_Config'] = [
             ],
             [
                 'domain_keyword' => [
-                    'telemetry', 'analytics', 'analysis', 'tracking', 
-                    'log-upload', 'metrics', 'adservice', 'adsystem', 
-                    'tongji', 'p2p', 'strategy'
+                    'telemetry',
+                    'analytics',
+                    'analysis',
+                    'tracking',
+                    'log-upload',
+                    'metrics',
+                    'adservice',
+                    'adsystem',
+                    'tongji',
+                    'p2p',
+                    'strategy'
                 ],
                 'action'         => 'predefined',
                 'rcode'          => 'REFUSED',
@@ -238,9 +246,17 @@ $_ENV['SingBox_Config'] = [
             ],
             [
                 'domain_keyword' => [
-                    'telemetry', 'analytics', 'analysis', 'tracking', 
-                    'log-upload', 'metrics', 'adservice', 'adsystem', 
-                    'tongji', 'p2p', 'strategy'
+                    'telemetry',
+                    'analytics',
+                    'analysis',
+                    'tracking',
+                    'log-upload',
+                    'metrics',
+                    'adservice',
+                    'adsystem',
+                    'tongji',
+                    'p2p',
+                    'strategy'
                 ],
                 'action'         => 'reject',
                 'method'         => 'default',
@@ -422,7 +438,7 @@ $_ENV['Clash_Group_Config'] = [
         ['name' => '🌍 主流媒体', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
         ['name' => '🇨🇳 中国媒体', 'type' => 'select', 'proxies' => ['🎯 Direct', '🔰 手动选择', '♻️ 自动选择']],
         ['name' => '📲 Telegram', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', $_ENV['Clash_US_Group_Index'], '🎯 Direct']],
-        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],        
+        ['name' => 'Ⓜ️ Microsoft', 'type' => 'select', 'proxies' => ['🎯 Direct', $_ENV['Clash_US_Group_Index'], '🔰 手动选择', '♻️ 自动选择']],
         ['name' => '🍎 Apple', 'type' => 'select', 'proxies' => ['🔰 手动选择', '♻️ 自动选择', '🎯 Direct']],
         ['name' => $_ENV['Clash_US_Group_Index'], 'type' => 'url-test', 'url' => 'http://cp.cloudflare.com/generate_204', 'interval' => 300, 'proxies' => []],
         ['name' => '🎯 Direct', 'type' => 'select', 'proxies' => ['DIRECT']],
@@ -436,23 +452,23 @@ $_ENV['Clash_Group_Config'] = [
         'GEOIP,ad,⛔️ 广告拦截',
 
         // 防追踪/广告域名
-        'DOMAIN-KEYWORD,telemetry,🛑 Block',   
-        'DOMAIN-KEYWORD,analytics,🛑 Block',   
-        'DOMAIN-KEYWORD,analysis,🛑 Block',    
-        'DOMAIN-KEYWORD,tracking,🛑 Block',    
-        'DOMAIN-KEYWORD,log-upload,🛑 Block',  
-        'DOMAIN-KEYWORD,metrics,🛑 Block',     
-        'DOMAIN-KEYWORD,adservice,🛑 Block',   
-        'DOMAIN-KEYWORD,adsystem,🛑 Block',    
-        'DOMAIN-KEYWORD,tongji,🛑 Block',      
-        'DOMAIN-KEYWORD,p2p,🛑 Block',         
-        'DOMAIN-KEYWORD,strategy,🛑 Block',    
-        
+        'DOMAIN-KEYWORD,telemetry,🛑 Block',
+        'DOMAIN-KEYWORD,analytics,🛑 Block',
+        'DOMAIN-KEYWORD,analysis,🛑 Block',
+        'DOMAIN-KEYWORD,tracking,🛑 Block',
+        'DOMAIN-KEYWORD,log-upload,🛑 Block',
+        'DOMAIN-KEYWORD,metrics,🛑 Block',
+        'DOMAIN-KEYWORD,adservice,🛑 Block',
+        'DOMAIN-KEYWORD,adsystem,🛑 Block',
+        'DOMAIN-KEYWORD,tongji,🛑 Block',
+        'DOMAIN-KEYWORD,p2p,🛑 Block',
+        'DOMAIN-KEYWORD,strategy,🛑 Block',
+
         // Microsoft
         'GEOSITE,microsoft,Ⓜ️ Microsoft',
         'GEOSITE,microsoft-dev,Ⓜ️ Microsoft',
         'GEOSITE,microsoft-pki,Ⓜ️ Microsoft',
-        
+
         // 苹果、电报及流媒体分流
         'GEOSITE,apple,🍎 Apple',
         'GEOSITE,telegram,📲 Telegram',
@@ -462,12 +478,12 @@ $_ENV['Clash_Group_Config'] = [
         'GEOSITE,netflix,🎥 Netflix',
         'GEOIP,netflix,🎥 Netflix',
         'GEOSITE,category-media,🌍 主流媒体',
-        
+
         // ====== 3. 国内直连层 ======
         'GEOSITE,category-media-cn,🇨🇳 中国媒体',
-        
+
         // 常用 P2P/下载直连
-        'DOMAIN-KEYWORD,oray,🎯 Direct', 
+        'DOMAIN-KEYWORD,oray,🎯 Direct',
         'DOMAIN-KEYWORD,todesk,🎯 Direct',
         'DOMAIN-KEYWORD,onedrive,🎯 Direct',
         'DOMAIN-KEYWORD,Thunder,🎯 Direct',
@@ -480,7 +496,7 @@ $_ENV['Clash_Group_Config'] = [
         'DOMAIN-KEYWORD,xmr,🎯 Direct',
         'DOMAIN-KEYWORD,xunlei,🎯 Direct',
         'DOMAIN-KEYWORD,yunpan,🎯 Direct',
-        
+
         // 常用直连端口
         'DST-PORT,10300,🎯 Direct',
         'DST-PORT,10343,🎯 Direct',
@@ -493,13 +509,13 @@ $_ENV['Clash_Group_Config'] = [
         'DST-PORT,8888,🎯 Direct',
         'DST-PORT,9000,🎯 Direct',
         'DST-PORT,9999,🎯 Direct',
-        
+
         // 大陆路由直连
         'GEOSITE,apple-cn,🎯 Direct',
         'GEOSITE,cn,🎯 Direct',
         'GEOIP,private,🎯 Direct,no-resolve',
         'GEOIP,CN,🎯 Direct,no-resolve',
-        
+
         // 常用下载进程
         'PROCESS-NAME,DownloadService,🎯 Direct',
         'PROCESS-NAME,Folx,🎯 Direct',
@@ -514,7 +530,7 @@ $_ENV['Clash_Group_Config'] = [
         'PROCESS-NAME,fdm,🎯 Direct',
         'PROCESS-NAME,qbittorrent,🎯 Direct',
         'PROCESS-NAME,uTorrent,🎯 Direct',
-        
+
         // ====== 4. 终极兜底层 ======
         'MATCH,🐟 漏网之鱼',
     ],

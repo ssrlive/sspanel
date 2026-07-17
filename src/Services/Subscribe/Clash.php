@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
+use App\Models\User;
 use App\Services\Subscribe;
 use App\Utils\Tools;
-use function array_merge;
+use function in_array;
 use function json_decode;
-use function yaml_emit;
 use function str_contains;
 use function stripos;
-use function in_array;
+use function yaml_emit;
 use const YAML_UTF8_ENCODING;
 
 final class Clash extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $nodes = [];
         $clash_config = $_ENV['Clash_Config'] ?? [];
         $clash_group_indexes = $_ENV['Clash_Group_Indexes'] ?? [];
         $clash_group_config = $_ENV['Clash_Group_Config'] ?? [];
-        
+
         // 增加美国组标签读取
         $clash_us_group_name = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
-        
+
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {
@@ -46,7 +46,7 @@ final class Clash extends Base
                         'cipher' => $user->method,
                         'udp' => (bool) $udp,
                     ];
-                    if (!empty($plugin)) {
+                    if ($plugin !== '') {
                         $node['plugin'] = $plugin;
                     }
                     if ($plugin_option !== null) {
@@ -74,7 +74,7 @@ final class Clash extends Base
                         'type' => 'ss',
                         'server' => $node_raw->server,
                         'port' => (int) $ss_2022_port,
-                        'password' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
+                        'password' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                         'cipher' => $method,
                         'udp' => (bool) $udp,
                         'udp_over_tcp' => (bool) $uot,
@@ -106,12 +106,12 @@ final class Clash extends Base
                     $security = $node_custom_config['security'] ?? 'none';
                     $encryption = $node_custom_config['encryption'] ?? 'auto';
                     $network = $node_custom_config['network'] ?? '';
-                    $host = $node_custom_config['header']['request']['headers']['Host'][0] ??
-                        $node_custom_config['host'] ?? '';
+                    $header_request = $node_custom_config['header']['request'] ?? [];
+                    $host = $header_request['headers']['Host'][0] ?? $node_custom_config['host'] ?? '';
                     $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $tls = $security === 'tls';
                     $udp = $node_custom_config['udp'] ?? true;
-                    
+
                     $ws_opts = $node_custom_config['ws-opts'] ?? $node_custom_config['ws_opts'] ?? null;
                     $h2_opts = $node_custom_config['h2-opts'] ?? $node_custom_config['h2_opts'] ?? null;
                     $http_opts = $node_custom_config['http-opts'] ?? $node_custom_config['http_opts'] ?? null;
@@ -136,10 +136,18 @@ final class Clash extends Base
                         'network' => $network,
                     ];
 
-                    if ($ws_opts !== null) $node['ws-opts'] = $ws_opts;
-                    if ($h2_opts !== null) $node['h2-opts'] = $h2_opts;
-                    if ($http_opts !== null) $node['http-opts'] = $http_opts;
-                    if ($grpc_opts !== null) $node['grpc-opts'] = $grpc_opts;
+                    if ($ws_opts !== null) {
+                        $node['ws-opts'] = $ws_opts;
+                    }
+                    if ($h2_opts !== null) {
+                        $node['h2-opts'] = $h2_opts;
+                    }
+                    if ($http_opts !== null) {
+                        $node['http-opts'] = $http_opts;
+                    }
+                    if ($grpc_opts !== null) {
+                        $node['grpc-opts'] = $grpc_opts;
+                    }
 
                     break;
                 case 14:
@@ -149,7 +157,6 @@ final class Clash extends Base
                     $host = $node_custom_config['host'] ?? '';
                     $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $udp = $node_custom_config['udp'] ?? true;
-                    
                     $ws_opts = $node_custom_config['ws-opts'] ?? $node_custom_config['ws_opts'] ?? null;
                     $grpc_opts = $node_custom_config['grpc-opts'] ?? $node_custom_config['grpc_opts'] ?? null;
 
@@ -169,8 +176,12 @@ final class Clash extends Base
                         'skip-cert-verify' => $allow_insecure,
                     ];
 
-                    if ($ws_opts !== null) $node['ws-opts'] = $ws_opts;
-                    if ($grpc_opts !== null) $node['grpc-opts'] = $grpc_opts;
+                    if ($ws_opts !== null) {
+                        $node['ws-opts'] = $ws_opts;
+                    }
+                    if ($grpc_opts !== null) {
+                        $node['grpc-opts'] = $grpc_opts;
+                    }
 
                     break;
                 case 16:
@@ -178,14 +189,15 @@ final class Clash extends Base
                         ($node_custom_config['offset_port_node'] ?? 443);
                     $security = $node_custom_config['security'] ?? 'none';
                     $network = $node_custom_config['network'] ?? 'tcp';
-                    $host = $node_custom_config['header']['request']['headers']['Host'][0] ??
+                    $header_request = $node_custom_config['header']['request'] ?? [];
+                    $host = $header_request['headers']['Host'][0] ??
                         $node_custom_config['host'] ?? '';
                     $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $tls = $security === 'tls' || $security === 'reality';
-                    
+
                     $uuid = $user->uuid;
                     $flow = $node_custom_config['flow'] ?? '';
-                    
+
                     $reality_opts = null;
                     if ($security === 'reality') {
                         $reality_opts = [
@@ -223,10 +235,18 @@ final class Clash extends Base
                     if ($security === 'reality') {
                         $node['reality-opts'] = $reality_opts;
                     }
-                    if ($ws_opts !== null) $node['ws-opts'] = $ws_opts;
-                    if ($h2_opts !== null) $node['h2-opts'] = $h2_opts;
-                    if ($http_opts !== null) $node['http-opts'] = $http_opts;
-                    if ($grpc_opts !== null) $node['grpc-opts'] = $grpc_opts;
+                    if ($ws_opts !== null) {
+                        $node['ws-opts'] = $ws_opts;
+                    }
+                    if ($h2_opts !== null) {
+                        $node['h2-opts'] = $h2_opts;
+                    }
+                    if ($http_opts !== null) {
+                        $node['http-opts'] = $http_opts;
+                    }
+                    if ($grpc_opts !== null) {
+                        $node['grpc-opts'] = $grpc_opts;
+                    }
 
                     break;
                 default:
@@ -249,7 +269,7 @@ final class Clash extends Base
 
             // 执行美国节点的过滤和自动分发
             foreach ($clash_group_config['proxy-groups'] as $key => $group) {
-                if ($group['name'] === $clash_us_group_name) {
+                if (($group['name'] ?? '') === $clash_us_group_name) {
                     if (str_contains($node_raw->name, '美国') || stripos($node_raw->name, 'US') !== false || stripos($node_raw->name, 'States') !== false || str_contains($node_raw->name, '美')) {
                         $clash_group_config['proxy-groups'][$key]['proxies'][] = $node_raw->name;
                     }
@@ -262,9 +282,9 @@ final class Clash extends Base
         // =========================================================================
         foreach ($clash_group_config['proxy-groups'] as $key => $group) {
             // 如果该组的 proxies 列表为空，进行兜底
-            if (empty($clash_group_config['proxy-groups'][$key]['proxies'])) {
+            if (! isset($clash_group_config['proxy-groups'][$key]['proxies']) || $clash_group_config['proxy-groups'][$key]['proxies'] === []) {
                 // 如果用户有任何可用节点，就把第 1 个可用节点作为兜底；否则直接塞入 DIRECT
-                if (!empty($nodes)) {
+                if ($nodes !== []) {
                     $clash_group_config['proxy-groups'][$key]['proxies'][] = $nodes[0]['name'];
                 } else {
                     $clash_group_config['proxy-groups'][$key]['proxies'][] = 'DIRECT';
@@ -274,7 +294,7 @@ final class Clash extends Base
 
         $final_clash = [];
         foreach ($clash_config as $key => $value) {
-            if (!in_array($key, ['proxies', 'proxy-groups', 'rules'])) {
+            if (! in_array($key, ['proxies', 'proxy-groups', 'rules'])) {
                 $final_clash[$key] = $value;
             }
         }

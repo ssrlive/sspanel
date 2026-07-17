@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Subscribe;
 
+use App\Models\User;
 use App\Services\Subscribe;
 use App\Utils\Tools;
 use function array_filter;
@@ -15,10 +16,13 @@ use function stripos;
 
 final class SingBox extends Base
 {
-    public function getContent($user): string
+    public function getContent(User $user): string
     {
         $nodes = [];
         $singbox_config = $_ENV['SingBox_Config'] ?? [];
+        $singbox_config['outbounds'] = $singbox_config['outbounds'] ?? [];
+        $singbox_config['experimental'] = $singbox_config['experimental'] ?? [];
+        $singbox_config['experimental']['cache_file'] = $singbox_config['experimental']['cache_file'] ?? [];
         $nodes_raw = Subscribe::getUserNodes($user);
 
         foreach ($nodes_raw as $node_raw) {
@@ -56,7 +60,7 @@ final class SingBox extends Base
                         'server' => $node_raw->server,
                         'server_port' => (int) $ss_2022_port,
                         'method' => $method,
-                        'password' => $server_key === '' ? $user_pk : $server_key . ':' .$user_pk,
+                        'password' => $server_key === '' ? $user_pk : $server_key . ':' . $user_pk,
                         'udp_over_tcp' => (bool) $uot,
                     ];
 
@@ -90,11 +94,17 @@ final class SingBox extends Base
                 case 11:
                     $v2_port = $node_custom_config['offset_port_user'] ??
                         ($node_custom_config['offset_port_node'] ?? 443);
-                    $transport = ($node_custom_config['network'] ?? '') === 'tcp' ? '' : $node_custom_config['network'];
-                    $host = $node_custom_config['header']['request']['headers']['Host'][0] ??
+                    $transport = $node_custom_config['network'] ?? '';
+                    if ($transport === 'tcp') {
+                        $transport = '';
+                    } elseif ($transport === 'httpupgrade') {
+                        $transport = 'ws';
+                    }
+                    $header_request = $node_custom_config['header']['request'] ?? [];
+                    $host = $header_request['headers']['Host'][0] ??
                         $node_custom_config['host'] ?? '';
-                    $path = $node_custom_config['header']['request']['path'][0] ?? $node_custom_config['path'] ?? '';
-                    $headers = $node_custom_config['header']['request']['headers'] ?? [];
+                    $path = $header_request['path'][0] ?? $node_custom_config['path'] ?? '';
+                    $headers = $header_request['headers'] ?? [];
                     $service_name = $node_custom_config['servicename'] ?? '';
                     $utls = filter_var($node_custom_config['utls'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $method = $node_custom_config['method'] ?? '';
@@ -144,8 +154,12 @@ final class SingBox extends Base
                     $host = $node_custom_config['host'] ?? '';
                     $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
                     $transport = $node_custom_config['network'] ?? '';
-                    $path = $node_custom_config['header']['request']['path'][0] ?? $node_custom_config['path'] ?? '';
-                    $headers = $node_custom_config['header']['request']['headers'] ?? [];
+                    if ($transport === 'httpupgrade') {
+                        $transport = 'ws';
+                    }
+                    $header_request = $node_custom_config['header']['request'] ?? [];
+                    $path = $header_request['path'][0] ?? $node_custom_config['path'] ?? '';
+                    $headers = $header_request['headers'] ?? [];
                     $service_name = $node_custom_config['servicename'] ?? '';
 
                     $node = [
@@ -175,11 +189,17 @@ final class SingBox extends Base
                     $vless_port = $node_custom_config['offset_port_user'] ??
                         ($node_custom_config['offset_port_node'] ?? 443);
                     $security = $node_custom_config['security'] ?? 'none';
-                    $transport = ($node_custom_config['network'] ?? '') === 'tcp' ? '' : $node_custom_config['network'];
-                    $host = $node_custom_config['header']['request']['headers']['Host'][0] ??
+                    $transport = $node_custom_config['network'] ?? '';
+                    if ($transport === 'tcp') {
+                        $transport = '';
+                    } elseif ($transport === 'httpupgrade') {
+                        $transport = 'ws';
+                    }
+                    $header_request = $node_custom_config['header']['request'] ?? [];
+                    $host = $header_request['headers']['Host'][0] ??
                         $node_custom_config['host'] ?? '';
-                    $path = $node_custom_config['header']['request']['path'][0] ?? $node_custom_config['path'] ?? '';
-                    $headers = $node_custom_config['header']['request']['headers'] ?? [];
+                    $path = $header_request['path'][0] ?? $node_custom_config['path'] ?? '';
+                    $headers = $header_request['headers'] ?? [];
                     $service_name = $node_custom_config['servicename'] ?? '';
                     $flow = $node_custom_config['flow'] ?? '';
                     $allow_insecure = filter_var($node_custom_config['allow_insecure'] ?? false, FILTER_VALIDATE_BOOLEAN);
@@ -251,7 +271,7 @@ final class SingBox extends Base
 
             foreach ($singbox_config['outbounds'] as $key => $outbound) {
                 if (($outbound['type'] ?? '') === 'selector' || ($outbound['type'] ?? '') === 'urltest') {
-                    if ($outbound['tag'] === $sb_us_group) {
+                    if (($outbound['tag'] ?? '') === $sb_us_group) {
                         if (str_contains($node_raw->name, '美国') || stripos($node_raw->name, 'US') !== false || stripos($node_raw->name, 'States') !== false || str_contains($node_raw->name, '美')) {
                             $singbox_config['outbounds'][$key]['outbounds'][] = $node_raw->name;
                         }
@@ -263,9 +283,9 @@ final class SingBox extends Base
         // 【修复】Sing-Box 出站防爆空值校验逻辑
         $sb_us_group = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
         foreach ($singbox_config['outbounds'] as $key => $outbound) {
-            if ($outbound['tag'] === $sb_us_group) {
-                if (empty($singbox_config['outbounds'][$key]['outbounds'])) {
-                    if (!empty($nodes)) {
+            if (($outbound['tag'] ?? '') === $sb_us_group) {
+                if (! isset($singbox_config['outbounds'][$key]['outbounds']) || $singbox_config['outbounds'][$key]['outbounds'] === []) {
+                    if ($nodes !== []) {
                         $singbox_config['outbounds'][$key]['outbounds'][] = $nodes[0]['tag'];
                     } else {
                         $singbox_config['outbounds'][$key]['outbounds'][] = 'direct';
