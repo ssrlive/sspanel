@@ -23,8 +23,8 @@ final class Clash extends Base
         $clash_group_indexes = $_ENV['Clash_Group_Indexes'] ?? [];
         $clash_group_config = $_ENV['Clash_Group_Config'] ?? [];
         
-        // 增加美国组标签读取（安全默认值防报错）
-        $clash_us_group_name = $_ENV['Clash_US_Group_Index'] ?? '美国节点';
+        // 仅保留美国组标签读取（安全默认值防报错）
+        $clash_us_group_name = $_ENV['Clash_US_Group_Index'] ?? '🇺🇸美国节点';
         
         $nodes_raw = Subscribe::getUserNodes($user);
 
@@ -247,11 +247,28 @@ final class Clash extends Base
                 }
             }
 
-            // 仅执行美国节点的过滤和自动分发
+            // 执行美国节点的过滤和自动分发
             foreach ($clash_group_config['proxy-groups'] as $key => $group) {
                 if ($group['name'] === $clash_us_group_name) {
                     if (str_contains($node_raw->name, '美国') || stripos($node_raw->name, 'US') !== false || stripos($node_raw->name, 'States') !== false || str_contains($node_raw->name, '美')) {
                         $clash_group_config['proxy-groups'][$key]['proxies'][] = $node_raw->name;
+                    }
+                }
+            }
+        }
+
+        // =========================================================================
+        // 【核心修复】防爆空值校验逻辑
+        // =========================================================================
+        foreach ($clash_group_config['proxy-groups'] as $key => $group) {
+            if ($group['name'] === $clash_us_group_name) {
+                // 如果发现筛选出来的美国节点为空
+                if (empty($clash_group_config['proxy-groups'][$key]['proxies'])) {
+                    // 如果有其他任何可用节点，就把第一个节点丢进去兜底，否则就塞入 DIRECT（直连）防止软件闪退崩溃
+                    if (!empty($nodes)) {
+                        $clash_group_config['proxy-groups'][$key]['proxies'][] = $nodes[0]['name'];
+                    } else {
+                        $clash_group_config['proxy-groups'][$key]['proxies'][] = 'DIRECT';
                     }
                 }
             }
