@@ -6,7 +6,7 @@
 
 <body {if $user->is_dark_mode === 1}data-bs-theme="dark" {elseif $user->is_dark_mode === 2}data-bs-theme="auto" {/if}>
     <style>
-        .overtls-qrcode-popup {
+        .node-qrcode-popup {
             display: none;
             position: fixed;
             min-width: 280px;
@@ -20,25 +20,25 @@
             z-index: 99999;
         }
 
-        [data-bs-theme='dark'] .overtls-qrcode-popup {
+        [data-bs-theme='dark'] .node-qrcode-popup {
             background: rgba(15, 23, 42, 0.95);
             border-color: rgba(255, 255, 255, 0.08);
             color: #f8fafc;
         }
 
-        .overtls-qrcode-box {
-            width: 240px;
-            height: 240px;
+        .node-qrcode-box {
+            width: 320px;
+            height: 320px;
             margin: 0 auto;
         }
 
-        .overtls-qrcode-caption {
+        .node-qrcode-caption {
             margin-top: 0.5rem;
             font-size: 0.85rem;
             color: #6b7280;
         }
 
-        [data-bs-theme='dark'] .overtls-qrcode-caption {
+        [data-bs-theme='dark'] .node-qrcode-caption {
             color: #cbd5e1;
         }
     </style>
@@ -70,9 +70,10 @@
                                         <div class="row row-deck row-cards">
                                             {foreach $servers as $server}
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
-                                                    <div class="card{if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''} overtls-card{/if}"
-                                                        {if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''}
-                                                        data-overtls-url="{$server.overtls_url|escape:'html'}" {/if}>
+                                                    <div class="card{if ($server['sort'] === 'OverTLS' || $server['sort'] === 'AnyTLS') && $server['node_url'] !== ''} node-qrcode-card{/if}"
+                                                        {if ($server['sort'] === 'OverTLS' || $server['sort'] === 'AnyTLS') && $server['node_url'] !== ''}
+                                                            data-node-qrcode-url="{$server.node_url|escape:'html'}"
+                                                        data-sub-type="{$server.sort|escape:'html'}" {/if}>
                                                         {if $server['class'] === 0}
                                                             <div class="ribbon bg-blue">免费</div>
                                                         {else}
@@ -108,17 +109,14 @@
                                                                                 {$server['traffic_rate']} 倍
                                                                             {/if}
                                                                         </span>
-                                                                        {if $server['sort'] === 'OverTLS' && $server['overtls_url'] !== ''}
-                                                                            <span class="overtls-badge-wrapper">
-                                                                                <span class="badge bg-teal-lt overtls-badge"
-                                                                                    data-overtls-url="{$server.overtls_url|escape:'html'}">
+                                                                        {if ($server['sort'] === 'OverTLS' || $server['sort'] === 'AnyTLS') && $server['node_url'] !== ''}
+                                                                            <span class="node-qrcode-badge-wrapper">
+                                                                                <span class="badge bg-teal-lt node-qrcode-badge"
+                                                                                    data-node-qrcode-url="{$server.node_url|escape:'html'}">
                                                                                     {$server['sort']}
                                                                                 </span>
-                                                                                <div class="overtls-qrcode-popup"></div>
+                                                                                <div class="node-qrcode-popup"></div>
                                                                             </span>
-                                                                        {elseif $server['sort'] === 'OverTLS'}
-                                                                            <span
-                                                                                class="badge bg-blue-lt">{$server['sort']}</span>
                                                                         {else}
                                                                             <span
                                                                                 class="badge bg-blue-lt">{$server['sort']}</span>
@@ -162,37 +160,42 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.overtls-card').forEach(function(card) {
-                var url = card.dataset.overtlsUrl || '';
+            document.querySelectorAll('.node-qrcode-card').forEach(function(card) {
+                var url = card.dataset.nodeQrcodeUrl || '';
                 if (!url) {
                     return;
                 }
 
                 var popup = document.createElement('div');
-                popup.className = 'overtls-qrcode-popup';
+                popup.className = 'node-qrcode-popup';
                 document.body.appendChild(popup);
 
                 var qrRendered = false;
+                var subType = card.dataset.subType || 'AnyTLS';
+                var qrSize = 320;
 
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function(event) {
                     if (!qrRendered) {
                         popup.innerHTML = '';
                         var qrBox = document.createElement('div');
-                        qrBox.className = 'overtls-qrcode-box';
+                        qrBox.className = 'node-qrcode-box';
                         popup.appendChild(qrBox);
                         new QRCode(qrBox, {
                             text: url,
-                            width: 240,
-                            height: 240,
+                            width: qrSize,
+                            height: qrSize,
                             correctLevel: QRCode.CorrectLevel.H
                         });
                         var caption = document.createElement('div');
-                        caption.className = 'overtls-qrcode-caption';
-                        caption.textContent = 'OverTLS 订阅二维码';
+                        caption.className = 'node-qrcode-caption';
+                        caption.textContent = subType + ' 订阅二维码';
                         popup.appendChild(caption);
                         qrRendered = true;
                     }
+
                     popup.style.display = 'block';
+                    popup.style.left = event.clientX + 16 + 'px';
+                    popup.style.top = event.clientY + 16 + 'px';
                 });
 
                 card.addEventListener('mousemove', function(event) {

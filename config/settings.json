@@ -1422,6 +1422,15 @@
         "mark": "Trojan 订阅开关"
     },
     {
+        "item": "enable_anytls_sub",
+        "value": "1",
+        "class": "subscribe",
+        "is_public": 1,
+        "type": "bool",
+        "default": "1",
+        "mark": "AnyTLS 订阅开关"
+    },
+    {
         "item": "enable_daily_finance_mail",
         "value": "0",
         "class": "cron",

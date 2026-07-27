@@ -32,7 +32,7 @@ final class SubController extends BaseController
     {
         $err_msg = '订阅链接无效';
         $subtype = $args['subtype'];
-        $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan', 'overtls'];
+        $subtype_list = ['json', 'clash', 'sip008', 'singbox', 'v2rayjson', 'sip002', 'ss', 'v2ray', 'trojan', 'overtls', 'anytls'];
 
         $subUrl = preg_replace('/^https?:\/\//', '', Env::get('subUrl'));
 
@@ -42,6 +42,7 @@ final class SubController extends BaseController
             ($subtype === 'singbox' && Config::obtain('enable_singbox_sub') === false) ||
             ($subtype === 'v2rayjson' && Config::obtain('enable_v2rayjson_sub') === false) ||
             ($subtype === 'overtls' && Config::obtain('enable_overtls_sub') === false) ||
+            ($subtype === 'anytls' && Config::obtain('enable_anytls_sub') === false) ||
             ! Env::get('Subscribe') ||
             ! in_array($subtype, $subtype_list) ||
             $subUrl !== $request->getHeaderLine('Host')
@@ -70,7 +71,7 @@ final class SubController extends BaseController
 
         $content_type = match ($subtype) {
             'clash' => 'application/yaml',
-            'json', 'sip008', 'singbox', 'v2rayjson', 'overtls' => 'application/json',
+            'json', 'sip008', 'singbox', 'v2rayjson', 'overtls', 'anytls' => 'application/json',
             default => 'text/plain',
         };
 

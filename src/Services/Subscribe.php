@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Link;
 use App\Models\Node;
 use App\Models\User;
+use App\Services\Subscribe\AnyTLS;
 use App\Services\Subscribe\Clash;
 use App\Services\Subscribe\Json;
 use App\Services\Subscribe\OverTLS;
@@ -64,7 +65,7 @@ final class Subscribe
         return self::getClient($type)->getContent($user);
     }
 
-    public static function getClient(string $type): Json|SS|SIP002|V2Ray|Trojan|Clash|SIP008|SingBox|V2RayJson|OverTLS
+    public static function getClient(string $type): Json|SS|SIP002|V2Ray|Trojan|Clash|SIP008|SingBox|V2RayJson|OverTLS|AnyTLS
     {
         return match ($type) {
             'ss' => new SS(),
@@ -76,6 +77,7 @@ final class Subscribe
             'singbox' => new SingBox(),
             'v2rayjson' => new V2RayJson(),
             'overtls' => new OverTLS(),
+            'anytls' => new AnyTLS(),
             default => new Json(),
         };
     }

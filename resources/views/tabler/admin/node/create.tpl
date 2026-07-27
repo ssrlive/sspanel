@@ -70,6 +70,7 @@
                                                 <option value="11">Vmess</option>
                                                 <option value="2">TUIC</option>
                                                 <option value="4">OverTLS</option>
+                                                <option value="5">AnyTLS</option>
                                                 <option value="1">Shadowsocks2022</option>
                                                 <option value="0">Shadowsocks</option>
                                             </select>

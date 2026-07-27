@@ -6,6 +6,7 @@ namespace App\Controllers\User;
 
 use App\Controllers\BaseController;
 use App\Services\Subscribe;
+use App\Services\Subscribe\AnyTLS;
 use App\Services\Subscribe\OverTLS;
 use App\Utils\Tools;
 use Exception;
@@ -38,8 +39,10 @@ final class ServerController extends BaseController
                 'node_bandwidth' => Tools::autoBytes($node->node_bandwidth),
                 'node_bandwidth_limit' => $node->node_bandwidth_limit === 0 ? '无限制' :
                     Tools::autoBytes($node->node_bandwidth_limit),
-                'overtls_url' => $node->sort() === 'OverTLS' && $node->getNodeOnlineStatus() === 1
-                    ? OverTLS::assembleNodeUrl($node, $this->user->uuid) : '',
+                'node_url' => ($node->sort() === 'OverTLS' || $node->sort() === 'AnyTLS') && $node->getNodeOnlineStatus() === 1
+                    ? ($node->sort() === 'OverTLS'
+                        ? OverTLS::assembleNodeUrl($node, $this->user->uuid)
+                        : AnyTLS::assembleNodeUrl($node, $this->user->uuid)) : '',
             ];
         }
 

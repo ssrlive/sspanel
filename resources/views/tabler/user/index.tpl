@@ -257,6 +257,17 @@
                                                         </a>
                                                     </div>
                                                 {/if}
+                                                {if $public_setting.enable_anytls_sub|default:1}
+                                                    <p>
+                                                        通用订阅（AnyTLS）：<code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    </p>
+                                                    <div class="btn-list justify-content-start">
+                                                        <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                            class="copy btn btn-primary">
+                                                            复制通用订阅（AnyTLS）
+                                                        </a>
+                                                    </div>
+                                                {/if}
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="client-sub">
@@ -311,6 +322,17 @@
                                                         <a data-clipboard-text="{$UniversalSub}/overtls"
                                                             class="copy btn btn-primary">
                                                             复制客户端订阅（OverTLS）
+                                                        </a>
+                                                    </div>
+                                                {/if}
+                                                {if $public_setting['enable_anytls_sub']|default:1}
+                                                    <p>
+                                                        客户端订阅（AnyTLS）：<code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    </p>
+                                                    <div class="btn-list justify-content-start">
+                                                        <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                            class="copy btn btn-primary">
+                                                            复制客户端订阅（AnyTLS）
                                                         </a>
                                                     </div>
                                                 {/if}
@@ -371,6 +393,15 @@
                                                     <a data-clipboard-text="{$UniversalSub}/overtls"
                                                         class="copy btn btn-primary">
                                                         复制客户端 OverTLS 订阅
+                                                    </a>
+                                                {/if}
+                                                {if $public_setting['enable_anytls_sub']|default:1}
+                                                    <p>
+                                                        适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    </p>
+                                                    <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                        class="copy btn btn-primary">
+                                                        复制客户端 AnyTLS 订阅
                                                     </a>
                                                 {/if}
                                             </div>
@@ -447,6 +478,15 @@
                                                     复制客户端 OverTLS 订阅
                                                 </a>
                                             {/if}
+                                            {if $public_setting['enable_anytls_sub']|default:1}
+                                                <p>
+                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 AnyTLS 订阅
+                                                </a>
+                                            {/if}
                                         </div>
                                         <div class="tab-pane" id="android">
                                             {if $public_setting.enable_clash_sub|default:1}
@@ -519,6 +559,15 @@
                                                     复制客户端 OverTLS 订阅
                                                 </a>
                                             {/if}
+                                            {if $public_setting['enable_anytls_sub']|default:1}
+                                                <p>
+                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 AnyTLS 订阅
+                                                </a>
+                                            {/if}
                                         </div>
                                         <div class="tab-pane" id="ios">
                                             {if $public_setting.enable_singbox_sub|default:1}
@@ -547,6 +596,15 @@
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
                                                     复制客户端 OverTLS 订阅
+                                                </a>
+                                            {/if}
+                                            {if $public_setting['enable_anytls_sub']|default:1}
+                                                <p>
+                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 AnyTLS 订阅
                                                 </a>
                                             {/if}
                                         </div>
@@ -603,6 +661,15 @@
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
                                                     复制客户端 OverTLS 订阅
+                                                </a>
+                                            {/if}
+                                            {if $public_setting['enable_anytls_sub']|default:1}
+                                                <p>
+                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                </p>
+                                                <a data-clipboard-text="{$UniversalSub}/anytls"
+                                                    class="copy btn btn-primary">
+                                                    复制客户端 AnyTLS 订阅
                                                 </a>
                                             {/if}
                                         </div>

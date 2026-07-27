@@ -71,6 +71,7 @@
                                                 <option value="11" {if $node->sort === 11}selected{/if}>Vmess</option>
                                                 <option value="2" {if $node->sort === 2}selected{/if}>TUIC</option>
                                                 <option value="4" {if $node->sort === 4}selected{/if}>OverTLS</option>
+                                                <option value="5" {if $node->sort === 5}selected{/if}>AnyTLS</option>
                                                 <option value="1" {if $node->sort === 1}selected{/if}>Shadowsocks2022
                                                 </option>
                                                 <option value="0" {if $node->sort === 0}selected{/if}>Shadowsocks

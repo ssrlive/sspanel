@@ -84,11 +84,18 @@ final class SubController extends BaseController
                 'mark' => 'V2Ray Json 通用订阅开关',
             ],
             'enable_overtls_sub' => [
-                'value' => '1',
+                'value' => '0',
                 'type' => 'bool',
                 'is_public' => 1,
-                'default' => '1',
+                'default' => '0',
                 'mark' => 'OverTLS 通用订阅开关',
+            ],
+            'enable_anytls_sub' => [
+                'value' => '0',
+                'type' => 'bool',
+                'is_public' => 1,
+                'default' => '0',
+                'mark' => 'AnyTLS 通用订阅开关',
             ],
         ];
 
