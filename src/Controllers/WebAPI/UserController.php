@@ -32,6 +32,7 @@ final class UserController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $node_id = $request->getQueryParam('node_id');
+        /** @var Node $node */
         $node = (new Node())->find($node_id);
 
         if ($node === null) {
@@ -85,12 +86,14 @@ final class UserController extends BaseController
             2 => ['u', 'd', 'transfer_enable', 'method', 'port', 'node_iplimit'],
             1 => ['u', 'd', 'transfer_enable', 'method', 'port', 'uuid', 'node_iplimit'],
             4 => ['u', 'd', 'transfer_enable', 'node_iplimit'],
+            5 => ['u', 'd', 'transfer_enable', 'node_iplimit'],
             default => ['u', 'd', 'transfer_enable', 'uuid', 'node_iplimit']
         };
 
         $users = [];
 
         foreach ($users_raw as $user_raw) {
+            /** @var User $user_raw */
             if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {
                 if (Env::get('keep_connect')) {
                     // 流量耗尽用户限速至 1Mbps
@@ -119,11 +122,13 @@ final class UserController extends BaseController
                 $user_raw->passwd = $user_pk;
             }
 
+            $client_uuid = $user_raw->uuid;
+
             foreach ($keys_unset as $key) {
                 unset($user_raw->$key);
             }
 
-            $user_raw->client_id = $user_raw->uuid;
+            $user_raw->client_id = $client_uuid;
             $users[] = $user_raw;
         }
 
