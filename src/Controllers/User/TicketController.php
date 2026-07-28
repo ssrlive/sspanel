@@ -186,6 +186,7 @@ final class TicketController extends BaseController
         }
 
         $id = $args['id'];
+        /** @var Ticket $ticket */
         $ticket = (new Ticket())->where('id', '=', $id)->where('userid', $this->user->id)->first();
 
         if ($ticket === null) {

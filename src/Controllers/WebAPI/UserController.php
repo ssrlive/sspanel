@@ -148,6 +148,7 @@ final class UserController extends BaseController
 
         $data = $data->data;
         $node_id = $request->getQueryParam('node_id');
+        /** @var Node $node */
         $node = (new Node())->find($node_id);
 
         if ($node === null) {

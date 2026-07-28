@@ -8,7 +8,7 @@ use Illuminate\Database\Query\Builder;
 
 /**
  * @property int    $id     记录ID
- * @property string $type   订阅token
+ * @property string $token  订阅token
  * @property int    $userid 用户ID
  *
  * @mixin Builder

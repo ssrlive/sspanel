@@ -80,6 +80,7 @@ final class Cron
 
     public static function detectNodeOffline(): void
     {
+        /** @var Node[] $nodes */
         $nodes = (new Node())->where('type', 1)->get();
 
         foreach ($nodes as $node) {

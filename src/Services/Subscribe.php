@@ -27,6 +27,7 @@ final class Subscribe
     public static function getUniversalSubLink(User $user): string
     {
         $userid = $user->id;
+        /** @var Link|null $token */
         $token = (new Link())->where('userid', $userid)->first();
 
         if ($token === null) {
