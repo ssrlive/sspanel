@@ -34,6 +34,8 @@ use function time;
  */
 final class Node extends Model
 {
+    private const NODE_ONLINE_TIMEOUT = 90;
+
     protected $connection = 'default';
     protected $table = 'node';
 
@@ -101,6 +103,6 @@ final class Node extends Model
      */
     public function getNodeOnlineStatus(): int
     {
-        return $this->node_heartbeat === 0 ? 0 : ($this->node_heartbeat + 600 > time() ? 1 : -1);
+        return $this->node_heartbeat === 0 ? 0 : ($this->node_heartbeat + self::NODE_ONLINE_TIMEOUT > time() ? 1 : -1);
     }
 }
