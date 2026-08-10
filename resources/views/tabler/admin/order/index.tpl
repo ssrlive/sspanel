@@ -133,6 +133,28 @@
                     });
                 }
 
+                function markPaidOrder(order_id) {
+                    $('#notice-message').text('确定将此订单标记为已付款？');
+                    $('#notice-dialog').modal('show');
+                    $('#notice-confirm').off('click').on('click', function() {
+                        $.ajax({
+                            url: "/admin/order/" + order_id + "/mark_paid",
+                            type: 'POST',
+                            dataType: "json",
+                            success: function(data) {
+                                if (data.ret === 1) {
+                                    $('#success-message').text(data.msg);
+                                    $('#success-dialog').modal('show');
+                                    reloadTableAjax();
+                                } else {
+                                    $('#fail-message').text(data.msg);
+                                    $('#fail-dialog').modal('show');
+                                }
+                            }
+                        })
+                    });
+                }
+
                 function reloadTableAjax() {
                     table.ajax.reload(null, false);
                 }

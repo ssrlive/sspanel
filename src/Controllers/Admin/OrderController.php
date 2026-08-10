@@ -168,6 +168,54 @@ final class OrderController extends BaseController
         ]);
     }
 
+    public function markPaid(ServerRequest $request, Response $response, array $args): ResponseInterface
+    {
+        $order = (new Order())->find($args['id']);
+
+        if ($order === null) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '订单不存在',
+            ]);
+        }
+
+        if (! in_array($order->status, ['pending_payment', 'pending_activation'])) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '只有未付款订单可以标记为已付款',
+            ]);
+        }
+
+        $invoice = (new Invoice())->where('order_id', $order->id)->first();
+        if ($invoice === null) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '关联账单不存在',
+            ]);
+        }
+
+        if (in_array($invoice->status, ['paid_gateway', 'paid_balance', 'paid_admin'])) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '账单已经支付',
+            ]);
+        }
+
+        $now = time();
+        $order->status = 'pending_activation';
+        $order->update_time = $now;
+        $order->save();
+        $invoice->status = 'paid_admin';
+        $invoice->update_time = $now;
+        $invoice->pay_time = $now;
+        $invoice->save();
+
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '成功标记订单为已付款，等待激活',
+        ]);
+    }
+
     public function delete(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $order_id = $args['id'];
@@ -207,6 +255,12 @@ final class OrderController extends BaseController
                 $order->op .= '
                 <button class="btn btn-orange" id="cancel-order-' . $order->id . '"
                  onclick="cancelOrder(' . $order->id . ')">取消</button>';
+            }
+
+            if ($order->status === 'pending_payment') {
+                $order->op .= '
+                <button class="btn btn-green" id="mark-paid-order-' . $order->id . '"
+                 onclick="markPaidOrder(' . $order->id . ')">标记为已付款</button>';
             }
 
             if ($order->status === 'pending_activation') {
