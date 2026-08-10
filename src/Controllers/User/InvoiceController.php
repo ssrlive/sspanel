@@ -6,8 +6,10 @@ namespace App\Controllers\User;
 
 use App\Controllers\BaseController;
 use App\Models\Invoice;
+use App\Models\Order;
 use App\Models\Paylist;
 use App\Models\UserMoneyLog;
+use App\Services\Cron;
 use App\Services\Payment;
 use App\Utils\Tools;
 use Exception;
@@ -142,11 +144,12 @@ final class InvoiceController extends BaseController
             $invoice->save();
 
             if ($invoice->status === 'paid_balance') {
-                $order = (new \App\Models\Order())->find($invoice->order_id);
+                $order = (new Order())->find($invoice->order_id);
                 if ($order !== null && $order->status === 'pending_payment') {
                     $order->status = 'pending_activation';
                     $order->update_time = time();
                     $order->save();
+                    Cron::activateOrder($order);
                 }
             }
         } else {

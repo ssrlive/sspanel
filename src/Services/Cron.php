@@ -160,6 +160,18 @@ final class Cron
 
         foreach ($paidUsers as $user) {
             if (strtotime($user->class_expire) < time()) {
+                $active_tabp_order = (new Order())->where('user_id', $user->id)
+                    ->where('status', 'activated')
+                    ->where('product_type', 'tabp')
+                    ->orderBy('id')
+                    ->first();
+                if ($active_tabp_order !== null) {
+                    $active_tabp_content = json_decode($active_tabp_order->product_content);
+                    if ($active_tabp_order->update_time + $active_tabp_content->time * 86400 >= time()) {
+                        continue;
+                    }
+                }
+
                 $text = '你好，系统发现你的账号等级已经过期了。';
                 $reset_traffic = Env::get('class_expire_reset_traffic');
 
@@ -242,56 +254,102 @@ final class Cron
 
         foreach ($users as $user) {
             $user_id = $user->id;
-            // 获取用户账户已激活的TABP订单，一个用户同时只能有一个已激活的TABP订单
-            $activated_order = (new Order())->where('user_id', $user_id)
-                ->where('status', 'activated')
-                ->where('product_type', 'tabp')
-                ->orderBy('id')
-                ->first();
             // 获取用户账户等待激活的TABP订单
-            $pending_activation_orders = (new Order())->where('user_id', $user_id)
+            $order = (new Order())->where('user_id', $user_id)
                 ->where('status', 'pending_activation')
                 ->where('product_type', 'tabp')
                 ->orderBy('id')
-                ->get();
-            // 如果用户账户中有已激活的TABP订单，则判断是否过期
-            if ($activated_order !== null) {
-                $content = json_decode($activated_order->product_content);
-
-                if ($activated_order->update_time + $content->time * 86400 < time()) {
-                    $activated_order->status = 'expired';
-                    $activated_order->update_time = time();
-                    $activated_order->save();
-                    echo "TABP订单 #{$activated_order->id} 已过期。\n";
-                    $activated_order = null; // 先检查过期，再激活新订单，避免服务中断
-                }
-            }
-            // 如果用户账户中没有已激活的TABP订单，且有等待激活的TABP订单，则激活最早的等待激活TABP订单
-            if ($activated_order === null && count($pending_activation_orders) > 0) {
-                $order = $pending_activation_orders[0];
-                // 获取TABP订单内容准备激活
-                $content = json_decode($order->product_content);
-                // 激活TABP
-                $user->u = 0;
-                $user->d = 0;
-                $user->transfer_today = 0;
-                $user->transfer_enable = Tools::gbToB($content->bandwidth);
-                $user->class = $content->class;
-                $old_class_expire = new DateTime();
-                $user->class_expire = $old_class_expire
-                    ->modify('+' . $content->class_time . ' days')->format('Y-m-d H:i:s');
-                $user->node_group = $content->node_group;
-                $user->node_speedlimit = $content->speed_limit;
-                $user->node_iplimit = $content->ip_limit;
-                $user->save();
-                $order->status = 'activated';
-                $order->update_time = time();
-                $order->save();
+                ->first();
+            if ($order !== null && self::activateOrder($order, true)) {
                 echo "TABP订单 #{$order->id} 已激活。\n";
             }
         }
 
         echo Tools::toDateTime(time()) . ' TABP订单激活处理完成' . PHP_EOL;
+    }
+
+    /**
+     * Activate a single paid order and apply its product benefits.
+     *
+     * @throws Exception
+     */
+    public static function activateOrder(Order $order, bool $logExpired = false): bool
+    {
+        $user = (new User())->find($order->user_id);
+        if ($user === null || $order->status !== 'pending_activation') {
+            return false;
+        }
+
+        $content = json_decode($order->product_content);
+
+        switch ($order->product_type) {
+            case 'tabp':
+                $activated_order = (new Order())->where('user_id', $user->id)
+                    ->where('status', 'activated')
+                    ->where('product_type', 'tabp')
+                    ->orderBy('id')
+                    ->first();
+                if ($activated_order !== null) {
+                    $activated_content = json_decode($activated_order->product_content);
+                    $is_expired = $activated_order->update_time + $activated_content->time * 86400 < time();
+                    $is_traffic_exhausted = $user->transfer_enable <= $user->u + $user->d;
+                    if (! $is_expired && ! $is_traffic_exhausted) {
+                        return false;
+                    }
+                    $activated_order->status = 'expired';
+                    $activated_order->update_time = time();
+                    $activated_order->save();
+                    if ($logExpired) {
+                        echo "TABP订单 #{$activated_order->id} 已过期。\n";
+                    }
+                }
+                $user->u = 0;
+                $user->d = 0;
+                $user->transfer_today = 0;
+                $user->transfer_enable = Tools::gbToB($content->bandwidth);
+                $user->class = $content->class;
+                $user->class_expire = (new DateTime())->modify('+' . $content->class_time . ' days')->format('Y-m-d H:i:s');
+                $user->node_group = $content->node_group;
+                $user->node_speedlimit = $content->speed_limit;
+                $user->node_iplimit = $content->ip_limit;
+                break;
+            case 'bandwidth':
+                $user->transfer_enable += Tools::gbToB($content->bandwidth);
+                break;
+            case 'time':
+                if ($user->class !== (int) $content->class && $user->class > 0) {
+                    return false;
+                }
+                $user->class = $content->class;
+                $user->class_expire = (new DateTime($user->class_expire))
+                    ->modify('+' . $content->class_time . ' days')->format('Y-m-d H:i:s');
+                $user->node_group = $content->node_group;
+                $user->node_speedlimit = $content->speed_limit;
+                $user->node_iplimit = $content->ip_limit;
+                break;
+            case 'topup':
+                $user->money += $content->amount;
+                break;
+            default:
+                return false;
+        }
+
+        $user->save();
+        $order->status = 'activated';
+        $order->update_time = time();
+        $order->save();
+
+        if ($order->product_type === 'topup') {
+            (new UserMoneyLog())->add(
+                $user->id,
+                $user->money - $content->amount,
+                $user->money,
+                $content->amount,
+                "充值订单 #{$order->id}"
+            );
+        }
+
+        return true;
     }
 
     public static function processBandwidthOrderActivation(): void
@@ -307,15 +365,7 @@ final class Cron
                 ->orderBy('id')
                 ->first();
 
-            if ($order !== null) {
-                // 获取流量包订单内容准备激活
-                $content = json_decode($order->product_content);
-                // 激活流量包
-                $user->transfer_enable += Tools::gbToB($content->bandwidth);
-                $user->save();
-                $order->status = 'activated';
-                $order->update_time = time();
-                $order->save();
+            if ($order !== null && self::activateOrder($order)) {
                 echo "流量包订单 #{$order->id} 已激活。\n";
             }
         }
@@ -339,24 +389,7 @@ final class Cron
                 ->orderBy('id')
                 ->first();
 
-            if ($order !== null) {
-                $content = json_decode($order->product_content);
-                // 跳过当前账户等级不等于时间包等级的非免费用户订单
-                if ($user->class !== (int) $content->class && $user->class > 0) {
-                    continue;
-                }
-                // 激活时间包
-                $user->class = $content->class;
-                $old_class_expire = new DateTime($user->class_expire);
-                $user->class_expire = $old_class_expire
-                    ->modify('+' . $content->class_time . ' days')->format('Y-m-d H:i:s');
-                $user->node_group = $content->node_group;
-                $user->node_speedlimit = $content->speed_limit;
-                $user->node_iplimit = $content->ip_limit;
-                $user->save();
-                $order->status = 'activated';
-                $order->update_time = time();
-                $order->save();
+            if ($order !== null && self::activateOrder($order)) {
                 echo "时间包订单 #{$order->id} 已激活。\n";
             }
         }
@@ -376,23 +409,9 @@ final class Cron
             ->get();
 
         foreach ($orders as $order) {
-            $user_id = $order->user_id;
-            $user = (new User())->find($user_id);
-            $content = json_decode($order->product_content);
-            // 充值
-            $user->money += $content->amount;
-            $user->save();
-            $order->status = 'activated';
-            $order->update_time = time();
-            $order->save();
-            (new UserMoneyLog())->add(
-                $user_id,
-                $user->money - $content->amount,
-                $user->money,
-                $content->amount,
-                "充值订单 #{$order->id}"
-            );
-            echo "充值订单 #{$order->id} 已激活。\n";
+            if (self::activateOrder($order)) {
+                echo "充值订单 #{$order->id} 已激活。\n";
+            }
         }
 
         echo Tools::toDateTime(time()) . ' 充值订单激活处理完成' . PHP_EOL;
