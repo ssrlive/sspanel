@@ -59,7 +59,7 @@ final class InvoiceController extends BaseController
         $invoice->status_text = $invoice->status();
         $invoice->create_time = Tools::toDateTime($invoice->create_time);
         $invoice->update_time = Tools::toDateTime($invoice->update_time);
-        $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
+        $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
         $invoice_content = json_decode($invoice->content);
 
         $view = $this->view();
@@ -114,7 +114,7 @@ final class InvoiceController extends BaseController
             $invoice->status = $invoice->status();
             $invoice->create_time = Tools::toDateTime($invoice->create_time);
             $invoice->update_time = Tools::toDateTime($invoice->update_time);
-            $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
+            $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
         }
 
         return $response->withJson([
