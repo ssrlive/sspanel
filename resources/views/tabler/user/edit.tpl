@@ -272,26 +272,32 @@
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <h3 class="card-title">修改登录密码</h3>
-                                                            <div class="mb-3">
-                                                                <form>
+                                                            <div class="form-group mb-3 row">
+                                                                <label
+                                                                    class="form-label col-3 col-form-label">当前密码</label>
+                                                                <div class="col">
                                                                     <input id="password" type="password"
-                                                                        class="form-control" placeholder="当前登录密码"
+                                                                        class="form-control" placeholder="请输入当前登录密码"
                                                                         autocomplete="off">
-                                                                </form>
+                                                                </div>
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <form>
+                                                            <div class="form-group mb-3 row">
+                                                                <label
+                                                                    class="form-label col-3 col-form-label">新密码</label>
+                                                                <div class="col">
                                                                     <input id="new_password" type="password"
-                                                                        class="form-control" placeholder="输入新密码"
+                                                                        class="form-control" placeholder="请输入新密码"
                                                                         autocomplete="off">
-                                                                </form>
+                                                                </div>
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <form>
+                                                            <div class="form-group mb-3 row">
+                                                                <label
+                                                                    class="form-label col-3 col-form-label">确认密码</label>
+                                                                <div class="col">
                                                                     <input id="confirm_new_password" type="password"
-                                                                        class="form-control" placeholder="再次输入新密码"
+                                                                        class="form-control" placeholder="请再次输入新密码"
                                                                         autocomplete="off">
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="card-footer">
