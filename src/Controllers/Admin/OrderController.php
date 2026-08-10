@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Services\Cron;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -133,6 +134,40 @@ final class OrderController extends BaseController
         ]);
     }
 
+    /**
+     * Force activation of a paid order, replacing the current TABP order if needed.
+     */
+    public function forceActivate(ServerRequest $request, Response $response, array $args): ResponseInterface
+    {
+        $order = (new Order())->find($args['id']);
+
+        if ($order === null) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '订单不存在',
+            ]);
+        }
+
+        if ($order->status !== 'pending_activation') {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '只有待激活订单可以强制激活',
+            ]);
+        }
+
+        if (! Cron::activateOrder($order, true, true)) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '订单强制激活失败',
+            ]);
+        }
+
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '订单强制激活成功',
+        ]);
+    }
+
     public function delete(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $order_id = $args['id'];
@@ -172,6 +207,12 @@ final class OrderController extends BaseController
                 $order->op .= '
                 <button class="btn btn-orange" id="cancel-order-' . $order->id . '"
                  onclick="cancelOrder(' . $order->id . ')">取消</button>';
+            }
+
+            if ($order->status === 'pending_activation') {
+                $order->op .= '
+                <button class="btn btn-green" id="force-activate-order-' . $order->id . '"
+                 onclick="forceActivateOrder(' . $order->id . ')">强制激活</button>';
             }
 
             $order->op .= '

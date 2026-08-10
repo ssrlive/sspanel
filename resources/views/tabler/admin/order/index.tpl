@@ -111,6 +111,28 @@
                     });
                 }
 
+                function forceActivateOrder(order_id) {
+                    $('#notice-message').text('确定强制激活此订单？当前用户正在使用的时间流量包将被替换。');
+                    $('#notice-dialog').modal('show');
+                    $('#notice-confirm').off('click').on('click', function() {
+                        $.ajax({
+                            url: "/admin/order/" + order_id + "/force_activate",
+                            type: 'POST',
+                            dataType: "json",
+                            success: function(data) {
+                                if (data.ret === 1) {
+                                    $('#success-message').text(data.msg);
+                                    $('#success-dialog').modal('show');
+                                    reloadTableAjax();
+                                } else {
+                                    $('#fail-message').text(data.msg);
+                                    $('#fail-dialog').modal('show');
+                                }
+                            }
+                        })
+                    });
+                }
+
                 function reloadTableAjax() {
                     table.ajax.reload(null, false);
                 }

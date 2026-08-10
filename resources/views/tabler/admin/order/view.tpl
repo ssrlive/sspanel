@@ -37,6 +37,13 @@
                                         取消订单
                                     </button>
                                 {/if}
+                                {if $order->status === 'pending_activation'}
+                                    <button href="#" class="btn btn-green" data-bs-toggle="modal"
+                                        data-bs-target="#force_activate_order_confirm_dialog">
+                                        <i class="icon ti ti-player-play"></i>
+                                        强制激活
+                                    </button>
+                                {/if}
                             </div>
                         </div>
                     </div>
@@ -223,10 +230,46 @@
                 </div>
             </div>
 
+            <div class="modal modal-blur fade" id="force_activate_order_confirm_dialog" tabindex="-1" role="dialog"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">强制激活订单</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>确认强制激活此订单？当前用户正在使用的时间流量包将被替换。</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
+                            <button id="confirm_force_activate" type="button" class="btn btn-primary" data-bs-dismiss="modal">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <script>
                 $("#confirm_cancel").click(function() {
                     $.ajax({
                         url: "/admin/order/{$order->id}/cancel",
+                        type: 'POST',
+                        dataType: "json",
+                        success: function(data) {
+                            if (data.ret === 1) {
+                                $('#success-message').text(data.msg);
+                                $('#success-dialog').modal('show');
+                            } else {
+                                $('#fail-message').text(data.msg);
+                                $('#fail-dialog').modal('show');
+                            }
+                        }
+                    })
+                });
+
+                $("#confirm_force_activate").click(function() {
+                    $.ajax({
+                        url: "/admin/order/{$order->id}/force_activate",
                         type: 'POST',
                         dataType: "json",
                         success: function(data) {

@@ -273,7 +273,7 @@ final class Cron
      *
      * @throws Exception
      */
-    public static function activateOrder(Order $order, bool $logExpired = false): bool
+    public static function activateOrder(Order $order, bool $logExpired = false, bool $force = false): bool
     {
         $user = (new User())->find($order->user_id);
         if ($user === null || $order->status !== 'pending_activation') {
@@ -293,7 +293,7 @@ final class Cron
                     $activated_content = json_decode($activated_order->product_content);
                     $is_expired = $activated_order->update_time + $activated_content->time * 86400 < time();
                     $is_traffic_exhausted = $user->transfer_enable <= $user->u + $user->d;
-                    if (! $is_expired && ! $is_traffic_exhausted) {
+                    if (! $force && ! $is_expired && ! $is_traffic_exhausted) {
                         return false;
                     }
                     $activated_order->status = 'expired';
