@@ -24,14 +24,23 @@ final class ServerController extends BaseController
         $nodes = Subscribe::getUserNodes($this->user, true);
         $node_list = [];
 
+        /** @var \App\Models\Node $node */
         foreach ($nodes as $node) {
+            $node_type = $node->sort();
+            $node_url = $this->user->class >= $node->node_class
+                && ($node_type === 'OverTLS' || $node_type === 'AnyTLS')
+                && $node->getNodeOnlineStatus() === 1
+                ? ($node_type === 'OverTLS'
+                    ? OverTLS::assembleNodeUrl($node, $this->user->uuid)
+                    : AnyTLS::assembleNodeUrl($node, $this->user->uuid)) : '';
+
             $node_list[] = [
                 'id' => $node->id,
                 'name' => $node->name,
                 'class' => (int) $node->node_class,
                 'color' => $node->color,
                 'connection_type' => $node->connection_type,
-                'sort' => $node->sort(),
+                'sort' => $node_type,
                 'online_user' => $node->online_user,
                 'online' => $node->getNodeOnlineStatus(),
                 'traffic_rate' => $node->traffic_rate,
@@ -39,10 +48,7 @@ final class ServerController extends BaseController
                 'node_bandwidth' => Tools::autoBytes($node->node_bandwidth),
                 'node_bandwidth_limit' => $node->node_bandwidth_limit === 0 ? '无限制' :
                     Tools::autoBytes($node->node_bandwidth_limit),
-                'node_url' => ($node->sort() === 'OverTLS' || $node->sort() === 'AnyTLS') && $node->getNodeOnlineStatus() === 1
-                    ? ($node->sort() === 'OverTLS'
-                        ? OverTLS::assembleNodeUrl($node, $this->user->uuid)
-                        : AnyTLS::assembleNodeUrl($node, $this->user->uuid)) : '',
+                'node_url' => $node_url,
             ];
         }
 
