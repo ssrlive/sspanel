@@ -32,6 +32,20 @@ final class I18n
         return $locales;
     }
 
+    public static function getLocaleOptions(): array
+    {
+        $options = [];
+
+        foreach (self::getLocaleList() as $locale) {
+            $options[] = [
+                'code' => $locale,
+                'name' => self::trans('lang_name', $locale),
+            ];
+        }
+
+        return $options;
+    }
+
     public static function getTranslator($lang = 'en_US'): Translator
     {
         $translator = new Translator($lang);

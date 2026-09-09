@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Services\Auth;
 use App\Services\Cache;
 use App\Services\Filter;
+use App\Services\I18n;
 use App\Services\MFA;
 use App\Utils\Env;
 use App\Utils\Hash;
@@ -40,6 +41,7 @@ final class InfoController extends BaseController
         $view->assign('user', $this->user)
             ->assign('themes', $themes)
             ->assign('methods', $methods)
+            ->assign('locale_options', I18n::getLocaleOptions())
             ->assign('ga_url', $ga_url);
         return $response->write($view->fetch('user/edit.tpl'));
     }
@@ -291,6 +293,23 @@ final class InfoController extends BaseController
 
         if (! $user->save()) {
             return ResponseHelper::error($response, '切换失败');
+        }
+
+        return $response->withHeader('HX-Refresh', 'true');
+    }
+
+    public function updateLocale(ServerRequest $request, Response $response, array $args): ResponseInterface
+    {
+        $locale = $this->antiXss->xss_clean($request->getParam('locale'));
+
+        if (! in_array($locale, I18n::getLocaleList(), true)) {
+            return ResponseHelper::error($response, '语言无效');
+        }
+
+        $this->user->locale = $locale;
+
+        if (! $this->user->save()) {
+            return ResponseHelper::error($response, '语言切换失败');
         }
 
         return $response->withHeader('HX-Refresh', 'true');

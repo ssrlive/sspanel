@@ -514,6 +514,32 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h3 class="card-title">语言</h3>
+                                                            <div class="mb-3">
+                                                                <select id="user-locale" class="form-select">
+                                                                    {foreach $locale_options as $locale_option}
+                                                                        <option value="{$locale_option['code']}"
+                                                                            {if $user->locale === $locale_option['code']}selected{/if}>
+                                                                            {$locale_option['name']}
+                                                                        </option>
+                                                                    {/foreach}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <div class="d-flex">
+                                                                <button class="btn btn-primary ms-auto"
+                                                                    hx-post="/user/edit/locale" hx-swap="none"
+                                                                    hx-vals='js:{ locale: document.getElementById("user-locale").value }'>
+                                                                    修改
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 {if $config['enable_kill']}
                                                     <div class="col-sm-12 col-md-6">
                                                         <div class="card">

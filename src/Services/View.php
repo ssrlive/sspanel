@@ -30,6 +30,7 @@ final class View
         $smarty->assign('config', self::getConfig());
         $smarty->assign('public_setting', Config::getPublicConfig());
         $smarty->assign('user', $user);
+        $smarty->assign('locale_options', I18n::getLocaleOptions());
 
         return $smarty;
     }
@@ -46,6 +47,7 @@ final class View
         $twig->addGlobal('config', self::getConfig());
         $twig->addGlobal('public_setting', Config::getPublicConfig());
         $twig->addGlobal('user', $user);
+        $twig->addGlobal('locale_options', I18n::getLocaleOptions());
 
         return $twig;
     }
@@ -63,6 +65,8 @@ final class View
 
     public static function getConfig(): array
     {
+        $user = Auth::getUser();
+
         return [
             'appName' => Env::getString('appName'),
             'baseUrl' => Env::getString('baseUrl'),
@@ -72,7 +76,9 @@ final class View
             'enable_r2_client_download' => Env::getBool('enable_r2_client_download'),
             'jsdelivr_url' => Env::getString('jsdelivr_url'),
             // site default language
-            'locale' => Env::getString('locale'),
+            'locale' => $user->isLogin && in_array($user->locale, I18n::getLocaleList(), true)
+                ? $user->locale
+                : Env::getString('locale'),
         ];
     }
 }

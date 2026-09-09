@@ -38,6 +38,14 @@ final class I18nTest extends TestCase
         $this->assertSame($expectedLocales, $locales);
     }
 
+    public function testGetLocaleOptions(): void
+    {
+        $options = I18n::getLocaleOptions();
+
+        $this->assertSame('en_US', $options[0]['code']);
+        $this->assertSame('English(Simplified)', $options[0]['name']);
+    }
+
     public function testGetTranslatorr(): void
     {
         $lang = 'en_US';
