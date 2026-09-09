@@ -45,6 +45,13 @@ return [
         'change_method' => '更换加密方式', 'method_help' => '不同的客户端支持的加密方式可能会有所不同，请参考客户端支持列表进行设置', 'reset_subscription' => '重置订阅地址', 'reset_subscription_help' => '重置订阅地址后，旧的订阅地址将无法获取配置，但节点配置仍能使用。如果希望作废旧节点配置请配合重置连接密码操作', 'reset_connection' => '重置连接密码', 'reset_connection_help' => '重置连接密码，重置后需更新订阅，才能继续使用', 'current_password_value' => '当前连接密码', 'current_uuid' => '当前 UUID', 'copy_uuid' => '复制用户 UUID',
         'daily_report' => '每日流量报告', 'no_receive' => '不接收', 'email_receive' => '邮件接收', 'im_receive' => 'IM 接收', 'preferred_contact' => '偏好的联系方式', 'contact_help' => '当 IM 未绑定时站点依然会向账户邮箱发送通知信息', 'email' => '邮件', 'theme' => '修改主题', 'theme_mode' => '修改主题模式', 'automatic' => '自动', 'light' => '浅色', 'dark' => '深色', 'language' => '语言', 'delete_data' => '删除账户数据', 'confirm_delete' => '确认删除', 'delete_title' => '删除确认', 'delete_help' => '请确认是否真的要删除你的账户，此操作无法撤销，你的所有账户数据将会被从服务器上彻底删除', 'enter_login_password' => '输入登录密码', 'cancel' => '取消', 'confirm' => '确认', 'bind_slack' => '绑定 Slack', 'bind_discord' => '绑定 Discord',
     ],
+    'profile' => [
+        'title' => '账户信息', 'subtitle' => '浏览最近的登录和使用记录', 'email' => '账户邮箱', 'username' => '用户名', 'registered_at' => '账户注册时间', 'total_traffic' => '账户累计使用流量',
+        'recent_subscriptions' => '最近10次订阅记录', 'type' => '类型', 'user_agent' => 'UA', 'location' => 'IP归属地', 'time' => '时间', 'recent_logins' => '最近10次成功登录记录', 'online_ips' => '当前在线IP', 'node_name' => '节点名称', 'last_online' => '最后在线时间',
+    ],
+    'invite' => [
+        'title' => '邀请注册', 'subtitle' => '查看邀请注册链接和邀请返利记录', 'rules' => '邀请规则', 'rule_one' => '邀请注册的用户在账单确认后，你可获得其账单金额的 %rate% 作为返利', 'rule_two' => '部分商品的返利比例可能不遵循上面的比例', 'total_rebate' => '你目前通过邀请好友获得的总返利为 %amount% 元', 'link' => '邀请链接', 'reset' => '重置', 'copy' => '复制', 'records' => '返利记录', 'record_id' => '记录ID', 'invited_user_id' => '邀请用户ID', 'invited_username' => '邀请用户昵称', 'rebate_amount' => '返利金额', 'rebate_time' => '返利时间', 'currency' => '元',
+    ],
     'bot' => [
         'daily_job_run' => '成功执行每日任务',
         'detect_rule_added' => '新增了审计规则 %rule_name%',

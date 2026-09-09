@@ -33,7 +33,17 @@ final class View
         $smarty->assign('user', $user);
         $smarty->assign('locale_options', I18n::getLocaleOptions());
         $smarty->registerPlugin('function', 'trans', static function (array $params) use ($config): string {
-            return I18n::trans((string) $params['key'], $config['locale']);
+            $key = (string) $params['key'];
+            unset($params['key']);
+
+            foreach ($params as $name => $value) {
+                if ($name[0] !== '%') {
+                    $params['%' . $name . '%'] = $value;
+                    unset($params[$name]);
+                }
+            }
+
+            return I18n::trans($key, $config['locale'], $params);
         });
 
         return $smarty;

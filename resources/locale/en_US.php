@@ -66,6 +66,18 @@ return [
         'enter_login_password' => 'Enter your login password', 'cancel' => 'Cancel', 'confirm' => 'Confirm',
         'bind_slack' => 'Bind Slack', 'bind_discord' => 'Bind Discord',
     ],
+    'profile' => [
+        'title' => 'Account information', 'subtitle' => 'View recent login and usage records', 'email' => 'Account email',
+        'username' => 'Username', 'registered_at' => 'Registration date', 'total_traffic' => 'Total traffic used',
+        'recent_subscriptions' => 'Last 10 subscription records', 'type' => 'Type', 'user_agent' => 'User agent',
+        'location' => 'Location', 'time' => 'Time', 'recent_logins' => 'Last 10 successful login records',
+        'online_ips' => 'Currently online IPs', 'node_name' => 'Node name', 'last_online' => 'Last online time',
+    ],
+    'invite' => [
+        'title' => 'Invite registration', 'subtitle' => 'View your invitation link and referral rebate records', 'rules' => 'Invitation rules',
+        'rule_one' => 'After an invited user confirms a bill, you receive %rate% of the bill as a rebate.', 'rule_two' => 'Some products may use a different rebate rate.', 'total_rebate' => 'Your total referral rebate is %amount%.',
+        'link' => 'Invitation link', 'reset' => 'Reset', 'copy' => 'Copy', 'records' => 'Rebate records', 'record_id' => 'Record ID', 'invited_user_id' => 'Invited user ID', 'invited_username' => 'Invited username', 'rebate_amount' => 'Rebate amount', 'rebate_time' => 'Rebate time', 'currency' => 'CNY',
+    ],
     'bot' => [
         'daily_job_run' => 'Successful execution of daily tasks',
         'detect_rule_added' => 'Detect rule %rule_name% has been added',

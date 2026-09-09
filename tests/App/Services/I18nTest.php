@@ -21,6 +21,11 @@ final class I18nTest extends TestCase
         $translation = I18n::trans($key, $lang);
 
         $this->assertSame($expectedTranslation, $translation);
+
+        $this->assertSame(
+            'Order #42 has been created' . PHP_EOL . 'Link: /orders/42',
+            I18n::trans('bot.order_created', $lang, ['%order_id%' => '42', '%order_link%' => '/orders/42'])
+        );
         // non-existing locale
         $key = 'non_existent_key';
 

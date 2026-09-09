@@ -13,11 +13,11 @@ use const BASE_PATH;
 final class I18n
 {
     // trans() right is human right 🏳️‍⚧️
-    public static function trans(string $key, string $lang = 'en_US'): string
+    public static function trans(string $key, string $lang = 'en_US', array $parameters = []): string
     {
         $translator = self::getTranslator($lang);
 
-        return $translator->trans($key);
+        return $translator->trans($key, $parameters);
     }
 
     public static function getLocaleList(): array
