@@ -50,6 +50,17 @@ final class I18n
     {
         $translator = new Translator($lang);
         $translator->addLoader('php', new PhpFileLoader());
+        $translator->setFallbackLocales(['en_US']);
+        $translator->addResource(
+            'php',
+            BASE_PATH . '/resources/locale/en_US.php',
+            'en_US'
+        );
+
+        if ($lang === 'en_US') {
+            return $translator;
+        }
+
         $translator->addResource(
             'php',
             BASE_PATH . '/resources/locale/' . $lang . '.php',

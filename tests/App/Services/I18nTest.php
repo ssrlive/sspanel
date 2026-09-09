@@ -54,5 +54,6 @@ final class I18nTest extends TestCase
 
         $this->assertInstanceOf(Translator::class, $translator);
         $this->assertSame($lang, $translator->getLocale());
+        $this->assertSame(['en_US'], $translator->getFallbackLocales());
     }
 }

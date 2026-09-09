@@ -13,14 +13,14 @@
             </div>
             <div class="card card-md">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">设置新密码</h2>
+                    <h2 class="card-title text-center mb-4">{trans key='password_reset.new_password'}</h2>
                     <div class="mb-3">
-                        <label class="form-label">新密码</label>
-                        <input id="password" type="password" class="form-control" placeholder="请输入新密码">
+                        <label class="form-label">{trans key='password_reset.new_password'}</label>
+                        <input id="password" type="password" class="form-control" placeholder="{trans key='password_reset.new_password_placeholder'}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">再次输入新密码</label>
-                        <input id="confirm_password" type="password" class="form-control" placeholder="请再次输入新密码">
+                        <label class="form-label">{trans key='password_reset.confirm_new_password'}</label>
+                        <input id="confirm_password" type="password" class="form-control" placeholder="{trans key='password_reset.confirm_new_password_placeholder'}">
                     </div>
                     <div class="form-footer">
                         <button class="btn btn-primary w-100" hx-post="/password/token" hx-swap="none" hx-vals='js:{
@@ -28,13 +28,13 @@
                             password: document.getElementById("password").value,
                             confirm_password: document.getElementById("confirm_password").value, }'>
                             <i class="ti ti-key icon"></i>
-                            重置
+                            {trans key='password_reset.reset'}
                         </button>
                     </div>
                 </div>
             </div>
             <div class="text-center text-secondary mt-3">
-                已有账户？ <a href="/auth/login" tabindex="-1">点击登录</a>
+                {trans key='auth.has_account'} <a href="/auth/login" tabindex="-1">{trans key='auth.login_link'}</a>
             </div>
         </div>
     </div>

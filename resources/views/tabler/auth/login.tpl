@@ -13,16 +13,16 @@
             </div>
             <div class="card card-md">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">登录到用户中心</h2>
+                    <h2 class="card-title text-center mb-4">{trans key='auth.login_title'}</h2>
                     <div class="mb-3">
-                        <label class="form-label">邮箱</label>
+                        <label class="form-label">{trans key='auth.email'}</label>
                         <input id="email" type="email" class="form-control">
                     </div>
                     <div class="mb-2">
                         <label class="form-label">
-                            登录密码
+                            {trans key='auth.password'}
                             <span class="form-label-description">
-                                <a href="/password/reset">忘记密码</a>
+                                <a href="/password/reset">{trans key='auth.forgot_password'}</a>
                             </span>
                         </label>
                         <div class="input-group input-group-flat">
@@ -30,13 +30,13 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">两步认证</label>
-                        <input id="mfa_code" type="email" class="form-control" placeholder="如果没有设置两步认证可留空">
+                        <label class="form-label">{trans key='auth.mfa'}</label>
+                        <input id="mfa_code" type="email" class="form-control" placeholder="{trans key='auth.mfa_placeholder'}">
                     </div>
                     <div class="mb-2">
                         <label class="form-check">
                             <input id="remember_me" type="checkbox" class="form-check-input" />
-                            <span class="form-check-label">记住此设备</span>
+                            <span class="form-check-label">{trans key='auth.remember_device'}</span>
                         </label>
                     </div>
                     <div class="mb-3">
@@ -56,13 +56,13 @@
                                 mfa_code: document.getElementById("mfa_code").value,
                                 remember_me: document.getElementById("remember_me").checked,
                              }'>
-                            登录
+                            {trans key='auth.login'}
                         </button>
                     </div>
                 </div>
             </div>
             <div class="text-center text-secondary mt-3">
-                还没有账户？ <a href="/auth/register" tabindex="-1">点击注册</a>
+                {trans key='auth.no_account'} <a href="/auth/register" tabindex="-1">{trans key='auth.register_link'}</a>
             </div>
         </div>
     </div>

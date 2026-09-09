@@ -24,27 +24,27 @@
             $('div.dt-scroll-body').css('border-bottom-style', 'none')
         },
         language: {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "显示 _MENU_ 条",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-            "sInfoEmpty": "第 0 至 0 项结果，共 0 项",
-            "sInfoFiltered": "(在 _MAX_ 项中查找)",
+            "sProcessing": "{trans key='datatable.processing'}",
+            "sLengthMenu": "{trans key='datatable.length_menu'}",
+            "sZeroRecords": "{trans key='datatable.zero_records'}",
+            "sInfo": "{trans key='datatable.info'}",
+            "sInfoEmpty": "{trans key='datatable.info_empty'}",
+            "sInfoFiltered": "{trans key='datatable.info_filtered'}",
             "sInfoPostFix": "",
             "sSearch": "<i class=\"ti ti-search\"></i> ",
             "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
+            "sEmptyTable": "{trans key='datatable.empty_table'}",
+            "sLoadingRecords": "{trans key='datatable.loading'}",
             "sInfoThousands": ",",
             "oPaginate": {
-                "sFirst": "首页",
+                "sFirst": "{trans key='datatable.first'}",
                 "sPrevious": "<i class=\"ti ti-arrow-left\"></i>",
                 "sNext": "<i class=\"ti ti-arrow-right\"></i>",
-                "sLast": "末页"
+                "sLast": "{trans key='datatable.last'}"
             },
             "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
+                "sSortAscending": "{trans key='datatable.sort_ascending'}",
+                "sSortDescending": "{trans key='datatable.sort_descending'}"
             }
         }
     };

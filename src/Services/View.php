@@ -27,10 +27,14 @@ final class View
         $smarty->setCompileDir(BASE_PATH . '/storage/framework/smarty/compile/'); //设置生成文件存放目录
         $smarty->setCacheDir(BASE_PATH . '/storage/framework/smarty/cache/'); //设置缓存文件存放目录
         // add config
-        $smarty->assign('config', self::getConfig());
+        $config = self::getConfig();
+        $smarty->assign('config', $config);
         $smarty->assign('public_setting', Config::getPublicConfig());
         $smarty->assign('user', $user);
         $smarty->assign('locale_options', I18n::getLocaleOptions());
+        $smarty->registerPlugin('function', 'trans', static function (array $params) use ($config): string {
+            return I18n::trans((string) $params['key'], $config['locale']);
+        });
 
         return $smarty;
     }
