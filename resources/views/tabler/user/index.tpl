@@ -792,6 +792,26 @@
                                         </div>
                                     </div>
                                 {/if}
+                                <div class="card mt-3 mb-0">
+                                    <div class="card-body">
+                                        <h3 class="card-title">{trans key='settings.language'}</h3>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <select id="user-locale" class="form-select flex-grow-1 w-auto">
+                                                {foreach $locale_options as $locale_option}
+                                                    <option value="{$locale_option['code']}"
+                                                        {if $user->locale === $locale_option['code']}selected{/if}>
+                                                        {$locale_option['name']}
+                                                    </option>
+                                                {/foreach}
+                                            </select>
+                                            <button class="btn btn-primary flex-shrink-0"
+                                                hx-post="/user/edit/locale" hx-swap="none"
+                                                hx-vals='js:{ locale: document.getElementById("user-locale").value }'>
+                                                {trans key='settings.update'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {if $public_setting['enable_checkin']}
