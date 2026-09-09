@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title my-3">订单列表</span>
+                                <span class="home-title my-3">{trans key='shop.orders_title'}</span>
                             </h2>
                             <div class="page-pretitle">
-                                <span class="home-subtitle">查看并管理账户中的订单</span>
+                                <span class="home-subtitle">{trans key='shop.orders_subtitle'}</span>
                             </div>
                         </div>
                     </div>

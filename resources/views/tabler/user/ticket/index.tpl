@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title my-3">工单列表</span>
+                                <span class="home-title my-3">{trans key='shop.tickets_title'}</span>
                             </h2>
                             <div class="page-pretitle">
-                                <span class="home-subtitle">你可以在这里联系管理员获取支持</span>
+                                <span class="home-subtitle">{trans key='shop.tickets_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -25,7 +25,7 @@
                                 <button href="#" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#create-ticket">
                                     <i class="icon ti ti-plus"></i>
-                                    创建工单
+                                    {trans key='shop.create_ticket'}
                                 </button>
                             </div>
                         </div>
@@ -68,13 +68,13 @@
                                                             {if $ticket->raw_status !== 'closed'}
                                                                 <button class="btn btn-danger btn-sm me-2"
                                                                     hx-post="/user/ticket/{$ticket->id}/close" hx-swap="none"
-                                                                    onclick="return confirm('确认关闭此工单？');">
-                                                                    关闭
+                                                                    onclick="return confirm('{trans key='shop.close_ticket_confirm' js=true}');">
+                                                                    {trans key='shop.close'}
                                                                 </button>
                                                             {/if}
                                                             <a href="/user/ticket/{$ticket->id}/view"
                                                                 class="btn btn-primary btn-sm">
-                                                                查看
+                                                                {trans key='shop.view'}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -85,9 +85,9 @@
                                 {else}
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">没有任何工单</h3>
+                                            <h3 class="card-title">{trans key='shop.no_tickets'}</h3>
                                         </div>
-                                        <div class="card-body">如需帮助，请点击右上角按钮开启新工单</div>
+                                        <div class="card-body">{trans key='shop.no_tickets_help'}</div>
                                     </div>
                                 {/if}
                             </div>
@@ -100,35 +100,37 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">创建工单</h5>
+                            <h5 class="modal-title">{trans key='shop.create_ticket'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
                                 <select id="ticket-type" class="form-select">
-                                    <option value="0">请选择工单类型</option>
-                                    <option value="howto">使用</option>
-                                    <option value="billing">财务</option>
-                                    <option value="account">账户</option>
-                                    <option value="other">其他</option>
+                                    <option value="0">{trans key='shop.ticket_type_placeholder'}</option>
+                                    <option value="howto">{trans key='shop.ticket_type_howto'}</option>
+                                    <option value="billing">{trans key='shop.ticket_type_billing'}</option>
+                                    <option value="account">{trans key='shop.ticket_type_account'}</option>
+                                    <option value="other">{trans key='shop.ticket_type_other'}</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <input id="ticket-title" type="text" class="form-control" placeholder="请输入工单主题">
+                                <input id="ticket-title" type="text" class="form-control"
+                                    placeholder="{trans key='shop.ticket_title_placeholder'}">
                             </div>
                             <div class="mb-3">
                                 <textarea id="ticket-comment" class="form-control" rows="12"
-                                    placeholder="请输入工单内容"></textarea>
+                                    placeholder="{trans key='shop.ticket_content_placeholder'}"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='shop.cancel'}</button>
                             <button id="create-ticket-button" class="btn btn-primary" data-bs-dismiss="modal"
                                 hx-post="/user/ticket" hx-swap="none" hx-vals='js:{
                             title: document.getElementById("ticket-title").value,
                             comment: document.getElementById("ticket-comment").value,
                             type: document.getElementById("ticket-type").value }'>
-                                创建
+                                {trans key='shop.create'}
                             </button>
                         </div>
                     </div>

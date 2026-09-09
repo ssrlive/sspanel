@@ -10,12 +10,14 @@ use App\Models\Order;
 use App\Models\Paylist;
 use App\Models\UserMoneyLog;
 use App\Services\Cron;
+use App\Services\I18n;
 use App\Services\Payment;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
+use function in_array;
 use function json_decode;
 use function json_encode;
 use function time;
@@ -41,7 +43,16 @@ final class InvoiceController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        $fieldKeys = [
+            'op' => 'view_action', 'id' => 'invoice_id', 'order_id' => 'order_id', 'price' => 'invoice_amount',
+            'status' => 'invoice_status', 'create_time' => 'created_at', 'update_time' => 'updated_at', 'pay_time' => 'payment_time',
+        ];
+        foreach ($fieldKeys as $field => $translationKey) {
+            $translationGroup = in_array($translationKey, ['view_action', 'invoice_id'], true) ? 'user_pages' : 'shop';
+            $details['field'][$field] = I18n::trans($translationGroup . '.' . $translationKey, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('user/invoice/index.tpl'));
     }
 
@@ -64,10 +75,12 @@ final class InvoiceController extends BaseController
             $paylist = (new Paylist())->where('invoice_id', $invoice->id)->where('status', 1)->first();
         }
 
-        $invoice->status_text = $invoice->status();
+        $invoice->status_text = $this->translateInvoiceStatus($invoice->status);
         $invoice->create_time = Tools::toDateTime($invoice->create_time);
         $invoice->update_time = Tools::toDateTime($invoice->update_time);
-        $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
+        $invoice->pay_time = $invoice->pay_time === 0
+            ? I18n::trans('user_pages.unpaid', $this->user->locale)
+            : Tools::toDateTime($invoice->pay_time);
         $invoice_content = json_decode($invoice->content);
 
         $view = $this->view();
@@ -171,15 +184,23 @@ final class InvoiceController extends BaseController
         $invoices = (new Invoice())->orderBy('id', 'desc')->where('user_id', $this->user->id)->get();
 
         foreach ($invoices as $invoice) {
-            $invoice->op = '<a class="btn btn-primary" href="/user/invoice/' . $invoice->id . '/view">查看</a>';
-            $invoice->status = $invoice->status();
+            $invoice->op = '<a class="btn btn-primary" href="/user/invoice/' . $invoice->id . '/view">'
+                . I18n::trans('user_pages.view_action', $this->user->locale) . '</a>';
+            $invoice->status = $this->translateInvoiceStatus($invoice->status);
             $invoice->create_time = Tools::toDateTime($invoice->create_time);
             $invoice->update_time = Tools::toDateTime($invoice->update_time);
-            $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
+            $invoice->pay_time = $invoice->pay_time === 0
+                ? I18n::trans('user_pages.unpaid', $this->user->locale)
+                : Tools::toDateTime($invoice->pay_time);
         }
 
         return $response->withJson([
             'invoices' => $invoices,
         ]);
+    }
+
+    private function translateInvoiceStatus(string $status): string
+    {
+        return I18n::trans('user_pages.invoice_status_' . $status, $this->user->locale);
     }
 }

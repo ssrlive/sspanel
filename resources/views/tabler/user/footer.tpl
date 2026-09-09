@@ -5,7 +5,7 @@
             <div class="modal-status bg-success"></div>
             <div class="modal-body text-center py-4">
                 <i class="ti ti-circle-check icon mb-2 text-green icon-lg" style="font-size:3.5rem;"></i>
-                <p id="success-message" class="text-secondary">成功</p>
+                <p id="success-message" class="text-secondary">{trans key='user_pages.success'}</p>
             </div>
             <div class="modal-footer">
                 <div class="w-100">
@@ -29,14 +29,14 @@
             <div class="modal-status bg-danger"></div>
             <div class="modal-body text-center py-4">
                 <i class="ti ti-circle-x icon mb-2 text-danger icon-lg" style="font-size:3.5rem;"></i>
-                <p id="fail-message" class="text-secondary">失败</p>
+                <p id="fail-message" class="text-secondary">{trans key='user_pages.failure'}</p>
             </div>
             <div class="modal-footer">
                 <div class="w-100">
                     <div class="row">
                         <div class="col">
                             <a href="" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                确认
+                                {trans key='user_pages.confirm'}
                             </a>
                         </div>
                     </div>

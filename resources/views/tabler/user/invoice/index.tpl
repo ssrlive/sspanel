@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title my-3">账单列表</span>
+                                <span class="home-title my-3">{trans key='shop.invoices_title'}</span>
                             </h2>
                             <div class="page-pretitle">
-                                <span class="home-subtitle">在这里查看账单列表</span>
+                                <span class="home-subtitle">{trans key='shop.invoices_subtitle'}</span>
                             </div>
                         </div>
                     </div>

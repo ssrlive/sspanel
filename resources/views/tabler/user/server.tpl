@@ -51,10 +51,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">节点列表</span>
+                                <span class="home-title">{trans key='user_pages.nodes_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看节点在线情况</span>
+                                <span class="home-subtitle">{trans key='user_pages.nodes_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                                                             data-node-qrcode-url="{$server.node_url|escape:'html'}"
                                                         data-sub-type="{$server.sort|escape:'html'}" {/if}>
                                                         {if $server['class'] === 0}
-                                                            <div class="ribbon bg-blue">免费</div>
+                                                            <div class="ribbon bg-blue">{trans key='user_pages.free'}</div>
                                                         {else}
                                                             <div class="ribbon bg-blue">LV. {$server['class']}</div>
                                                         {/if}
@@ -104,9 +104,9 @@
                                                                             {$server['online_user']}</span>
                                                                         <span class="badge bg-blue-lt">
                                                                             {if $server['is_dynamic_rate']}
-                                                                                动态倍率
+                                                                                {trans key='user_pages.dynamic_rate'}
                                                                             {else}
-                                                                                {$server['traffic_rate']} 倍
+                                                                                {$server['traffic_rate']} {trans key='user_pages.multiplier'}
                                                                             {/if}
                                                                         </span>
                                                                         {if ($server['sort'] === 'OverTLS' || $server['sort'] === 'AnyTLS') && $server['node_url'] !== ''}
@@ -135,8 +135,8 @@
                                                             <div class="card-body">
                                                                 <p class="text-secondary">
                                                                     <i class="ti ti-info-circle icon text-blue"></i>
-                                                                    你当前的账户等级小于节点等级，因此无法使用。可前往 <a href="/user/product">商品页面</a>
-                                                                    订购时间流量包
+                                                                    {trans key='user_pages.below_node_level'} <a href="/user/product">{trans key='user_pages.product_page'}</a>
+                                                                    {trans key='user_pages.order_time_traffic'}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -188,7 +188,7 @@
                         });
                         var caption = document.createElement('div');
                         caption.className = 'node-qrcode-caption';
-                        caption.textContent = subType + ' 订阅二维码';
+                        caption.textContent = subType + "{trans key='user_pages.subscription_qr'}";
                         popup.appendChild(caption);
                         qrRendered = true;
                     }

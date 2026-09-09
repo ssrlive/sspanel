@@ -22,7 +22,7 @@
                     }
 
                     if (key === "last-checkin-time") {
-                        document.getElementById("check-in").innerHTML = "已签到"
+                        document.getElementById("check-in").innerHTML = "{trans key='user_pages.checked_in'}"
                         document.getElementById("check-in").disabled = true;
                     }
 
@@ -49,5 +49,5 @@
     });
 </script>
 <script>
-    console.table([['数据库查询', '执行时间'], ['{count($queryLog)} 次', '{$optTime} ms']])
+    console.table([["{trans key='user_pages.database_queries'}", "{trans key='user_pages.execution_time'}"], ['{count($queryLog)}', '{$optTime} ms']])
 </script>

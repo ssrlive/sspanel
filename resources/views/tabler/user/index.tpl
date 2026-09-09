@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">用户中心</span>
+                                <span class="home-title">{trans key='user_pages.home_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">在这里查看账户信息和最新公告</span>
+                                <span class="home-subtitle">{trans key='user_pages.home_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -39,11 +39,11 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        账户等级
+                                                        {trans key='user_pages.account_level'}
                                                     </div>
                                                     <div class="text-secondary">
                                                         {if $user->class === 0}
-                                                            免费
+                                                            {trans key='user_pages.free'}
                                                         {else}
                                                             Lv. {$user->class}
                                                         {/if}
@@ -64,7 +64,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        账户余额
+                                                        {trans key='user_pages.account_balance'}
                                                     </div>
                                                     <div class="text-secondary">
                                                         {$user->money}
@@ -90,13 +90,13 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        同时连接IP限制
+                                                        {trans key='user_pages.connection_ip_limit'}
                                                     </div>
                                                     <div class="text-secondary">
                                                         {if $user->node_iplimit !== 0}
                                                             {$user->node_iplimit}
                                                         {else}
-                                                            不限制
+                                                            {trans key='shop.unlimited'}
                                                         {/if}
                                                     </div>
                                                 </div>
@@ -115,14 +115,14 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        速度限制
+                                                        {trans key='user_pages.speed_limit'}
                                                     </div>
                                                     <div class="text-secondary">
                                                         {if $user->node_speedlimit !== 0}
                                                             <code>{$user->node_speedlimit}</code>
                                                             Mbps
                                                         {else}
-                                                            不限制
+                                                            {trans key='shop.unlimited'}
                                                         {/if}
                                                     </div>
                                                 </div>
@@ -138,13 +138,13 @@
                                     <li class="nav-item">
                                         <a href="#sub" class="nav-link active" data-bs-toggle="tab">
                                             <i class="ti ti-rss icon"></i>
-                                            &nbsp;通用订阅
+                                            &nbsp;{trans key='user_pages.general_subscription'}
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#client-sub" class="nav-link" data-bs-toggle="tab">
                                             <i class="ti ti-rss icon"></i>
-                                            &nbsp;客户端订阅
+                                            &nbsp;{trans key='user_pages.client_subscription'}
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -190,81 +190,87 @@
                                             <div>
                                                 {if $public_setting.enable_json_sub|default:1}
                                                     <p>
-                                                        通用订阅（Json）：<code class="spoiler">{$UniversalSub}/json</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Json'}:<code
+                                                            class="spoiler">{$UniversalSub}/json</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting.enable_clash_sub|default:1}
                                                     <p>
-                                                        通用订阅（Clash）：<code class="spoiler">{$UniversalSub}/clash</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Clash'}:<code
+                                                            class="spoiler">{$UniversalSub}/clash</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting.enable_singbox_sub|default:1}
                                                     <p>
-                                                        通用订阅（SingBox）：<code class="spoiler">{$UniversalSub}/singbox</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
+                                                            class="spoiler">{$UniversalSub}/singbox</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting.enable_v2rayjson_sub|default:1}
                                                     <p>
-                                                        通用订阅（V2Ray Json）：<code
+                                                        {trans key='user_pages.for_protocol' protocol='V2Ray Json'}:<code
                                                             class="spoiler">{$UniversalSub}/v2rayjson</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting.enable_ss_sub}
                                                     <p>
-                                                        通用订阅（SIP008）：<code class="spoiler">{$UniversalSub}/sip008</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SIP008'}:<code
+                                                            class="spoiler">{$UniversalSub}/sip008</code>
                                                     </p>
                                                 {/if}
                                                 <div class="btn-list justify-content-start">
                                                     {if $public_setting.enable_json_sub|default:1}
                                                         <a data-clipboard-text="{$UniversalSub}/json"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（Json）
+                                                            {trans key='user_pages.copy_subscription' protocol='Json'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting.enable_clash_sub|default:1}
                                                         <a data-clipboard-text="{$UniversalSub}/clash"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（Clash）
+                                                            {trans key='user_pages.copy_subscription' protocol='Clash'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting.enable_singbox_sub|default:1}
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（SingBox）
+                                                            {trans key='user_pages.copy_subscription' protocol='SingBox'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting.enable_v2rayjson_sub|default:1}
                                                         <a data-clipboard-text="{$UniversalSub}/v2rayjson"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（V2Ray Json）
+                                                            {trans key='user_pages.copy_subscription' protocol='V2Ray Json'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting.enable_ss_sub}
                                                         <a data-clipboard-text="{$UniversalSub}/sip008"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（SIP008）
+                                                            {trans key='user_pages.copy_subscription' protocol='SIP008'}
                                                         </a>
                                                     {/if}
                                                 </div>
                                                 {if $public_setting.enable_overtls_sub|default:1}
                                                     <p>
-                                                        通用订阅（OverTLS）：<code class="spoiler">{$UniversalSub}/overtls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='OverTLS'}:<code
+                                                            class="spoiler">{$UniversalSub}/overtls</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/overtls"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（OverTLS）
+                                                            {trans key='user_pages.copy_subscription' protocol='OverTLS'}
                                                         </a>
                                                     </div>
                                                 {/if}
                                                 {if $public_setting.enable_anytls_sub|default:1}
                                                     <p>
-                                                        通用订阅（AnyTLS）：<code class="spoiler">{$UniversalSub}/anytls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='AnyTLS'}:<code
+                                                            class="spoiler">{$UniversalSub}/anytls</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/anytls"
                                                             class="copy btn btn-primary">
-                                                            复制通用订阅（AnyTLS）
+                                                            {trans key='user_pages.copy_subscription' protocol='AnyTLS'}
                                                         </a>
                                                     </div>
                                                 {/if}
@@ -274,65 +280,71 @@
                                             <div>
                                                 {if $public_setting['enable_ss_sub']}
                                                     <p>
-                                                        客户端订阅（Shadowsocks）：<code class="spoiler">{$UniversalSub}/ss</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Shadowsocks'}:<code
+                                                            class="spoiler">{$UniversalSub}/ss</code>
                                                     </p>
                                                     <p>
-                                                        客户端订阅（SIP002）：<code class="spoiler">{$UniversalSub}/sip002</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SIP002'}:<code
+                                                            class="spoiler">{$UniversalSub}/sip002</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting['enable_v2_sub']}
                                                     <p>
-                                                        客户端订阅（V2Ray）：<code class="spoiler">{$UniversalSub}/v2ray</code>
+                                                        {trans key='user_pages.for_protocol' protocol='V2Ray'}:<code
+                                                            class="spoiler">{$UniversalSub}/v2ray</code>
                                                     </p>
                                                 {/if}
                                                 {if $public_setting['enable_trojan_sub']}
                                                     <p>
-                                                        客户端订阅（Trojan）：<code class="spoiler">{$UniversalSub}/trojan</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Trojan'}:<code
+                                                            class="spoiler">{$UniversalSub}/trojan</code>
                                                     </p>
                                                 {/if}
                                                 <div class="btn-list justify-content-start">
                                                     {if $public_setting['enable_ss_sub']}
                                                         <a data-clipboard-text="{$UniversalSub}/ss"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（Shadowsocks）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='Shadowsocks'}
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/sip002"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（SIP002）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='SIP002'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting['enable_v2_sub']}
                                                         <a data-clipboard-text="{$UniversalSub}/v2ray"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（V2Ray）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='V2Ray'}
                                                         </a>
                                                     {/if}
                                                     {if $public_setting['enable_trojan_sub']}
                                                         <a data-clipboard-text="{$UniversalSub}/trojan"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（Trojan）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='Trojan'}
                                                         </a>
                                                     {/if}
                                                 </div>
                                                 {if $public_setting['enable_overtls_sub']|default:1}
                                                     <p>
-                                                        客户端订阅（OverTLS）：<code class="spoiler">{$UniversalSub}/overtls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='OverTLS'}:<code
+                                                            class="spoiler">{$UniversalSub}/overtls</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/overtls"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（OverTLS）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                         </a>
                                                     </div>
                                                 {/if}
                                                 {if $public_setting['enable_anytls_sub']|default:1}
                                                     <p>
-                                                        客户端订阅（AnyTLS）：<code class="spoiler">{$UniversalSub}/anytls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='AnyTLS'}:<code
+                                                            class="spoiler">{$UniversalSub}/anytls</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a data-clipboard-text="{$UniversalSub}/anytls"
                                                             class="copy btn btn-primary">
-                                                            复制客户端订阅（AnyTLS）
+                                                            {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                         </a>
                                                     </div>
                                                 {/if}
@@ -343,22 +355,23 @@
                                                 {if $public_setting.enable_clash_sub|default:1}
                                                     <div class="mb-3">
                                                         <p>
-                                                            适用于 Clash 的订阅：<code class="spoiler">{$UniversalSub}/clash</code>
+                                                            {trans key='user_pages.for_protocol' protocol='Clash'}:<code
+                                                                class="spoiler">{$UniversalSub}/clash</code>
                                                         </p>
                                                         <div class="btn-list justify-content-start">
                                                             <a {if $config['enable_r2_client_download']}
                                                                 href="/user/clients/Clash.Nyanpasu.exe" {else}
                                                                 href="/clients/Clash.Nyanpasu.exe" {/if}
                                                                 class="btn btn-azure">
-                                                                下载 Clash Nyanpasu
+                                                                {trans key='user_pages.download'} Clash Nyanpasu
                                                             </a>
                                                             <a data-clipboard-text="{$UniversalSub}/clash"
                                                                 class="copy btn btn-primary">
-                                                                复制 Clash 订阅链接
+                                                                {trans key='user_pages.copy_link' protocol='Clash'}
                                                             </a>
                                                             <a href="clash-nyanpasu://subscribe-remote-profile?url={$UniversalSub}&name={$config['appName']}"
                                                                 class="btn btn-indigo">
-                                                                导入 Clash Nyanpasu
+                                                                {trans key='user_pages.import' client='Clash Nyanpasu'}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -366,42 +379,44 @@
                                                 {if $public_setting.enable_singbox_sub|default:1}
                                                     <div class="mb-3">
                                                         <p>
-                                                            适用于 SingBox 的订阅：<code
+                                                            {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
                                                                 class="spoiler">{$UniversalSub}/singbox</code>
                                                         </p>
                                                         <div class="btn-list justify-content-start">
                                                             <a {if $config['enable_r2_client_download']}
                                                                 href="/user/clients/Hiddify.exe" {else}
                                                                 href="/clients/Hiddify.exe" {/if} class="btn btn-azure">
-                                                                下载 Hiddify
+                                                                {trans key='user_pages.download'} Hiddify
                                                             </a>
                                                             <a data-clipboard-text="{$UniversalSub}/singbox"
                                                                 class="copy btn btn-primary">
-                                                                复制 SingBox 订阅链接
+                                                                {trans key='user_pages.copy_link' protocol='SingBox'}
                                                             </a>
                                                             <a href="hiddify://import/{$UniversalSub}#{$config['appName']}"
                                                                 class="btn btn-indigo">
-                                                                导入 Hiddify
+                                                                {trans key='user_pages.import' client='Hiddify'}
                                                             </a>
                                                         </div>
                                                     </div>
                                                 {/if}
                                                 {if $public_setting['enable_overtls_sub']|default:1}
                                                     <p>
-                                                        适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='OverTLS'} <code
+                                                            class="spoiler">{$UniversalSub}/overtls</code>
                                                     </p>
                                                     <a data-clipboard-text="{$UniversalSub}/overtls"
                                                         class="copy btn btn-primary">
-                                                        复制客户端 OverTLS 订阅
+                                                        {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                     </a>
                                                 {/if}
                                                 {if $public_setting['enable_anytls_sub']|default:1}
                                                     <p>
-                                                        适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                        {trans key='user_pages.for_protocol' protocol='AnyTLS'} <code
+                                                            class="spoiler">{$UniversalSub}/anytls</code>
                                                     </p>
                                                     <a data-clipboard-text="{$UniversalSub}/anytls"
                                                         class="copy btn btn-primary">
-                                                        复制客户端 AnyTLS 订阅
+                                                        {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                     </a>
                                                 {/if}
                                             </div>
@@ -410,22 +425,23 @@
                                             {if $public_setting.enable_clash_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 Clash 的订阅：<code class="spoiler">{$UniversalSub}/clash</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Clash'}:<code
+                                                            class="spoiler">{$UniversalSub}/clash</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/Clash.Nyanpasu_aarch64.dmg" {else}
                                                             href="/clients/Clash.Nyanpasu_aarch64.dmg" {/if}
                                                             class="btn btn-azure">
-                                                            下载 Clash Nyanpasu (aarch64)
+                                                            {trans key='user_pages.download'} Clash Nyanpasu (aarch64)
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/clash"
                                                             class="copy btn btn-primary">
-                                                            复制 Clash 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='Clash'}
                                                         </a>
                                                         <a href="clash-nyanpasu://subscribe-remote-profile?url={$UniversalSub}&name={$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Clash Nyanpasu
+                                                            {trans key='user_pages.import' client='Clash Nyanpasu'}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -433,21 +449,22 @@
                                             {if $public_setting.enable_singbox_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 SingBox 的订阅：<code class="spoiler">{$UniversalSub}/singbox</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
+                                                            class="spoiler">{$UniversalSub}/singbox</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/SFM.zip" {else} href="/clients/SFM.zip"
                                                             {/if} class="btn btn-azure">
-                                                            下载 SFM
+                                                            {trans key='user_pages.download'} SFM
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制 SingBox 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='SingBox'}
                                                         </a>
                                                         <a href="sing-box://import-remote-profile?url={$UniversalSub}/singbox#{$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 SFM
+                                                            {trans key='user_pages.import' client='SFM'}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -456,35 +473,37 @@
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/Hiddify.dmg" {else}
                                                             href="/clients/Hiddify.dmg" {/if} class="btn btn-azure">
-                                                            下载 Hiddify
+                                                            {trans key='user_pages.download'} Hiddify
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制 SingBox 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='SingBox'}
                                                         </a>
                                                         <a href="hiddify://import/{$UniversalSub}#{$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Hiddify
+                                                            {trans key='user_pages.import' client='Hiddify'}
                                                         </a>
                                                     </div>
                                                 </div>
                                             {/if}
                                             {if $public_setting['enable_overtls_sub']|default:1}
                                                 <p>
-                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='OverTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/overtls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 OverTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                 </a>
                                             {/if}
                                             {if $public_setting['enable_anytls_sub']|default:1}
                                                 <p>
-                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='AnyTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/anytls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/anytls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 AnyTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                 </a>
                                             {/if}
                                         </div>
@@ -492,21 +511,22 @@
                                             {if $public_setting.enable_clash_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 Clash 的订阅：<code class="spoiler">{$UniversalSub}/clash</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Clash'}:<code
+                                                            class="spoiler">{$UniversalSub}/clash</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/CMFA.apk" {else} href="/clients/CMFA.apk"
                                                             {/if} class="btn btn-azure">
-                                                            下载 Clash.Meta For Android
+                                                            {trans key='user_pages.download'} Clash.Meta For Android
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/clash"
                                                             class="copy btn btn-primary">
-                                                            复制 Clash 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='Clash'}
                                                         </a>
                                                         <a href="clash://install-config?url={$UniversalSub}/clash&name={$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Clash
+                                                            {trans key='user_pages.import' client='Clash'}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -514,21 +534,22 @@
                                             {if $public_setting.enable_singbox_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 SingBox 的订阅：<code class="spoiler">{$UniversalSub}/singbox</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
+                                                            class="spoiler">{$UniversalSub}/singbox</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/SFA.apk" {else} href="/clients/SFA.apk"
                                                             {/if} class="btn btn-azure">
-                                                            下载 SFA
+                                                            {trans key='user_pages.download'} SFA
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制 SingBox 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='SingBox'}
                                                         </a>
                                                         <a href="sing-box://import-remote-profile?url={$UniversalSub}/singbox#{$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 SFA
+                                                            {trans key='user_pages.import' client='SFA'}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -537,74 +558,79 @@
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/Hiddify.apk" {else}
                                                             href="/clients/Hiddify.apk" {/if} class="btn btn-azure">
-                                                            下载 Hiddify
+                                                            {trans key='user_pages.download'} Hiddify
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制 SingBox 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='SingBox'}
                                                         </a>
                                                         <a href="hiddify://import/{$UniversalSub}#{$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Hiddify
+                                                            {trans key='user_pages.import' client='Hiddify'}
                                                         </a>
                                                     </div>
                                                 </div>
                                             {/if}
                                             {if $public_setting['enable_overtls_sub']|default:1}
                                                 <p>
-                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='OverTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/overtls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 OverTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                 </a>
                                             {/if}
                                             {if $public_setting['enable_anytls_sub']|default:1}
                                                 <p>
-                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='AnyTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/anytls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/anytls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 AnyTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                 </a>
                                             {/if}
                                         </div>
                                         <div class="tab-pane" id="ios">
                                             {if $public_setting.enable_singbox_sub|default:1}
                                                 <p>
-                                                    适用于 SingBox 的订阅：<code class="spoiler">{$UniversalSub}/singbox</code>
+                                                    {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
+                                                        class="spoiler">{$UniversalSub}/singbox</code>
                                                 </p>
                                                 <div class="btn-list justify-content-start">
                                                     <a href="https://apps.apple.com/app/sing-box/id6451272673"
                                                         target="_blank" class="btn btn-azure">
-                                                        安裝 SFI
+                                                        {trans key='user_pages.install' client='SFI'}
                                                     </a>
                                                     <a data-clipboard-text="{$UniversalSub}/singbox"
                                                         class="copy btn btn-primary">
-                                                        复制 SingBox 订阅链接
+                                                        {trans key='user_pages.copy_link' protocol='SingBox'}
                                                     </a>
                                                     <a href="sing-box://import-remote-profile?url={$UniversalSub}/singbox#{$config['appName']}"
                                                         class="btn btn-indigo">
-                                                        导入 SFI
+                                                        {trans key='user_pages.import' client='SFI'}
                                                     </a>
                                                 </div>
                                             {/if}
                                             {if $public_setting['enable_overtls_sub']|default:1}
                                                 <p>
-                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='OverTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/overtls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 OverTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                 </a>
                                             {/if}
                                             {if $public_setting['enable_anytls_sub']|default:1}
                                                 <p>
-                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='AnyTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/anytls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/anytls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 AnyTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                 </a>
                                             {/if}
                                         </div>
@@ -612,22 +638,23 @@
                                             {if $public_setting.enable_clash_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 Clash 的订阅：<code class="spoiler">{$UniversalSub}/clash</code>
+                                                        {trans key='user_pages.for_protocol' protocol='Clash'}:<code
+                                                            class="spoiler">{$UniversalSub}/clash</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/Clash.Nyanpasu.AppImage" {else}
                                                             href="/clients/Clash.Nyanpasu.AppImage" {/if}
                                                             class="btn btn-azure">
-                                                            下载 Clash Nyanpasu
+                                                            {trans key='user_pages.download'} Clash Nyanpasu
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/clash"
                                                             class="copy btn btn-primary">
-                                                            复制 Clash 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='Clash'}
                                                         </a>
                                                         <a href="clash-nyanpasu://subscribe-remote-profile?url={$UniversalSub}&name={$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Clash Nyanpasu
+                                                            {trans key='user_pages.import' client='Clash Nyanpasu'}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -635,55 +662,59 @@
                                             {if $public_setting.enable_singbox_sub|default:1}
                                                 <div class="mb-3">
                                                     <p>
-                                                        适用于 SingBox 的订阅：<code class="spoiler">{$UniversalSub}/singbox</code>
+                                                        {trans key='user_pages.for_protocol' protocol='SingBox'}:<code
+                                                            class="spoiler">{$UniversalSub}/singbox</code>
                                                     </p>
                                                     <div class="btn-list justify-content-start">
                                                         <a {if $config['enable_r2_client_download']}
                                                             href="/user/clients/Hiddify.AppImage" {else}
                                                             href="/clients/Hiddify.AppImage" {/if} class="btn btn-azure">
-                                                            下载 Hiddify
+                                                            {trans key='user_pages.download'} Hiddify
                                                         </a>
                                                         <a data-clipboard-text="{$UniversalSub}/singbox"
                                                             class="copy btn btn-primary">
-                                                            复制 SingBox 订阅链接
+                                                            {trans key='user_pages.copy_link' protocol='SingBox'}
                                                         </a>
                                                         <a href="hiddify://import/{$UniversalSub}#{$config['appName']}"
                                                             class="btn btn-indigo">
-                                                            导入 Hiddify
+                                                            {trans key='user_pages.import' client='Hiddify'}
                                                         </a>
                                                     </div>
                                                 </div>
                                             {/if}
                                             {if $public_setting['enable_overtls_sub']|default:1}
                                                 <p>
-                                                    适用于 OverTLS 的订阅 <code class="spoiler">{$UniversalSub}/overtls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='OverTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/overtls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/overtls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 OverTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='OverTLS'}
                                                 </a>
                                             {/if}
                                             {if $public_setting['enable_anytls_sub']|default:1}
                                                 <p>
-                                                    适用于 AnyTLS 的订阅 <code class="spoiler">{$UniversalSub}/anytls</code>
+                                                    {trans key='user_pages.for_protocol' protocol='AnyTLS'} <code
+                                                        class="spoiler">{$UniversalSub}/anytls</code>
                                                 </p>
                                                 <a data-clipboard-text="{$UniversalSub}/anytls"
                                                     class="copy btn btn-primary">
-                                                    复制客户端 AnyTLS 订阅
+                                                    {trans key='user_pages.copy_client_subscription' protocol='AnyTLS'}
                                                 </a>
                                             {/if}
                                         </div>
                                         <div class="tab-pane" id="config">
-                                            <p>你的连接信息：</p>
+                                            <p>{trans key='user_pages.connection_information'}:</p>
                                             <div class="table-responsive">
                                                 <table class="table table-vcenter card-table">
                                                     <tbody>
                                                         <tr>
-                                                            <td><strong>端口</strong></td>
+                                                            <td><strong>{trans key='user_pages.port'}</strong></td>
                                                             <td>{$user->port}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>连接密码</strong></td>
+                                                            <td><strong>{trans key='user_pages.connection_password'}</strong>
+                                                            </td>
                                                             <td><span class="spoiler">{$user->passwd}</span></td>
                                                         </tr>
                                                         <tr>
@@ -691,7 +722,8 @@
                                                             <td><span class="spoiler">{$user->uuid}</span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>自定义加密</strong></td>
+                                                            <td><strong>{trans key='user_pages.custom_encryption'}</strong>
+                                                            </td>
                                                             <td>{$user->method}</td>
                                                         </tr>
                                                     </tbody>
@@ -706,7 +738,7 @@
                             <div class="vstack">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">流量用量</h3>
+                                        <h3 class="card-title">{trans key='user_pages.traffic_usage'}</h3>
                                         <div class="progress progress-separated mb-3">
                                             {if $user->LastusedTrafficPercent() < '1'}
                                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 1%">
@@ -727,24 +759,27 @@
                                         <div class="row">
                                             <div class="col-auto d-flex align-items-center pe-2">
                                                 <span class="legend me-2 bg-primary"></span>
-                                                <span>过去用量 {$user->LastusedTraffic()}</span>
+                                                <span>{trans key='user_pages.past_usage'}
+                                                    {$user->LastusedTraffic()}</span>
                                             </div>
                                             <div class="col-auto d-flex align-items-center px-2">
                                                 <span class="legend me-2 bg-success"></span>
-                                                <span>今日用量 {$user->TodayusedTraffic()}</span>
+                                                <span>{trans key='user_pages.today_usage'}
+                                                    {$user->TodayusedTraffic()}</span>
                                             </div>
                                             <div class="col-auto d-flex align-items-center ps-2">
                                                 <span class="legend me-2"></span>
-                                                <span>剩余流量 {$user->unusedTraffic()}</span>
+                                                <span>{trans key='user_pages.remaining_traffic'}
+                                                    {$user->unusedTraffic()}</span>
                                             </div>
                                         </div>
                                         <p class="my-3">
                                             {if $user->class === 0}
-                                                前往
-                                                <a href="/user/product">商店</a>
-                                                购买套餐
+                                                {trans key='user_pages.go_to'}
+                                                <a href="/user/product">{trans key='user_pages.store'}</a>
+                                                {trans key='user_pages.purchase_plan'}
                                             {else}
-                                                你的 LV. {$user->class} 账户会在 {$class_expire_days} 天后到期（{$user->class_expire}）
+                                                {trans key='user_pages.account_expiry' class=$user->class days=$class_expire_days date=$user->class_expire}
                                             {/if}
                                         </p>
                                     </div>
@@ -752,7 +787,7 @@
                                 {if $public_setting['traffic_log']}
                                     <div class="card my-3 mb-0">
                                         <div class="card-body">
-                                            <h3 class="card-title">每小时用量</h3>
+                                            <h3 class="card-title">{trans key='user_pages.hourly_usage'}</h3>
                                             <div id="traffic-log"></div>
                                         </div>
                                     </div>
@@ -768,27 +803,29 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <h3 class="card-title">每日签到</h3>
+                                        <h3 class="card-title">{trans key='user_pages.daily_checkin'}</h3>
                                         <p>
-                                            签到可领取
+                                            {trans key='user_pages.checkin_reward_range'}
                                             {if $public_setting['checkin_min'] !== $public_setting['checkin_max']}
                                                 &nbsp;
                                                 <code>{$public_setting['checkin_min']} MB</code>
-                                                至
+                                                {trans key='user_pages.to'}
                                                 <code>{$public_setting['checkin_max']} MB</code>
-                                                范围内的流量
+                                                {trans key='user_pages.traffic'}
                                             {else}
                                                 <code>{$public_setting['checkin_min']} MB</code>
                                             {/if}
                                         </p>
                                         <p>
-                                            上次签到时间：<code id="last-checkin-time">{$user->lastCheckInTime()}</code>
+                                            {trans key='user_pages.last_checkin'} <code
+                                                id="last-checkin-time">{$user->lastCheckInTime()}</code>
                                         </p>
                                     </div>
                                     <div class="card-footer">
                                         <div class="d-flex">
                                             {if ! $user->isAbleToCheckin()}
-                                                <button id="check-in" class="btn btn-primary ms-auto" disabled>已签到</button>
+                                                <button id="check-in" class="btn btn-primary ms-auto"
+                                                    disabled>{trans key='user_pages.checked_in'}</button>
                                             {else}
                                                 {if $public_setting['enable_checkin_captcha']}
                                                     {include file='captcha/div.tpl'}
@@ -799,7 +836,7 @@
                                     {include file='captcha/ajax.tpl'}
                                     {/if}
                                     }'>
-                                                    签到
+                                                    {trans key='user_pages.checkin'}
                                                 </button>
                                             {/if}
                                         </div>
@@ -814,7 +851,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h3 class="card-title">
-                                        置顶公告
+                                        {trans key='user_pages.pinned_announcement'}
                                         {if $ann !== null}
                                             <span class="card-subtitle">{$ann->date}</span>
                                         {/if}
@@ -823,7 +860,7 @@
                                         {if $ann !== null}
                                             {$ann->content}
                                         {else}
-                                            暂无公告
+                                            {trans key='user_pages.no_announcements'}
                                         {/if}
                                     </p>
                                 </div>
@@ -860,7 +897,7 @@
                                 opacity: 1
                             },
                             series: [{
-                                name: "使用流量（MB）",
+                                name: "{trans key='user_pages.traffic_mb'}",
                                 data: {$traffic_logs}
                             }],
                             tooltip: {
@@ -877,7 +914,7 @@
                             },
                             xaxis: {
                                 title: {
-                                    text: "小时"
+                                    text: "{trans key='user_pages.hour_unit'}"
                                 },
                                 labels: {
                                     padding: 0
@@ -917,7 +954,7 @@
                             },
                             yaxis: {
                                 title: {
-                                    text: "使用流量（MB）",
+                                    text: "{trans key='user_pages.traffic_mb'}",
                                     rotate: -90
                                 },
                                 labels: {

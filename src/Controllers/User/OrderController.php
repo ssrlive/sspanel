@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\UserCoupon;
 use App\Services\DB;
+use App\Services\I18n;
 use App\Utils\Cookie;
 use App\Utils\Tools;
 use Exception;
@@ -47,7 +48,24 @@ final class OrderController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        $fieldKeys = [
+            'op' => 'view_action',
+            'id' => 'order_id',
+            'product_id' => 'product_id',
+            'product_type' => 'product_type',
+            'product_name' => 'product_name',
+            'coupon' => 'coupon',
+            'price' => 'order_amount',
+            'status' => 'status',
+            'create_time' => 'created_at',
+            'update_time' => 'updated_at',
+        ];
+        foreach ($fieldKeys as $field => $translationKey) {
+            $translationGroup = $translationKey === 'view_action' ? 'user_pages' : 'shop';
+            $details['field'][$field] = I18n::trans($translationGroup . '.' . $translationKey, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('user/order/index.tpl'));
     }
 
@@ -94,8 +112,8 @@ final class OrderController extends BaseController
             return $response->withRedirect('/user/order');
         }
 
-        $order->product_type_text = $order->productType();
-        $order->status = $order->status();
+        $order->product_type_text = $this->translateProductType($order->product_type);
+        $order->status = $this->translateOrderStatus($order->status);
         $order->create_time = Tools::toDateTime($order->create_time);
         $order->update_time = Tools::toDateTime($order->update_time);
         $order->content = json_decode($order->product_content);
@@ -106,7 +124,7 @@ final class OrderController extends BaseController
             return $response->withRedirect('/user/order');
         }
 
-        $invoice->status = $invoice->status();
+        $invoice->status = $this->translateInvoiceStatus($invoice->status);
         $invoice->create_time = Tools::toDateTime($invoice->create_time);
         $invoice->update_time = Tools::toDateTime($invoice->update_time);
         $invoice->pay_time = Tools::toDateTime($invoice->pay_time);
@@ -388,16 +406,18 @@ final class OrderController extends BaseController
         $orders = (new Order())->orderBy('id', 'desc')->where('user_id', $this->user->id)->get();
 
         foreach ($orders as $order) {
-            $order->op = '<a class="btn btn-primary" href="/user/order/' . $order->id . '/view">查看</a>';
+            $order->op = '<a class="btn btn-primary" href="/user/order/' . $order->id . '/view">'
+                . I18n::trans('user_pages.view_action', $this->user->locale) . '</a>';
 
             if ($order->status === 'pending_payment') {
                 $invoice_id = (new Invoice())->where('order_id', $order->id)->first()->id;
                 $order->op .= '
-                <a class="btn btn-red" href="/user/invoice/' . $invoice_id . '/view">支付</a>';
+                <a class="btn btn-red" href="/user/invoice/' . $invoice_id . '/view">'
+                    . I18n::trans('user_pages.pay_action', $this->user->locale) . '</a>';
             }
 
-            $order->product_type = $order->productType();
-            $order->status = $order->status();
+            $order->product_type = $this->translateProductType($order->product_type);
+            $order->status = $this->translateOrderStatus($order->status);
             $order->create_time = Tools::toDateTime($order->create_time);
             $order->update_time = Tools::toDateTime($order->update_time);
         }
@@ -405,5 +425,20 @@ final class OrderController extends BaseController
         return $response->withJson([
             'orders' => $orders,
         ]);
+    }
+
+    private function translateProductType(string $productType): string
+    {
+        return I18n::trans('user_pages.product_type_' . $productType, $this->user->locale);
+    }
+
+    private function translateOrderStatus(string $status): string
+    {
+        return I18n::trans('user_pages.order_status_' . $status, $this->user->locale);
+    }
+
+    private function translateInvoiceStatus(string $status): string
+    {
+        return I18n::trans('user_pages.invoice_status_' . $status, $this->user->locale);
     }
 }

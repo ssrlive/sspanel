@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">审计记录</span>
+                                <span class="home-title">{trans key='user_pages.audit_logs_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">系统中所有审计记录</span>
+                                <span class="home-subtitle">{trans key='user_pages.audit_logs_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -32,15 +32,15 @@
                                     <table class="table table-vcenter card-table">
                                         <thead>
                                             <tr>
-                                                <th>事件ID</th>
-                                                <th>节点ID</th>
-                                                <th>节点名称</th>
-                                                <th>规则ID</th>
-                                                <th>名称</th>
-                                                <th>描述</th>
-                                                <th>正则表达式</th>
-                                                <th>类型</th>
-                                                <th>时间</th>
+                                                <th>{trans key='shop.event_id'}</th>
+                                                <th>{trans key='user_pages.node_id'}</th>
+                                                <th>{trans key='user_pages.node_name'}</th>
+                                                <th>{trans key='user_pages.rule_id'}</th>
+                                                <th>{trans key='shop.name'}</th>
+                                                <th>{trans key='user_pages.description'}</th>
+                                                <th>{trans key='user_pages.regex'}</th>
+                                                <th>{trans key='user_pages.match_type'}</th>
+                                                <th>{trans key='user_pages.time'}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
