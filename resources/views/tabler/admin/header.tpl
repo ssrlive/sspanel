@@ -37,5 +37,63 @@
         .home-title {
             font-size: 36px;
         }
+
+        .navbar-toggler-line {
+            display: block;
+            width: 1.5em;
+            height: 2px;
+            margin: 0.2em 0;
+            background-color: #fff;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .navbar-toggler {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-line:first-child {
+            transform: translateY(0.4em) rotate(45deg);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-line:last-child {
+            transform: translateY(-0.4em) rotate(-45deg);
+        }
+
+        /* iOS 15 Safari ignores light-dark(), which Tabler uses for the navbar
+           background, leaving the header and mobile menu blank; set it explicitly. */
+        @supports not (background: light-dark(black, white)) {
+            header.navbar {
+                background-color: #1a2234;
+            }
+
+            /* iOS 15 Safari ignores color-mix(), which Tabler uses for .text-white,
+               leaving page titles and icon badges invisible on the dark header. */
+            .text-white {
+                color: #fff !important;
+            }
+
+            /* iOS 15 Safari ignores color-mix(), which Tabler uses for the dropdown
+               background/hover colors, leaving the account menu blank. */
+            header[data-bs-theme="dark"] .dropdown-menu {
+                background-color: #1a2234;
+                color: #fff;
+            }
+
+            header[data-bs-theme="dark"] .dropdown-menu .dropdown-item {
+                color: #fff;
+            }
+
+            header[data-bs-theme="dark"] .dropdown-menu .dropdown-item:hover,
+            header[data-bs-theme="dark"] .dropdown-menu .dropdown-item:focus {
+                background-color: rgba(255, 255, 255, 0.08);
+                color: #fff;
+            }
+        }
     </style>
 </head>

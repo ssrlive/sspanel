@@ -1,7 +1,10 @@
 <header class="navbar navbar-expand-md navbar-overlap d-print-none" data-bs-theme="dark">
     <div class="container-xl" style="background-image: none;">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" aria-label="Toggle navigation"
+            data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-line"></span>
+            <span class="navbar-toggler-line"></span>
+            <span class="navbar-toggler-line"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <img src="/images/next-logo.svg" height="32" alt="Next Panel Logo" class="navbar-brand-image"
