@@ -6,8 +6,8 @@ namespace App\Controllers\Admin\Setting;
 
 use App\Controllers\BaseController;
 use App\Models\Config;
-use App\Services\Mail;
 use App\Services\I18n;
+use App\Services\Mail;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
