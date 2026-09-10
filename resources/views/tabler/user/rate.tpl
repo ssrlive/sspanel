@@ -149,7 +149,7 @@
             </script>
 
             <script
-                src="//{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js">
+                src="https://{$config['jsdelivr_url']}/npm/@tabler/core@latest/dist/libs/apexcharts/dist/apexcharts.min.js">
             </script>
 
             {include file='user/footer.tpl'}

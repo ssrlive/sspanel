@@ -102,7 +102,7 @@ $_ENV['keep_connect'] = false;            // 流量耗尽用户限速至 1Mbps
 
 //Other-----------------------------------------------------------------------------------------------------------------
 // cdn.jsdelivr.net / fastly.jsdelivr.net / testingcf.jsdelivr.net
-$_ENV['jsdelivr_url'] = 'fastly.jsdelivr.net';
+$_ENV['jsdelivr_url'] = 'cdn.jsdelivr.net';
 // https://sentry.io for production debugging
 $_ENV['sentry_dsn'] = '';
 // Maxmind GeoIP2 database
