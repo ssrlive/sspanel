@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">订单列表</span>
+                                <span class="home-title">{trans key='admin.order.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">管理客户订单</span>
+                                <span class="home-subtitle">{trans key='admin.order.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 }
 
                 function deleteOrder(order_id) {
-                    $('#notice-message').text('确定删除此订单？');
+                    $('#notice-message').text('{trans key='admin.order.confirm_delete'}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({
@@ -90,7 +90,7 @@
                 }
 
                 function cancelOrder(order_id) {
-                    $('#notice-message').text('确定取消此订单？如果关联账单已支付，将会退款至用户余额。');
+                    $('#notice-message').text('{trans key='admin.order.confirm_cancel'}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({
@@ -112,7 +112,7 @@
                 }
 
                 function forceActivateOrder(order_id) {
-                    $('#notice-message').text('确定强制激活此订单？当前用户正在使用的时间流量包将被替换。');
+                    $('#notice-message').text('{trans key='admin.order.confirm_activate'}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({
@@ -134,7 +134,7 @@
                 }
 
                 function markPaidOrder(order_id) {
-                    $('#notice-message').text('确定将此订单标记为已付款？');
+                    $('#notice-message').text('{trans key='admin.order.confirm_mark_paid'}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

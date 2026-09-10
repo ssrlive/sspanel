@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">定时任务设置</span>
+                                <span class="home-title">{trans key='admin.cron.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">设置站点的定时任务</span>
+                                <span class="home-subtitle">{trans key='admin.cron.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.cron.save'}
                                 </a>
                             </div>
                         </div>
@@ -39,16 +39,20 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#daily_job" class="nav-link active" data-bs-toggle="tab">每日任务</a>
+                                            <a href="#daily_job" class="nav-link active"
+                                                data-bs-toggle="tab">{trans key='admin.cron.tabs.daily_job'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#finance_mail" class="nav-link" data-bs-toggle="tab">财务报告</a>
+                                            <a href="#finance_mail" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.cron.tabs.finance_mail'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#detect" class="nav-link" data-bs-toggle="tab">审计任务</a>
+                                            <a href="#detect" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.cron.tabs.detect'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#inactive" class="nav-link" data-bs-toggle="tab">闲置账号检测</a>
+                                            <a href="#inactive" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.cron.tabs.inactive'}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -57,14 +61,16 @@
                                         <div class="tab-pane active show" id="daily_job">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">每日任务执行时间(小时)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.daily_hour'}</label>
                                                     <div class="col">
                                                         <input id="daily_job_hour" type="text" class="form-control"
                                                             value="{$settings['daily_job_hour']}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">每日任务执行时间(分钟)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.daily_minute'}</label>
                                                     <div class="col">
                                                         <input id="daily_job_minute" type="text" class="form-control"
                                                             value="{$settings['daily_job_minute']}">
@@ -75,49 +81,52 @@
                                         <div class="tab-pane show" id="finance_mail">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用每日财务报告</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.daily_finance'}</label>
                                                     <div class="col">
                                                         <select id="enable_daily_finance_mail" class="col form-select"
                                                             value="{$settings['enable_daily_finance_mail']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_daily_finance_mail']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_daily_finance_mail']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用每周财务报告</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.weekly_finance'}</label>
                                                     <div class="col">
                                                         <select id="enable_weekly_finance_mail" class="col form-select"
                                                             value="{$settings['enable_weekly_finance_mail']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_weekly_finance_mail']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_weekly_finance_mail']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用每月财务报告</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.monthly_finance'}</label>
                                                     <div class="col">
                                                         <select id="enable_monthly_finance_mail" class="col form-select"
                                                             value="{$settings['enable_monthly_finance_mail']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_monthly_finance_mail']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_monthly_finance_mail']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -127,31 +136,35 @@
                                         <div class="tab-pane show" id="detect">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用节点被墙检测</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.detect_gfw'}</label>
                                                     <div class="col">
                                                         <select id="enable_detect_gfw" class="col form-select"
                                                             value="{$settings['enable_detect_gfw']}">
                                                             <option value="0"
-                                                                {if ! $settings['enable_detect_gfw']}selected{/if}>关闭
+                                                                {if ! $settings['enable_detect_gfw']}selected{/if}>
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_detect_gfw']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用审计封禁</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.detect_ban'}</label>
                                                     <div class="col">
                                                         <select id="enable_detect_ban" class="col form-select"
                                                             value="{$settings['enable_detect_ban']}">
                                                             <option value="0"
-                                                                {if ! $settings['enable_detect_ban']}selected{/if}>关闭
+                                                                {if ! $settings['enable_detect_ban']}selected{/if}>
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_detect_ban']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -161,23 +174,25 @@
                                         <div class="tab-pane show" id="inactive">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">是否启用闲置账号检测</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.detect_inactive'}</label>
                                                     <div class="col">
                                                         <select id="enable_detect_inactive_user" class="col form-select"
                                                             value="{$settings['enable_detect_inactive_user']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_detect_inactive_user']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_detect_inactive_user']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">未签到时长(天)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.inactive_checkin_days'}</label>
                                                     <div class="col">
                                                         <input id="detect_inactive_user_checkin_days" type="text"
                                                             class="form-control"
@@ -185,7 +200,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">未登录时长(天)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.inactive_login_days'}</label>
                                                     <div class="col">
                                                         <input id="detect_inactive_user_login_days" type="text"
                                                             class="form-control"
@@ -193,7 +209,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">未使用时长(天)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.inactive_use_days'}</label>
                                                     <div class="col">
                                                         <input id="detect_inactive_user_use_days" type="text"
                                                             class="form-control"
@@ -202,18 +219,18 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label
-                                                        class="form-label col-3 col-form-label">是否启用移除闲置账号订阅链接与邀请码</label>
+                                                        class="form-label col-3 col-form-label">{trans key='admin.cron.fields.remove_inactive_data'}</label>
                                                     <div class="col">
                                                         <select id="remove_inactive_user_link_and_invite"
                                                             class="col form-select"
                                                             value="{$settings['remove_inactive_user_link_and_invite']}">
                                                             <option value="0"
                                                                 {if ! $settings['remove_inactive_user_link_and_invite']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.cron.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['remove_inactive_user_link_and_invite']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.cron.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>

@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\LoginIp;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use MaxMind\Db\Reader\InvalidDatabaseException;
@@ -17,12 +18,12 @@ final class LoginLogController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'userid' => '用户ID',
-            'ip' => '登录IP',
-            'location' => 'IP归属地',
-            'datetime' => '时间',
-            'type' => '类型',
+            'id' => 'admin.login_log.fields.event_id',
+            'userid' => 'admin.login_log.fields.user_id',
+            'ip' => 'admin.login_log.fields.login_ip',
+            'location' => 'admin.login_log.fields.location',
+            'datetime' => 'admin.login_log.fields.datetime',
+            'type' => 'admin.login_log.fields.type',
         ],
     ];
 
@@ -34,7 +35,11 @@ final class LoginLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/login.tpl'));
     }
 
@@ -75,8 +80,11 @@ final class LoginLogController extends BaseController
 
         foreach ($logins as $login) {
             $login->location = Tools::getIpLocation($login->ip);
+            if ($login->location === 'GeoIP2 服务未配置') {
+                $login->location = I18n::trans('admin.login_log.geoip_unavailable', $this->user->locale);
+            }
             $login->datetime = Tools::toDateTime((int) $login->datetime);
-            $login->type = $login->type();
+            $login->type = I18n::trans($login->type === 0 ? 'admin.login_log.success' : 'admin.login_log.failure', $this->user->locale);
         }
 
         return $response->withJson([

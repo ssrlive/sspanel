@@ -13,17 +13,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">订阅设置</span>
+                                <span class="home-title">{trans key='admin.subscription.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">设置站点的订阅系统</span>
+                                <span class="home-subtitle">{trans key='admin.subscription.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.subscription.save'}
                                 </a>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#sub" class="nav-link active" data-bs-toggle="tab">订阅设置</a>
+                                            <a href="#sub" class="nav-link active" data-bs-toggle="tab">{trans key='admin.subscription.tabs.general'}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -48,7 +48,7 @@
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Shadowsocks Subscription
+                                                        {trans key='admin.subscription.fields.shadowsocks'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -59,7 +59,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Vmess Subscription
+                                                        {trans key='admin.subscription.fields.vmess'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -70,7 +70,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Trojan Subscription
+                                                        {trans key='admin.subscription.fields.trojan'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -81,7 +81,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Json Subscription
+                                                        {trans key='admin.subscription.fields.json'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -93,7 +93,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Clash Subscription
+                                                        {trans key='admin.subscription.fields.clash'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable SingBox Subscription
+                                                        {trans key='admin.subscription.fields.singbox'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -117,7 +117,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable V2Ray Json Subscription
+                                                        {trans key='admin.subscription.fields.v2ray_json'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -129,7 +129,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable OverTLS Subscription
+                                                        {trans key='admin.subscription.fields.overtls'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -141,7 +141,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable AnyTLS Subscription
+                                                        {trans key='admin.subscription.fields.anytls'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">
@@ -153,7 +153,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        修改账户登录密码时重置订阅地址
+                                                        {trans key='admin.subscription.fields.reset_on_password_change'}
                                                     </label>
                                                     <div class="col-auto">
                                                         <label class="form-check form-check-single form-switch">

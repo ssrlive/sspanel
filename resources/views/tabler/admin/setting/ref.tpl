@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">邀请设置</span>
+                                <span class="home-title">{trans key='admin.ref.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">管理站点的邀请设置</span>
+                                <span class="home-subtitle">{trans key='admin.ref.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.ref.save'}
                                 </a>
                             </div>
                         </div>
@@ -39,10 +39,10 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#invite" class="nav-link active" data-bs-toggle="tab">邀请奖励</a>
+                                            <a href="#invite" class="nav-link active" data-bs-toggle="tab">{trans key='admin.ref.tabs.invite'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#rebate" class="nav-link" data-bs-toggle="tab">返利</a>
+                                            <a href="#rebate" class="nav-link" data-bs-toggle="tab">{trans key='admin.ref.tabs.rebate'}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -51,7 +51,7 @@
                                         <div class="tab-pane active show" id="invite">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">被邀请者初始账户余额（元）</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.initial_balance'}</label>
                                                     <div class="col">
                                                         <input id="invite_reg_money_reward" type="text"
                                                             class="form-control"
@@ -59,7 +59,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">邀请者流量奖励（GB）</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.traffic_reward'}</label>
                                                     <div class="col">
                                                         <input id="invite_reg_traffic_reward" type="text"
                                                             class="form-control"
@@ -71,47 +71,46 @@
                                         <div class="tab-pane" id="rebate">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">返利模式</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.mode'}</label>
                                                     <div class="col">
                                                         <select id="invite_mode" class="col form-select"
                                                             value="{$settings['invite_mode']}">
                                                             <option value="reg_only"
                                                                 {if $settings['invite_mode'] === 'reg_only'}selected{/if}>
-                                                                不返利
+                                                                {trans key='admin.ref.options.none'}
                                                             </option>
                                                             <option value="reward"
                                                                 {if $settings['invite_mode'] === 'reward'}selected{/if}>
-                                                                被邀请用户支付账单时返利
+                                                                {trans key='admin.ref.options.on_payment'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">返利奖励模式</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.reward_mode'}</label>
                                                     <div class="col">
                                                         <select id="invite_reward_mode" class="col form-select"
                                                             value="{$settings['invite_reward_mode']}">
                                                             <option value="reward_count"
                                                                 {if $settings['invite_reward_mode'] === 'reward_count'}selected{/if}>
-                                                                限制返利次数
+                                                                {trans key='admin.ref.options.count_limit'}
                                                             </option>
                                                             <option value="reward_total"
                                                                 {if $settings['invite_reward_mode'] === 'reward_total'}selected{/if}>
-                                                                限制返利金额
+                                                                {trans key='admin.ref.options.amount_limit'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">返利比例，10% 填
-                                                        0.1</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.rate'}</label>
                                                     <div class="col">
                                                         <input id="invite_reward_rate" type="text" class="form-control"
                                                             value="{$settings['invite_reward_rate']}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">返利次数限制</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.count_limit'}</label>
                                                     <div class="col">
                                                         <input id="invite_reward_count_limit" type="text"
                                                             class="form-control"
@@ -119,7 +118,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">返利金额限制</label>
+                                                    <label class="form-label col-3 col-form-label">{trans key='admin.ref.fields.amount_limit'}</label>
                                                     <div class="col">
                                                         <input id="invite_reward_total_limit" type="text"
                                                             class="form-control"

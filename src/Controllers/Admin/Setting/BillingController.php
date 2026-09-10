@@ -6,6 +6,7 @@ namespace App\Controllers\Admin\Setting;
 
 use App\Controllers\BaseController;
 use App\Models\Config;
+use App\Services\I18n;
 use App\Services\Payment;
 use App\Utils\Env;
 use Psr\Http\Message\ResponseInterface;
@@ -56,7 +57,7 @@ final class BillingController extends BaseController
         if (! Config::set('payment_gateway', $active_gateway)) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '保存支付网关时出错',
+                'msg' => I18n::trans('admin.billing.messages.gateway_save_failed', $this->user->locale),
             ]);
         }
 
@@ -68,14 +69,14 @@ final class BillingController extends BaseController
             if (! Config::set($item, $request->getParam($item))) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => '保存 ' . $item . ' 时出错',
+                    'msg' => I18n::trans('admin.billing.messages.save_failed', $this->user->locale, ['field' => $item]),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '保存成功',
+            'msg' => I18n::trans('admin.billing.messages.saved', $this->user->locale),
         ]);
     }
 
@@ -95,13 +96,13 @@ final class BillingController extends BaseController
         } catch (ApiErrorException) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '设置 Stripe Webhook 失败',
+                'msg' => I18n::trans('admin.billing.messages.stripe_webhook_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '设置 Stripe Webhook 成功',
+            'msg' => I18n::trans('admin.billing.messages.stripe_webhook_saved', $this->user->locale),
         ]);
     }
 
@@ -129,13 +130,13 @@ final class BillingController extends BaseController
         } catch (Throwable $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '设置 PayPal Webhook 失败',
+                'msg' => I18n::trans('admin.billing.messages.paypal_webhook_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '设置 PayPal Webhook 成功',
+            'msg' => I18n::trans('admin.billing.messages.paypal_webhook_saved', $this->user->locale),
         ]);
     }
 

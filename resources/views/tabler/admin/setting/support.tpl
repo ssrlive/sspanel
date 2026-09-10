@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">客服设置</span>
+                                <span class="home-title">{trans key='admin.support.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">设置站点的客服系统</span>
+                                <span class="home-subtitle">{trans key='admin.support.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.support.save'}
                                 </a>
                             </div>
                         </div>
@@ -39,10 +39,12 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#support" class="nav-link active" data-bs-toggle="tab">网页客服</a>
+                                            <a href="#support" class="nav-link active"
+                                                data-bs-toggle="tab">{trans key='admin.support.tabs.live_chat'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#ticket" class="nav-link" data-bs-toggle="tab">工单</a>
+                                            <a href="#ticket" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.support.tabs.ticket'}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -51,7 +53,8 @@
                                         <div class="tab-pane active show" id="support">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">客服系统提供商</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.support.fields.provider'}</label>
                                                     <div class="col">
                                                         <select id="live_chat" class="col form-select"
                                                             value="{$settings['live_chat']}">
@@ -89,38 +92,42 @@
                                         <div class="tab-pane" id="ticket">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">启用工单系统</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.support.fields.ticket_enabled'}</label>
                                                     <div class="col">
                                                         <select id="enable_ticket" class="col form-select"
                                                             value="{$settings['enable_ticket']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_ticket']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.support.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_ticket']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.support.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">启用工单邮件提醒</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.support.fields.ticket_mail'}</label>
                                                     <div class="col">
                                                         <select id="mail_ticket" class="col form-select"
                                                             value="{$settings['mail_ticket']}">
                                                             <option value="0"
                                                                 {if ! $settings['mail_ticket']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.support.options.disabled'}
                                                             </option>
                                                             <option value="1"
-                                                                {if $settings['mail_ticket']}selected{/if}>开启
+                                                                {if $settings['mail_ticket']}selected{/if}>
+                                                                {trans key='admin.support.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">用戶工单配額（每月）</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.support.fields.ticket_limit'}</label>
                                                     <div class="col">
                                                         <input id="ticket_limit" type="text" class="form-control"
                                                             value="{$settings['ticket_limit']}">

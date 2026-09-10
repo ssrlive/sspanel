@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Paylist;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -16,14 +17,14 @@ final class PaylistController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'userid' => '用户ID',
-            'total' => '金额',
-            'status' => '状态',
-            'gateway' => '支付网关',
-            'tradeno' => '网关单号',
-            'datetime' => '支付时间',
-            'invoice_id' => '关联账单ID',
+            'id' => 'admin.gateway_log.fields.event_id',
+            'userid' => 'admin.gateway_log.fields.user_id',
+            'total' => 'admin.gateway_log.fields.amount',
+            'status' => 'admin.gateway_log.fields.status',
+            'gateway' => 'admin.gateway_log.fields.gateway',
+            'tradeno' => 'admin.gateway_log.fields.transaction_id',
+            'datetime' => 'admin.gateway_log.fields.payment_time',
+            'invoice_id' => 'admin.gateway_log.fields.invoice_id',
         ],
     ];
 
@@ -35,7 +36,11 @@ final class PaylistController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/gateway.tpl'));
     }
 
@@ -47,7 +52,11 @@ final class PaylistController extends BaseController
         $paylists = (new Paylist())->orderBy('id', 'desc')->get();
 
         foreach ($paylists as $paylist) {
-            $paylist->status = $paylist->status();
+            $paylist->status = I18n::trans(match ((int) $paylist->status) {
+                0 => 'admin.gateway_log.status.unpaid',
+                1 => 'admin.gateway_log.status.paid',
+                default => 'admin.gateway_log.status.unknown',
+            }, $this->user->locale);
             $paylist->datetime = Tools::toDateTime((int) $paylist->datetime);
         }
 

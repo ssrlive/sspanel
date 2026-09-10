@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Docs;
+use App\Services\I18n;
 use App\Services\LLM;
 use App\Utils\Tools;
 use Exception;
@@ -18,12 +19,12 @@ final class DocsController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => 'ID',
-            'status' => '状态',
-            'sort' => '排序',
-            'date' => '日期',
-            'title' => '标题',
+            'op' => 'admin.docs.fields.operation',
+            'id' => 'admin.docs.fields.id',
+            'status' => 'admin.docs.fields.status',
+            'sort' => 'admin.docs.fields.sort',
+            'date' => 'admin.docs.fields.date',
+            'title' => 'admin.docs.fields.title',
         ],
     ];
 
@@ -41,7 +42,11 @@ final class DocsController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/docs/index.tpl'));
     }
 
@@ -70,7 +75,7 @@ final class DocsController extends BaseController
         if ($title === '' || $content === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '文档标题和内容不能为空',
+                'msg' => I18n::trans('admin.docs.messages.content_required', $this->user->locale),
             ]);
         }
 
@@ -84,13 +89,13 @@ final class DocsController extends BaseController
         if (! $doc->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '文档添加失败',
+                'msg' => I18n::trans('admin.docs.messages.create_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '文档添加成功',
+            'msg' => I18n::trans('admin.docs.messages.created', $this->user->locale),
         ]);
     }
 
@@ -109,7 +114,7 @@ final class DocsController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '文档生成成功',
+            'msg' => I18n::trans('admin.docs.messages.generated', $this->user->locale),
             'content' => $content,
         ]);
     }
@@ -142,7 +147,7 @@ final class DocsController extends BaseController
         if ($title === '' || $content === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '文档标题和内容不能为空',
+                'msg' => I18n::trans('admin.docs.messages.content_required', $this->user->locale),
             ]);
         }
 
@@ -151,7 +156,7 @@ final class DocsController extends BaseController
         if ($doc === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '文档不存在',
+                'msg' => I18n::trans('admin.docs.messages.not_found', $this->user->locale),
             ]);
         }
 
@@ -164,13 +169,13 @@ final class DocsController extends BaseController
         if (! $doc->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '文档更新失败',
+                'msg' => I18n::trans('admin.docs.messages.update_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '文档更新成功',
+            'msg' => I18n::trans('admin.docs.messages.updated', $this->user->locale),
         ]);
     }
 
@@ -184,13 +189,13 @@ final class DocsController extends BaseController
         if (! $doc->delete()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '删除失败',
+                'msg' => I18n::trans('admin.docs.messages.delete_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.docs.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -203,9 +208,9 @@ final class DocsController extends BaseController
 
         foreach ($docs as $doc) {
             $doc->op = '<button class="btn btn-red" id="delete-doc-' . $doc->id . '" 
-            onclick="deleteDoc(' . $doc->id . ')">删除</button>
-            <a class="btn btn-primary" href="/admin/docs/' . $doc->id . '/edit">编辑</a>';
-            $doc->status = $doc->status();
+            onclick="deleteDoc(' . $doc->id . ')">' . I18n::trans('admin.docs.actions.delete', $this->user->locale) . '</button>
+            <a class="btn btn-primary" href="/admin/docs/' . $doc->id . '/edit">' . I18n::trans('admin.docs.actions.edit', $this->user->locale) . '</a>';
+            $doc->status = I18n::trans('admin.docs.status.' . $doc->status, $this->user->locale);
         }
 
         return $response->withJson([

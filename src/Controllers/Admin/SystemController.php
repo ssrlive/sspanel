@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Config;
+use App\Services\I18n;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Exception;
@@ -30,7 +31,10 @@ final class SystemController extends BaseController
         $view = $this->view();
         $view->assign('version', PANEL_VERSION)
             ->assign('last_daily_job_time', Tools::toDateTime(Config::obtain('last_daily_job_time')))
-            ->assign('db_version', Config::obtain('db_version'));
+            ->assign('db_version', Config::obtain('db_version'))
+            ->assign('available', I18n::trans('admin.system.messages.available', $this->user->locale))
+            ->assign('up_to_date', I18n::trans('admin.system.messages.up_to_date', $this->user->locale))
+            ->assign('new_version', I18n::trans('admin.system.messages.new_version', $this->user->locale));
         return $response->write($view->fetch('admin/system.tpl'));
     }
 
@@ -53,7 +57,7 @@ final class SystemController extends BaseController
                 'timeout' => 3,
             ])->getBody()->getContents();
         } catch (GuzzleException $e) {
-            return ResponseHelper::error($response, '检查更新失败：' . $e->getMessage());
+            return ResponseHelper::error($response, I18n::trans('admin.system.messages.update_failed', $this->user->locale) . ': ' . $e->getMessage());
         }
 
         return $response->withJson([

@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">返利记录</span>
+                                <span class="home-title">{trans key='admin.payback_log.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看用户的返利记录</span>
+                                <span class="home-subtitle">{trans key='admin.payback_log.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>

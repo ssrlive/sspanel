@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">站点概况</span>
+                                <span class="home-title">{trans key='admin.dashboard.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">站点运营状态总览</span>
+                                <span class="home-subtitle">{trans key='admin.dashboard.subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                                         ￥{$today_income}
                                                     </div>
                                                     <div class="text-secondary">
-                                                        本日流水
+                                                        {trans key='admin.dashboard.today_income'}
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,7 +63,7 @@
                                                         ￥{$yesterday_income}
                                                     </div>
                                                     <div class="text-secondary">
-                                                        昨日流水
+                                                        {trans key='admin.dashboard.yesterday_income'}
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                                                         ￥{$this_month_income}
                                                     </div>
                                                     <div class="text-secondary">
-                                                        本月流水
+                                                        {trans key='admin.dashboard.month_income'}
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,7 +105,7 @@
                                                         ￥{$total_income}
                                                     </div>
                                                     <div class="text-secondary">
-                                                        累计流水
+                                                        {trans key='admin.dashboard.total_income'}
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,7 +117,8 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">{$total_user} 位用户的签到情况</h3>
+                                    <h3 class="card-title">{trans key='admin.dashboard.checkin_users' count=$total_user}
+                                    </h3>
                                 </div>
                                 <div class="card-body">
                                     <div id="check-in"></div>
@@ -127,7 +128,8 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">{$total_node} 个服务器的在线情况</h3>
+                                    <h3 class="card-title">
+                                        {trans key='admin.dashboard.online_servers' count=$total_node}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div id="node-online"></div>
@@ -137,7 +139,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">闲置账户</h3>
+                                    <h3 class="card-title">{trans key='admin.dashboard.user_status'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div id="user-inactive"></div>
@@ -147,7 +149,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">流量用量</h3>
+                                    <h3 class="card-title">{trans key='admin.dashboard.traffic_usage'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div id="traffic-usage"></div>
@@ -176,7 +178,7 @@
                             opacity: 1,
                         },
                         series: [{$total_user-$checkin_user}, {$checkin_user-$today_checkin_user}, {$today_checkin_user}],
-                        labels: ["没有签到", "曾经签到", "今日签到"],
+                        labels: ["{trans key='admin.dashboard.no_checkin'}", "{trans key='admin.dashboard.previous_checkin'}", "{trans key='admin.dashboard.today_checkin'}"],
                         grid: {
                             strokeDashArray: 3,
                         },
@@ -217,7 +219,7 @@
                             opacity: 1,
                         },
                         series: [{$alive_node}, {$total_node-$alive_node}],
-                        labels: ["在线", "离线"],
+                        labels: ["{trans key='admin.dashboard.online'}", "{trans key='admin.dashboard.offline'}"],
                         grid: {
                             strokeDashArray: 2,
                         },
@@ -257,7 +259,7 @@
                             opacity: 1,
                         },
                         series: [{$inactive_user}, {$active_user}],
-                        labels: ["闲置账户", "活动账户"],
+                        labels: ["{trans key='admin.dashboard.inactive_users'}", "{trans key='admin.dashboard.active_users'}"],
                         grid: {
                             strokeDashArray: 4,
                         },
@@ -297,7 +299,7 @@
                             opacity: 1,
                         },
                         series: [{$raw_today_traffic}, {$raw_last_traffic}, {$raw_unused_traffic}],
-                        labels: ["今日已用({$today_traffic})", "过去已用({$last_traffic})", "剩余流量({$unused_traffic})"],
+                        labels: ["{trans key='admin.dashboard.today_traffic' value=$today_traffic}", "{trans key='admin.dashboard.previous_traffic' value=$last_traffic}", "{trans key='admin.dashboard.remaining_traffic' value=$unused_traffic}"],
                         grid: {
                             strokeDashArray: 3,
                         },

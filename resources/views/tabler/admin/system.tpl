@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">系统状态</span>
+                                <span class="home-title">{trans key='admin.system.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看系统的运行状态</span>
+                                <span class="home-subtitle">{trans key='admin.system.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -31,17 +31,19 @@
                                 <div class="card-body">
                                     <table class="table table-transparent table-responsive">
                                         <tr>
-                                            <td>NeXT Panel 版本</td>
-                                            <td class="text-end" id="version"><a href="#" id="version_check">{$version}
+                                            <td>{trans key='admin.system.fields.panel_version'}</td>
+                                            <td class="text-end" id="version" data-available="{$available}"
+                                                data-up-to-date="{$up_to_date}" data-new-version="{$new_version}"><a
+                                                    href="#" id="version_check">{$version}
                                                 </a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>数据库版本</td>
+                                            <td>{trans key='admin.system.fields.database_version'}</td>
                                             <td class="text-end">{$db_version}</td>
                                         </tr>
                                         <tr>
-                                            <td>最后一次每日任务执行时间</td>
+                                            <td>{trans key='admin.system.fields.last_daily_job_time'}</td>
                                             <td class="text-end">{$last_daily_job_time}</td>
                                         </tr>
                                     </table>
@@ -53,6 +55,10 @@
             </div>
 
             <script>
+                const availableText = $('#version').data('available');
+                const newVersionText = $('#version').data('new-version');
+                const upToDateText = $('#version').data('up-to-date');
+
                 $('#version_check').click(function() {
                     $.ajax({
                         url: '/admin/system/check_update',
@@ -63,20 +69,22 @@
                                 if (data.is_up_to_date) {
                                     $('.badge').remove();
                                     $('#version').append(
-                                        '<span class="badge bg-green text-green-fg">已是最新版本</span>'
+                                        '<span class="badge bg-green text-green-fg">' +
+                                        upToDateText + '</span>'
                                     );
                                 } else {
                                     $('.badge').remove();
                                     $('#version').append(
-                                        '<span class="badge bg-red text-red-fg">有新版本 ' +
-                                        data.latest_version + ' 可用</span>');
+                                        '<span class="badge bg-red text-red-fg">' +
+                                        newVersionText + ' ' +
+                                        data.latest_version + ' ' + availableText + '</span>');
                                 }
                             } else {
                                 $('#fail-message').text(data.msg);
                                 $('#fail-dialog').modal('show');
                             }
                         }
-                    })
+                    });
                 });
             </script>
 

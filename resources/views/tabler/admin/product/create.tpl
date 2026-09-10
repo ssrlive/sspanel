@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">创建商品</span>
+                                <span class="home-title">{trans key='admin.product.form.create_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">创建各类商品</span>
+                                <span class="home-subtitle">{trans key='admin.product.form.create_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="create-product" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.product.form.save'}
                                 </a>
                             </div>
                         </div>
@@ -37,43 +37,49 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
-                                    <h3 class="card-title">基础信息</h3>
+                                    <h3 class="card-title">{trans key='admin.product.form.basic_info'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">名称</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.name'}</label>
                                         <div class="col">
                                             <input id="name" type="text" class="form-control" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">价格</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.price'}</label>
                                         <div class="col">
                                             <input id="price" type="text" class="form-control" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">库存（-1为不限制）</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.stock'}</label>
                                         <div class="col">
                                             <input id="stock" type="text" class="form-control" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">销售状态</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.product.form.status'}</label>
                                         <div class="col">
                                             <select id="status" class="col form-select">
-                                                <option value="1">正常</option>
-                                                <option value="0">下架</option>
+                                                <option value="1">{trans key='admin.product.form.active'}</option>
+                                                <option value="0">{trans key='admin.product.form.inactive'}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">类型</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.product.form.type'}</label>
                                         <div class="col">
                                             <select id="type" class="col form-select">
-                                                <option value="tabp">时间流量包</option>
-                                                <option value="bandwidth">流量包</option>
-                                                <option value="time">时间包</option>
+                                                <option value="tabp">{trans key='admin.product.form.type_tabp'}</option>
+                                                <option value="bandwidth">
+                                                    {trans key='admin.product.form.type_bandwidth'}</option>
+                                                <option value="time">{trans key='admin.product.form.type_time'}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -83,69 +89,78 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
-                                    <h3 class="card-title">商品内容</h3>
+                                    <h3 class="card-title">{trans key='admin.product.form.product_content'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div id="time_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">商品时长 (天)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.duration'}</label>
                                         <div class="col">
                                             <input id="time" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="class_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">等级</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.class'}</label>
                                         <div class="col">
                                             <input id="class" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="class_time_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">等级时长 (天)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.class_duration'}</label>
                                         <div class="col">
                                             <input id="class_time" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="bandwidth_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">可用流量 (GB)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.bandwidth'}</label>
                                         <div class="col">
                                             <input id="bandwidth" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="node_group_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">用户分组</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.node_group'}</label>
                                         <div class="col">
                                             <input id="node_group" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="speed_limit_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">速率限制 (Mbps)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.speed_limit'}</label>
                                         <div class="col">
                                             <input id="speed_limit" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div id="ip_limit_option" class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">同时连接IP限制</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.product.form.ip_limit'}</label>
                                         <div class="col">
                                             <input id="ip_limit" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="hr-text">
-                                        <span>购买限制</span>
+                                        <span>{trans key='admin.product.form.purchase_limits'}</span>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">用户等级要求</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.product.form.class_required'}</label>
                                         <div class="col">
                                             <input id="class_required" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">用户所在的节点组</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.product.form.node_group_required'}</label>
                                         <div class="col">
                                             <input id="node_group_required" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="row">
-                                            <span class="col">仅限新用户购买</span>
+                                            <span class="col">{trans key='admin.product.form.new_user_required'}</span>
                                             <span class="col-auto">
                                                 <label class="form-check form-check-single form-switch">
                                                     <input id="new_user_required" class="form-check-input"
@@ -222,7 +237,7 @@
                 });
 
                 if (emptyFields.length > 0) {
-                    $("#fail-message").text("请填写所有必要栏位");
+                    $("#fail-message").text("{trans key='admin.product.form.required_fields'}");
                     $("#fail-dialog").modal("show");
                 } else {
                     $.ajax({

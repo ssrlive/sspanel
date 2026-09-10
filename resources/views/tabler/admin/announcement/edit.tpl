@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">编辑公告 #{$ann->id}</span>
+                                <span class="home-title">{trans key='admin.announcement.edit_title' id=$ann->id}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">编辑站点公告</span>
+                                <span class="home-subtitle">{trans key='admin.announcement.edit_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <button id="save" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.announcement.save'}
                                 </button>
                             </div>
                         </div>
@@ -48,19 +48,23 @@
                         <div class="col-md-3 col-sm-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title">选项</h3>
+                                    <h3 class="card-title">{trans key='admin.announcement.options'}</h3>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">状态</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.announcement.fields.status'}</label>
                                         <div class="col">
                                             <select id="status" class="col form-select" value="{$ann->status}">
-                                                <option value="0" {if $ann->status == 0}selected{/if}>未发布</option>
-                                                <option value="1" {if $ann->status == 1}selected{/if}>已发布</option>
-                                                <option value="2" {if $ann->status == 2}selected{/if}>置顶</option>
+                                                <option value="0" {if $ann->status == 0}selected{/if}>
+                                                    {trans key='admin.announcement.status.0'}</option>
+                                                <option value="1" {if $ann->status == 1}selected{/if}>
+                                                    {trans key='admin.announcement.status.1'}</option>
+                                                <option value="2" {if $ann->status == 2}selected{/if}>
+                                                    {trans key='admin.announcement.status.2'}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label">排序</label>
+                                        <label class="form-label">{trans key='admin.announcement.fields.sort'}</label>
                                         <div class="col">
                                             <input id="sort" type="text" class="form-control" value="{$ann->sort}">
                                         </div>

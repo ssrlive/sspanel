@@ -8,6 +8,7 @@ use App\Controllers\BaseController;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Paylist;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -21,15 +22,15 @@ final class InvoiceController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '账单ID',
-            'user_id' => '归属用户',
-            'order_id' => '订单ID',
-            'price' => '账单金额',
-            'status' => '账单状态',
-            'create_time' => '创建时间',
-            'update_time' => '更新时间',
-            'pay_time' => '支付时间',
+            'op' => 'admin.invoice.operation',
+            'id' => 'admin.invoice.invoice_id',
+            'user_id' => 'admin.invoice.submitting_user',
+            'order_id' => 'admin.invoice.related_order_id',
+            'price' => 'admin.invoice.amount',
+            'status' => 'admin.invoice.status',
+            'create_time' => 'admin.invoice.created_at',
+            'update_time' => 'admin.invoice.updated_at',
+            'pay_time' => 'admin.invoice.paid_at',
         ],
     ];
 
@@ -39,7 +40,11 @@ final class InvoiceController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/invoice/index.tpl'));
     }
 
@@ -56,10 +61,10 @@ final class InvoiceController extends BaseController
             $paylist = (new Paylist())->where('invoice_id', $invoice->id)->where('status', 1)->first();
         }
 
-        $invoice->status_text = $invoice->status();
+        $invoice->status_text = $this->translateStatus($invoice->status);
         $invoice->create_time = Tools::toDateTime($invoice->create_time);
         $invoice->update_time = Tools::toDateTime($invoice->update_time);
-        $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
+        $invoice->pay_time = $invoice->pay_time === 0 ? I18n::trans('admin.invoice.unpaid', $this->user->locale) : Tools::toDateTime($invoice->pay_time);
         $invoice_content = json_decode($invoice->content);
 
         $view = $this->view();
@@ -77,7 +82,7 @@ final class InvoiceController extends BaseController
         if (in_array($invoice->status, ['paid_gateway', 'paid_balance', 'paid_admin'])) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '不能标记已经支付的账单',
+                'msg' => I18n::trans('admin.invoice.messages.already_paid', $this->user->locale),
             ]);
         }
 
@@ -86,7 +91,7 @@ final class InvoiceController extends BaseController
         if ($order->status === 'cancelled') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '关联订单已被取消，标记失败',
+                'msg' => I18n::trans('admin.invoice.messages.order_cancelled', $this->user->locale),
             ]);
         }
 
@@ -101,7 +106,7 @@ final class InvoiceController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '成功标记账单为已支付（管理员）',
+            'msg' => I18n::trans('admin.invoice.messages.marked_paid', $this->user->locale),
         ]);
     }
 
@@ -110,15 +115,21 @@ final class InvoiceController extends BaseController
         $invoices = (new Invoice())->orderBy('id', 'desc')->get();
 
         foreach ($invoices as $invoice) {
-            $invoice->op = '<a class="btn btn-primary" href="/admin/invoice/' . $invoice->id . '/view">查看</a>';
-            $invoice->status = $invoice->status();
+            $invoice->op = '<a class="btn btn-primary" href="/admin/invoice/' . $invoice->id . '/view">'
+                . I18n::trans('admin.invoice.view', $this->user->locale) . '</a>';
+            $invoice->status = $this->translateStatus($invoice->status);
             $invoice->create_time = Tools::toDateTime($invoice->create_time);
             $invoice->update_time = Tools::toDateTime($invoice->update_time);
-            $invoice->pay_time = $invoice->pay_time === 0 ? '未支付' : Tools::toDateTime($invoice->pay_time);
+            $invoice->pay_time = $invoice->pay_time === 0 ? I18n::trans('admin.invoice.unpaid', $this->user->locale) : Tools::toDateTime($invoice->pay_time);
         }
 
         return $response->withJson([
             'invoices' => $invoices,
         ]);
+    }
+
+    private function translateStatus(string $status): string
+    {
+        return I18n::trans('admin.invoice.statuses.' . $status, $this->user->locale);
     }
 }

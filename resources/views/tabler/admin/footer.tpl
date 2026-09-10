@@ -5,14 +5,14 @@
             <div class="modal-status bg-success"></div>
             <div class="modal-body text-center py-4">
                 <i class="ti ti-circle-check icon mb-2 text-green icon-lg" style="font-size:3.5rem;"></i>
-                <p id="success-message" class="text-secondary">成功</p>
+                <p id="success-message" class="text-secondary">{trans key='admin.dialog.success'}</p>
             </div>
             <div class="modal-footer">
                 <div class="w-100">
                     <div class="row">
                         <div class="col">
                             <a id="success-confirm" href="" class="btn w-100" data-bs-dismiss="modal">
-                                好
+                                {trans key='admin.dialog.ok'}
                             </a>
                         </div>
                     </div>
@@ -29,14 +29,14 @@
             <div class="modal-status bg-danger"></div>
             <div class="modal-body text-center py-4">
                 <i class="ti ti-circle-x icon mb-2 text-danger icon-lg" style="font-size:3.5rem;"></i>
-                <p id="fail-message" class="text-secondary">失败</p>
+                <p id="fail-message" class="text-secondary">{trans key='admin.dialog.failure'}</p>
             </div>
             <div class="modal-footer">
                 <div class="w-100">
                     <div class="row">
                         <div class="col">
                             <a href="" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                确认
+                                {trans key='admin.dialog.confirm'}
                             </a>
                         </div>
                     </div>
@@ -53,11 +53,11 @@
             <div class="modal-status bg-yellow"></div>
             <div class="modal-body text-center py-4">
                 <i class="ti ti-alert-circle icon mb-2 text-yellow icon-lg" style="font-size:3.5rem;"></i>
-                <p id="notice-message" class="text-secondary">注意</p>
+                <p id="notice-message" class="text-secondary">{trans key='admin.dialog.notice'}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
-                <button id="notice-confirm" type="button" class="btn btn-yellow" data-bs-dismiss="modal">确认</button>
+                <button type="button" class="btn me-auto" data-bs-dismiss="modal">{trans key='admin.dialog.cancel'}</button>
+                <button id="notice-confirm" type="button" class="btn btn-yellow" data-bs-dismiss="modal">{trans key='admin.dialog.confirm'}</button>
             </div>
         </div>
     </div>

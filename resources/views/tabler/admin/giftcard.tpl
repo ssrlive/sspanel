@@ -14,11 +14,11 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">礼品卡</span>
+                                <span class="home-title">{trans key='admin.gift_card.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
                                 <span class="home-subtitle">
-                                    查看并管理礼品卡
+                                    {trans key='admin.gift_card.list_subtitle'}
                                 </span>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#create-dialog">
                                     <i class="icon ti ti-plus"></i>
-                                    创建
+                                    {trans key='admin.gift_card.create'}
                                 </a>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">礼品卡内容</h5>
+                            <h5 class="modal-title">{trans key='admin.gift_card.create_title'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -96,9 +96,10 @@
                             {/foreach}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='admin.gift_card.cancel'}</button>
                             <button id="create-button" onclick="createGiftCard()" type="button" class="btn btn-primary"
-                                data-bs-dismiss="modal">创建
+                                data-bs-dismiss="modal">{trans key='admin.gift_card.create'}
                             </button>
                         </div>
                     </div>
@@ -151,7 +152,7 @@
                 }
 
                 function deleteGiftCard(giftcard_id) {
-                    $('#notice-message').text('确定删除此礼品卡？');
+                    $('#notice-message').text('{trans key="admin.gift_card.confirm_delete"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

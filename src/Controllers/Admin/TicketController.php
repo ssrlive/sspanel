@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\I18n;
 use App\Services\LLM;
 use App\Services\Notification;
 use App\Utils\Env;
@@ -30,13 +31,13 @@ final class TicketController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '工单ID',
-            'title' => '主题',
-            'status' => '工单状态',
-            'type' => '工单类型',
-            'userid' => '提交用户',
-            'datetime' => '创建时间',
+            'op' => 'admin.ticket.fields.operation',
+            'id' => 'admin.ticket.fields.id',
+            'title' => 'admin.ticket.fields.title',
+            'status' => 'admin.ticket.fields.status',
+            'type' => 'admin.ticket.fields.type',
+            'userid' => 'admin.ticket.fields.user',
+            'datetime' => 'admin.ticket.fields.created_at',
         ],
     ];
 
@@ -46,7 +47,11 @@ final class TicketController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/ticket/index.tpl'));
     }
 
@@ -56,13 +61,13 @@ final class TicketController extends BaseController
         $comment = $request->getParam('comment') ?? '';
 
         if ($comment === '') {
-            return ResponseHelper::error($response, '请输入评论内容');
+            return ResponseHelper::error($response, I18n::trans('admin.ticket.messages.comment_required', $this->user->locale));
         }
 
         $ticket = (new Ticket())->where('id', $id)->first();
 
         if ($ticket === null) {
-            return ResponseHelper::error($response, '工单不存在');
+            return ResponseHelper::error($response, I18n::trans('admin.ticket.messages.not_found', $this->user->locale));
         }
 
         $content_old = json_decode($ticket->content, true);
@@ -83,8 +88,10 @@ final class TicketController extends BaseController
         try {
             Notification::notifyUser(
                 (new User())->find($ticket->userid),
-                Env::get('appName') . '-工单被回复',
-                '你好，有人回复了<a href="' . Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
+                Env::get('appName') . ' - ' . I18n::trans('admin.ticket.notifications.replied_subject', $this->user->locale),
+                I18n::trans('admin.ticket.notifications.replied_body', $this->user->locale, [
+                    '%url%' => Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view',
+                ])
             );
         } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');
@@ -99,7 +106,7 @@ final class TicketController extends BaseController
         $ticket = (new Ticket())->where('id', $id)->first();
 
         if ($ticket === null) {
-            return ResponseHelper::error($response, '工单不存在');
+            return ResponseHelper::error($response, I18n::trans('admin.ticket.messages.not_found', $this->user->locale));
         }
 
         $content_old = json_decode($ticket->content, true);
@@ -150,8 +157,10 @@ final class TicketController extends BaseController
         try {
             Notification::notifyUser(
                 (new User())->find($ticket->userid),
-                Env::get('appName') . '-工单被回复',
-                '你好，AI助理回复了<a href="' . Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view">工单</a>，请你查看。'
+                Env::get('appName') . ' - ' . I18n::trans('admin.ticket.notifications.ai_replied_subject', $this->user->locale),
+                I18n::trans('admin.ticket.notifications.ai_replied_body', $this->user->locale, [
+                    '%url%' => Env::get('baseUrl') . '/user/ticket/' . $ticket->id . '/view',
+                ])
             );
         } catch (TelegramSDKException | GuzzleException | ClientExceptionInterface $e) {
             return $response->withHeader('HX-Refresh', 'true');
@@ -196,17 +205,17 @@ final class TicketController extends BaseController
         $ticket = (new Ticket())->where('id', '=', $id)->first();
 
         if ($ticket === null) {
-            return ResponseHelper::error($response, '工单不存在');
+            return ResponseHelper::error($response, I18n::trans('admin.ticket.messages.not_found', $this->user->locale));
         }
 
         if ($ticket->status === 'closed') {
-            return ResponseHelper::error($response, '工单已关闭，无需重复操作');
+            return ResponseHelper::error($response, I18n::trans('admin.ticket.messages.already_closed', $this->user->locale));
         }
 
         $ticket->status = 'closed';
         $ticket->save();
 
-        return ResponseHelper::success($response, '工单关闭成功');
+        return ResponseHelper::success($response, I18n::trans('admin.ticket.messages.closed', $this->user->locale));
     }
 
     /**
@@ -217,7 +226,7 @@ final class TicketController extends BaseController
         $id = $args['id'];
         (new Ticket())->where('id', '=', $id)->delete();
 
-        return ResponseHelper::success($response, '工单删除成功');
+        return ResponseHelper::success($response, I18n::trans('admin.ticket.messages.deleted', $this->user->locale));
     }
 
     /**
@@ -229,16 +238,16 @@ final class TicketController extends BaseController
 
         foreach ($tickets as $ticket) {
             $ticket->op = '<button class="btn btn-red" id="delete-ticket" 
-            onclick="deleteTicket(' . $ticket->id . ')">删除</button>';
+            onclick="deleteTicket(' . $ticket->id . ')">' . I18n::trans('admin.ticket.actions.delete', $this->user->locale) . '</button>';
 
             if ($ticket->status !== 'closed') {
                 $ticket->op .= '
                 <button class="btn btn-orange" id="close-ticket" 
-                onclick="closeTicket(' . $ticket->id . ')">关闭</button>';
+                onclick="closeTicket(' . $ticket->id . ')">' . I18n::trans('admin.ticket.actions.close', $this->user->locale) . '</button>';
             }
 
             $ticket->op .= '
-            <a class="btn btn-primary" href="/admin/ticket/' . $ticket->id . '/view">查看</a>';
+            <a class="btn btn-primary" href="/admin/ticket/' . $ticket->id . '/view">' . I18n::trans('admin.ticket.actions.view', $this->user->locale) . '</a>';
             $ticket->status = $ticket->status();
             $ticket->type = $ticket->type();
             $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);

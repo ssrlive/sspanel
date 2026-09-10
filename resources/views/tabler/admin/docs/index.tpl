@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">文档管理</span>
+                                <span class="home-title">{trans key='admin.docs.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看并管理站点中的文档</span>
+                                <span class="home-subtitle">{trans key='admin.docs.list_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="/admin/docs/create" class="btn btn-primary">
                                     <i class="icon ti ti-plus"></i>
-                                    创建
+                                    {trans key='admin.docs.create'}
                                 </a>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                 }
 
                 function deleteDoc(doc_id) {
-                    $('#notice-message').text('确定删除此文档？');
+                    $('#notice-message').text('{trans key="admin.docs.confirm_delete"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

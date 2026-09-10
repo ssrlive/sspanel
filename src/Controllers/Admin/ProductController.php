@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Product;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -19,16 +20,16 @@ final class ProductController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '商品ID',
-            'type' => '类型',
-            'name' => '名称',
-            'price' => '售价',
-            'status' => '销售状态',
-            'create_time' => '创建时间',
-            'update_time' => '更新时间',
-            'sale_count' => '累计销售',
-            'stock' => '库存',
+            'op' => 'admin.product.fields.operation',
+            'id' => 'admin.product.fields.id',
+            'type' => 'admin.product.fields.type',
+            'name' => 'admin.product.fields.name',
+            'price' => 'admin.product.fields.price',
+            'status' => 'admin.product.fields.status',
+            'create_time' => 'admin.product.fields.created_at',
+            'update_time' => 'admin.product.fields.updated_at',
+            'sale_count' => 'admin.product.fields.sale_count',
+            'stock' => 'admin.product.fields.stock',
         ],
     ];
 
@@ -49,7 +50,7 @@ final class ProductController extends BaseController
         'node_group_required',
     ];
 
-    private static string $invalid_data_msg = '无效商品数据';
+    private static string $invalid_data_key = 'admin.product.messages.invalid_data';
 
     /**
      * @throws Exception
@@ -57,7 +58,11 @@ final class ProductController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/product/index.tpl'));
     }
 
@@ -123,7 +128,7 @@ final class ProductController extends BaseController
         if ($price < 0) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => self::$invalid_data_msg,
+                'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
             ]);
         }
 
@@ -131,7 +136,7 @@ final class ProductController extends BaseController
             if ($time <= 0 || $class_time <= 0 || $bandwidth <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -148,7 +153,7 @@ final class ProductController extends BaseController
             if ($time <= 0 || $class_time === '' || $class_time <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -164,7 +169,7 @@ final class ProductController extends BaseController
             if ($bandwidth <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -174,7 +179,7 @@ final class ProductController extends BaseController
         } else {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => self::$invalid_data_msg,
+                'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
             ]);
         }
 
@@ -198,7 +203,7 @@ final class ProductController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功',
+            'msg' => I18n::trans('admin.product.messages.created', $this->user->locale),
         ]);
     }
 
@@ -229,7 +234,7 @@ final class ProductController extends BaseController
         if ($price < 0) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => self::$invalid_data_msg,
+                'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
             ]);
         }
 
@@ -237,7 +242,7 @@ final class ProductController extends BaseController
             if ($time <= 0 || $class_time <= 0 || $bandwidth <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -254,7 +259,7 @@ final class ProductController extends BaseController
             if ($time <= 0 || $class_time <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -270,7 +275,7 @@ final class ProductController extends BaseController
             if ($bandwidth <= 0) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => self::$invalid_data_msg,
+                    'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
                 ]);
             }
 
@@ -280,7 +285,7 @@ final class ProductController extends BaseController
         } else {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => self::$invalid_data_msg,
+                'msg' => I18n::trans(self::$invalid_data_key, $this->user->locale),
             ]);
         }
 
@@ -302,7 +307,7 @@ final class ProductController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '更新成功',
+            'msg' => I18n::trans('admin.product.messages.updated', $this->user->locale),
         ]);
     }
 
@@ -313,7 +318,7 @@ final class ProductController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.product.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -334,7 +339,7 @@ final class ProductController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '复制成功',
+            'msg' => I18n::trans('admin.product.messages.copied', $this->user->locale),
         ]);
     }
 
@@ -344,15 +349,21 @@ final class ProductController extends BaseController
 
         foreach ($products as $product) {
             $product->op = '<button class="btn btn-red" id="delete-product-' . $product->id . '"
-             onclick="deleteProduct(' . $product->id . ')">删除</button>
+             onclick="deleteProduct(' . $product->id . ')">' . I18n::trans('admin.product.actions.delete', $this->user->locale) . '</button>
             <button class="btn btn-orange" id="copy-product-' . $product->id . '"
-             onclick="copyProduct(' . $product->id . ')">复制</button>
-            <a class="btn btn-primary" href="/admin/product/' . $product->id . '/edit">编辑</a>';
-            $product->type = $product->type();
-            $product->status = $product->status();
+             onclick="copyProduct(' . $product->id . ')">' . I18n::trans('admin.product.actions.copy', $this->user->locale) . '</button>
+            <a class="btn btn-primary" href="/admin/product/' . $product->id . '/edit">' . I18n::trans('admin.product.actions.edit', $this->user->locale) . '</a>';
+            $product->type = match ($product->type) {
+                'tabp' => I18n::trans('admin.product.form.type_tabp', $this->user->locale),
+                'time' => I18n::trans('admin.product.form.type_time', $this->user->locale),
+                'bandwidth' => I18n::trans('admin.product.form.type_bandwidth', $this->user->locale),
+                'topup' => I18n::trans('admin.product.form.type_topup', $this->user->locale),
+                default => I18n::trans('admin.product.form.type_other', $this->user->locale),
+            };
+            $product->status = I18n::trans($product->status ? 'admin.product.status.active' : 'admin.product.status.inactive', $this->user->locale);
             $product->create_time = Tools::toDateTime($product->create_time);
             $product->update_time = Tools::toDateTime($product->update_time);
-            $product->stock = $product->stock();
+            $product->stock = $product->stock < 0 ? I18n::trans('admin.product.stock.unlimited', $this->user->locale) : $product->stock;
         }
 
         return $response->withJson([

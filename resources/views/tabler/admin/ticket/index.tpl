@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">工单列表</span>
+                                <span class="home-title">{trans key='admin.ticket.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看并回复用户工单</span>
+                                <span class="home-subtitle">{trans key='admin.ticket.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 }
 
                 function closeTicket(ticket_id) {
-                    $('#notice-message').text('确定关闭此工单？');
+                    $('#notice-message').text('{trans key="admin.ticket.confirm_close"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({
@@ -90,7 +90,7 @@
                 }
 
                 function deleteTicket(ticket_id) {
-                    $('#notice-message').text('确定删除此工单？');
+                    $('#notice-message').text('{trans key="admin.ticket.confirm_delete"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

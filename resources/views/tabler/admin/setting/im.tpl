@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">IM 设置</span>
+                                <span class="home-title">{trans key='admin.im.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">管理站点的 IM 集成设置</span>
+                                <span class="home-subtitle">{trans key='admin.im.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.im.save'}
                                 </a>
                             </div>
                         </div>
@@ -40,16 +40,19 @@
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
                                             <a href="#notification" class="nav-link active"
-                                                data-bs-toggle="tab">Notification</a>
+                                                data-bs-toggle="tab">{trans key='admin.im.tabs.notification'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#telegram" class="nav-link" data-bs-toggle="tab">Telegram Bot</a>
+                                            <a href="#telegram" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.im.tabs.telegram'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#discord" class="nav-link" data-bs-toggle="tab">Discord Bot</a>
+                                            <a href="#discord" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.im.tabs.discord'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#slack" class="nav-link" data-bs-toggle="tab">Slack Bot</a>
+                                            <a href="#slack" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.im.tabs.slack'}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -59,7 +62,7 @@
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node Addition
+                                                        {trans key='admin.im.fields.add_node'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_add_node"
@@ -67,18 +70,18 @@
                                                             value="{$settings['im_bot_group_notify_add_node']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_add_node']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_add_node']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node Update
+                                                        {trans key='admin.im.fields.update_node'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_update_node"
@@ -86,18 +89,18 @@
                                                             value="{$settings['im_bot_group_notify_update_node']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_update_node']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_update_node']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node Deletion
+                                                        {trans key='admin.im.fields.delete_node'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_delete_node"
@@ -105,18 +108,18 @@
                                                             value="{$settings['im_bot_group_notify_delete_node']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_delete_node']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_delete_node']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node GFWed
+                                                        {trans key='admin.im.fields.node_gfwed'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_node_gfwed"
@@ -124,18 +127,18 @@
                                                             value="{$settings['im_bot_group_notify_node_gfwed']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_node_gfwed']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node UnGFWed
+                                                        {trans key='admin.im.fields.node_ungfwed'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_node_ungfwed"
@@ -143,18 +146,18 @@
                                                             value="{$settings['im_bot_group_notify_node_ungfwed']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_node_ungfwed']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node Online
+                                                        {trans key='admin.im.fields.node_online'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_node_online"
@@ -162,18 +165,18 @@
                                                             value="{$settings['im_bot_group_notify_node_online']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_node_online']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_node_online']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Node Offline
+                                                        {trans key='admin.im.fields.node_offline'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_node_offline"
@@ -181,18 +184,18 @@
                                                             value="{$settings['im_bot_group_notify_node_offline']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_node_offline']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_node_offline']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Daily Job
+                                                        {trans key='admin.im.fields.daily_job'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_daily_job"
@@ -200,36 +203,36 @@
                                                             value="{$settings['im_bot_group_notify_daily_job']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_daily_job']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_daily_job']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        System Dairy
+                                                        {trans key='admin.im.fields.diary'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_diary" class="col form-select"
                                                             value="{$settings['im_bot_group_notify_diary']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_diary']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_diary']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Announcement Creation
+                                                        {trans key='admin.im.fields.ann_create'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_ann_create"
@@ -237,18 +240,18 @@
                                                             value="{$settings['im_bot_group_notify_ann_create']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_ann_create']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_ann_create']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Announcement Update
+                                                        {trans key='admin.im.fields.ann_update'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="im_bot_group_notify_ann_update"
@@ -256,11 +259,11 @@
                                                             value="{$settings['im_bot_group_notify_ann_update']}">
                                                             <option value="0"
                                                                 {if ! $settings['im_bot_group_notify_ann_update']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['im_bot_group_notify_ann_update']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -281,7 +284,7 @@
                                                             hx-swap="none" hx-vals='js:{
                                                             bot_token: document.getElementById("telegram_token").value
                                                         }'>
-                                                            Set Webhook
+                                                            {trans key='admin.im.actions.set_webhook'}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -296,7 +299,7 @@
                                                         <button class="btn btn-primary"
                                                             hx-post="/admin/setting/im/reset_webhook_token/telegram"
                                                             hx-swap="none">
-                                                            Reset Webhook Token
+                                                            {trans key='admin.im.actions.reset_webhook'}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -317,7 +320,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Telegram group notify
+                                                        {trans key='admin.im.fields.telegram_group_notify'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="enable_telegram_group_notify"
@@ -325,99 +328,103 @@
                                                             value="{$settings['enable_telegram_group_notify']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_telegram_group_notify']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_telegram_group_notify']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">解绑 Telegram
-                                                        账户后自动踢出群组</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.telegram_unbind_kick'}</label>
                                                     <div class="col">
                                                         <select id="telegram_unbind_kick_member" class="col form-select"
                                                             value="{$settings['telegram_unbind_kick_member']}">
                                                             <option value="0"
                                                                 {if ! $settings['telegram_unbind_kick_member']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['telegram_unbind_kick_member']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">仅允许已绑定 Telegram
-                                                        账户的用户加入群组</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.telegram_group_bound'}</label>
                                                     <div class="col">
                                                         <select id="telegram_group_bound_user" class="col form-select"
                                                             value="{$settings['telegram_group_bound_user']}">
                                                             <option value="0"
                                                                 {if ! $settings['telegram_group_bound_user']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['telegram_group_bound_user']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">Telegram
-                                                        机器人发送欢迎消息</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.welcome_message'}</label>
                                                     <div class="col">
                                                         <select id="enable_welcome_message" class="col form-select"
                                                             value="{$settings['enable_welcome_message']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_welcome_message']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
-                                                                {if $settings['enable_welcome_message']}selected{/if}>开启
+                                                                {if $settings['enable_welcome_message']}selected{/if}>
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">Telegram
-                                                        机器人在群组中不回应</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.group_quiet'}</label>
                                                     <div class="col">
                                                         <select id="telegram_group_quiet" class="col form-select"
                                                             value="{$settings['telegram_group_quiet']}">
                                                             <option value="0"
-                                                                {if ! $settings['telegram_group_quiet']}selected{/if}>关闭
+                                                                {if ! $settings['telegram_group_quiet']}selected{/if}>
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
-                                                                {if $settings['telegram_group_quiet']}selected{/if}>开启
+                                                                {if $settings['telegram_group_quiet']}selected{/if}>
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">允许 Bot
-                                                        加入下方配置之外的群组</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.allow_new_groups'}</label>
                                                     <div class="col">
                                                         <select id="allow_to_join_new_groups" class="col form-select"
                                                             value="{$settings['allow_to_join_new_groups']}">
                                                             <option value="0"
                                                                 {if ! $settings['allow_to_join_new_groups']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['allow_to_join_new_groups']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">允许加入的群组 ID</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.allowed_group_ids'}</label>
                                                     <div class="col">
                                                         <input id="group_id_allowed_to_join" type="text"
                                                             class="form-control"
@@ -425,25 +432,25 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">允许任意未知的命令触发 /help
-                                                        的回复</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.help_any_command'}</label>
                                                     <div class="col">
                                                         <select id="help_any_command" class="col form-select"
                                                             value="{$settings['help_any_command']}">
                                                             <option value="0"
                                                                 {if ! $settings['help_any_command']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['help_any_command']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">Telegram Chat
-                                                        ID(Group/DM)</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.im.fields.chat_id'}</label>
                                                     <input type="text" class="form-control" id="telegram_chat_id"
                                                         value="">
                                                     <div class="row my-3">
@@ -451,7 +458,7 @@
                                                             <button class="btn btn-primary"
                                                                 hx-post="/admin/setting/test/telegram" hx-swap="none"
                                                                 hx-vals='js:{ telegram_chat_id: document.getElementById("telegram_chat_id").value }'>
-                                                                Send Test Message
+                                                                {trans key='admin.im.actions.send_test'}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -499,7 +506,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Discord channel notify
+                                                        {trans key='admin.im.fields.discord_notify'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="enable_discord_channel_notify"
@@ -507,11 +514,11 @@
                                                             value="{$settings['enable_discord_channel_notify']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_discord_channel_notify']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_discord_channel_notify']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -527,7 +534,7 @@
                                                             <button class="btn btn-primary"
                                                                 hx-post="/admin/setting/test/discord" hx-swap="none"
                                                                 hx-vals='js:{ discord_channel_id: document.getElementById("discord_channel_id").value }'>
-                                                                Send Test Message
+                                                                {trans key='admin.im.actions.send_test'}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -574,18 +581,18 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label class="form-label col-3 col-form-label">
-                                                        Enable Slack channel notify
+                                                        {trans key='admin.im.fields.slack_notify'}
                                                     </label>
                                                     <div class="col">
                                                         <select id="enable_slack_channel_notify" class="col form-select"
                                                             value="{$settings['enable_slack_channel_notify']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_slack_channel_notify']}selected{/if}>
-                                                                False
+                                                                {trans key='admin.im.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_slack_channel_notify']}selected{/if}>
-                                                                True
+                                                                {trans key='admin.im.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -600,7 +607,7 @@
                                                             <button class="btn btn-primary"
                                                                 hx-post="/admin/setting/test/slack" hx-swap="none"
                                                                 hx-vals='js:{ slack_channel_id: document.getElementById("slack_channel_id").value }'>
-                                                                Send Test Message
+                                                                {trans key='admin.im.actions.send_test'}
                                                             </button>
                                                         </div>
                                                     </div>

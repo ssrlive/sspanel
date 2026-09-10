@@ -14,11 +14,11 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">用户列表</span>
+                                <span class="home-title">{trans key='admin.user.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
                                 <span class="home-subtitle">
-                                    系统中所有用户的列表
+                                    {trans key='admin.user.list_subtitle'}
                                 </span>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                                 <button href="#" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#create-dialog">
                                     <i class="icon ti ti-plus"></i>
-                                    创建
+                                    {trans key='admin.user.create'}
                                 </button>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                         <thead>
                                             <tr>
                                                 {foreach $details['field'] as $key => $value}
-                                                    <th>{$value}</th>
+                                                    <th>{trans key=$value}</th>
                                                 {/foreach}
                                             </tr>
                                         </thead>
@@ -60,30 +60,30 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">添加用户</h5>
+                            <h5 class="modal-title">{trans key='admin.user.add_title'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             {foreach $details['create_dialog'] as $from}
                                 {if $from['type'] === 'input'}
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">{$from['info']}</label>
+                                        <label class="form-label col-3 col-form-label">{trans key=$from['info']}</label>
                                         <div class="col">
                                             <input id="{$from['id']}" type="text" class="form-control"
-                                                placeholder="{$from['placeholder']}">
+                                                placeholder="{trans key=$from['placeholder']}">
                                         </div>
                                     </div>
                                 {/if}
                                 {if $from['type'] === 'textarea'}
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">{$from['info']}</label>
+                                        <label class="form-label col-3 col-form-label">{trans key=$from['info']}</label>
                                         <textarea id="{$from['id']}" class="col form-control" rows="{$from['rows']}"
-                                            placeholder="{$from['placeholder']}"></textarea>
+                                            placeholder="{trans key=$from['placeholder']}"></textarea>
                                     </div>
                                 {/if}
                                 {if $from['type'] === 'select'}
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">{$from['info']}</label>
+                                        <label class="form-label col-3 col-form-label">{trans key=$from['info']}</label>
                                         <div class="col">
                                             <select id="{$from['id']}" class="col form-select">
                                                 {foreach $from['select'] as $key => $value}
@@ -96,8 +96,10 @@
                             {/foreach}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
-                            <button id="create-button" type="button" class="btn btn-primary" data-bs-dismiss="modal">添加
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='admin.dialog.cancel'}</button>
+                            <button id="create-button" type="button" class="btn btn-primary"
+                                data-bs-dismiss="modal">{trans key='admin.user.add'}
                             </button>
                         </div>
                     </div>
@@ -150,7 +152,7 @@
                 });
 
                 function deleteUser(user_id) {
-                    $('#notice-message').text('确定删除此用户？');
+                    $('#notice-message').text('{trans key='admin.user.confirm_delete'}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

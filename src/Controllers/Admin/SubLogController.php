@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\SubscribeLog;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use MaxMind\Db\Reader\InvalidDatabaseException;
@@ -17,13 +18,13 @@ final class SubLogController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'user_id' => '用户ID',
-            'type' => '获取的订阅类型',
-            'request_ip' => '请求IP',
-            'location' => 'IP归属地',
-            'request_time' => '请求时间',
-            'request_user_agent' => '客户端标识符',
+            'id' => 'admin.sub_log.fields.event_id',
+            'user_id' => 'admin.sub_log.fields.user_id',
+            'type' => 'admin.sub_log.fields.type',
+            'request_ip' => 'admin.sub_log.fields.request_ip',
+            'location' => 'admin.sub_log.fields.location',
+            'request_time' => 'admin.sub_log.fields.request_time',
+            'request_user_agent' => 'admin.sub_log.fields.request_user_agent',
         ],
     ];
 
@@ -35,7 +36,11 @@ final class SubLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/sub.tpl'));
     }
 

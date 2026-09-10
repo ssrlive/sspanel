@@ -6,25 +6,27 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\SysLog;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Smarty\Exception;
+use function in_array;
 use function strlen;
 
 final class SysLogController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '事件ID',
-            'user_id' => '触发用户',
-            'ip' => '触发IP',
-            'message' => '日志内容',
-            'level' => '日志等级',
-            'channel' => '日志类别',
-            'datetime' => '记录时间',
+            'op' => 'admin.syslog.fields.operation',
+            'id' => 'admin.syslog.fields.event_id',
+            'user_id' => 'admin.syslog.fields.trigger_user',
+            'ip' => 'admin.syslog.fields.trigger_ip',
+            'message' => 'admin.syslog.fields.message',
+            'level' => 'admin.syslog.fields.level',
+            'channel' => 'admin.syslog.fields.channel',
+            'datetime' => 'admin.syslog.fields.datetime',
         ],
     ];
 
@@ -36,7 +38,11 @@ final class SysLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/syslog/index.tpl'));
     }
 
@@ -55,7 +61,7 @@ final class SysLogController extends BaseController
 
         $syslog->level_text = $syslog->level();
         $syslog->context = json_decode($syslog->context);
-        $syslog->channel_text = $syslog->channel();
+        $syslog->channel_text = I18n::trans('admin.syslog.channels.' . $syslog->channel, $this->user->locale);
         $syslog->datetime = Tools::toDateTime($syslog->datetime);
 
         $view = $this->view();
@@ -96,12 +102,13 @@ final class SysLogController extends BaseController
         $syslogs = $syslog->paginate($length, '*', '', $page);
 
         foreach ($syslogs as $log) {
-            $log->op =
-                '<a class="btn btn-primary" href="/admin/syslog/' . $log->id . '/view">查看</a>';
+            $log->op = '<a class="btn btn-primary" href="/admin/syslog/' . $log->id . '/view">'
+                . I18n::trans('admin.syslog.actions.view', $this->user->locale) . '</a>';
             $log->message = strlen($log->message) > 25 ?
                 substr($log->message, 0, 25) . '...' : $log->message;
             $log->level = $log->level();
-            $log->channel = $log->channel();
+            $channel = in_array($log->channel, ['cron', 'sub', 'auth', 'user', 'admin'], true) ? $log->channel : 'unknown';
+            $log->channel = I18n::trans('admin.syslog.channels.' . $channel, $this->user->locale);
             $log->datetime = Tools::toDateTime($log->datetime);
         }
 

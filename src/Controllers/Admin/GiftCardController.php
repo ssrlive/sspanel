@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\GiftCard;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -18,38 +19,38 @@ final class GiftCardController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '礼品卡ID',
-            'card' => '卡号',
-            'balance' => '面值',
-            'create_time' => '创建时间',
-            'status' => '使用状态',
-            'use_time' => '使用时间',
-            'use_user' => '使用用户',
+            'op' => 'admin.gift_card.fields.operation',
+            'id' => 'admin.gift_card.fields.id',
+            'card' => 'admin.gift_card.fields.card',
+            'balance' => 'admin.gift_card.fields.balance',
+            'create_time' => 'admin.gift_card.fields.created_at',
+            'status' => 'admin.gift_card.fields.status',
+            'use_time' => 'admin.gift_card.fields.used_at',
+            'use_user' => 'admin.gift_card.fields.used_by',
         ],
         'create_dialog' => [
             [
                 'id' => 'card_number',
-                'info' => '创建数量',
+                'info' => 'admin.gift_card.fields.quantity',
                 'type' => 'input',
                 'placeholder' => '',
             ],
             [
                 'id' => 'card_value',
-                'info' => '礼品卡面值',
+                'info' => 'admin.gift_card.fields.card_value',
                 'type' => 'input',
                 'placeholder' => '',
             ],
             [
                 'id' => 'card_length',
-                'info' => '礼品卡长度',
+                'info' => 'admin.gift_card.fields.card_length',
                 'type' => 'select',
                 'select' => [
-                    '12' => '12位',
-                    '18' => '18位',
-                    '24' => '24位',
-                    '30' => '30位',
-                    '36' => '36位',
+                    '12' => '12',
+                    '18' => '18',
+                    '24' => '24',
+                    '30' => '30',
+                    '36' => '36',
                 ],
             ],
         ],
@@ -61,7 +62,15 @@ final class GiftCardController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        foreach ($details['create_dialog'] as &$detail) {
+            $detail['info'] = I18n::trans($detail['info'], $this->user->locale);
+        }
+        unset($detail);
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/giftcard.tpl'));
     }
 
@@ -75,21 +84,21 @@ final class GiftCardController extends BaseController
         if ($card_number === '' || $card_number <= 0) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '生成数量不能为空或小于0',
+                'msg' => I18n::trans('admin.gift_card.messages.quantity_invalid', $this->user->locale),
             ]);
         }
 
         if ($card_value === '' || $card_value <= 0) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '礼品卡面值不能为空或小于0',
+                'msg' => I18n::trans('admin.gift_card.messages.value_invalid', $this->user->locale),
             ]);
         }
 
         if ($card_length === '' || $card_length <= 0) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '礼品卡长度不能为空或小于0',
+                'msg' => I18n::trans('admin.gift_card.messages.length_invalid', $this->user->locale),
             ]);
         }
 
@@ -109,7 +118,7 @@ final class GiftCardController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功' . PHP_EOL . $card_added,
+            'msg' => I18n::trans('admin.gift_card.messages.created', $this->user->locale) . PHP_EOL . $card_added,
         ]);
     }
 
@@ -120,7 +129,7 @@ final class GiftCardController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.gift_card.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -130,8 +139,8 @@ final class GiftCardController extends BaseController
 
         foreach ($giftcards as $giftcard) {
             $giftcard->op = '<button class="btn btn-red" id="delete-gift-card-' . $giftcard->id . '" 
-        onclick="deleteGiftCard(' . $giftcard->id . ')">删除</button>';
-            $giftcard->status = $giftcard->status();
+            onclick="deleteGiftCard(' . $giftcard->id . ')">' . I18n::trans('admin.gift_card.actions.delete', $this->user->locale) . '</button>';
+            $giftcard->status = I18n::trans('admin.gift_card.status.' . $giftcard->status, $this->user->locale);
             $giftcard->create_time = Tools::toDateTime((int) $giftcard->create_time);
             $giftcard->use_time = Tools::toDateTime((int) $giftcard->use_time);
         }

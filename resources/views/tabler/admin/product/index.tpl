@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">商品列表</span>
+                                <span class="home-title">{trans key='admin.product.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">在这里管理商店商品</span>
+                                <span class="home-subtitle">{trans key='admin.product.list_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="/admin/product/create" class="btn btn-primary">
                                     <i class="icon ti ti-plus"></i>
-                                    添加
+                                    {trans key='admin.product.create'}
                                 </a>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                 }
 
                 function deleteProduct(product_id) {
-                    $('#notice-message').text('确定删除此产品？');
+                    $('#notice-message').text('{trans key="admin.product.confirm_delete"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({
@@ -98,7 +98,7 @@
                 }
 
                 function copyProduct(product_id) {
-                    $('#notice-message').text('确定复制此产品？');
+                    $('#notice-message').text('{trans key="admin.product.confirm_copy"}');
                     $('#notice-dialog').modal('show');
                     $('#notice-confirm').off('click').on('click', function() {
                         $.ajax({

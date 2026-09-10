@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Payback;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -16,15 +17,15 @@ final class PaybackController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'total' => '原始金额',
-            'userid' => '发起用户ID',
-            'user_name' => '发起用户名',
-            'ref_by' => '获利用户ID',
-            'ref_user_name' => '获利用户名',
-            'ref_get' => '获利金额',
-            'invoice_id' => '账单ID',
-            'datetime' => '时间',
+            'id' => 'admin.payback_log.fields.event_id',
+            'total' => 'admin.payback_log.fields.total',
+            'userid' => 'admin.payback_log.fields.user_id',
+            'user_name' => 'admin.payback_log.fields.user_name',
+            'ref_by' => 'admin.payback_log.fields.ref_user_id',
+            'ref_user_name' => 'admin.payback_log.fields.ref_user_name',
+            'ref_get' => 'admin.payback_log.fields.ref_amount',
+            'invoice_id' => 'admin.payback_log.fields.invoice_id',
+            'datetime' => 'admin.payback_log.fields.datetime',
         ],
     ];
 
@@ -36,7 +37,11 @@ final class PaybackController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/payback.tpl'));
     }
 

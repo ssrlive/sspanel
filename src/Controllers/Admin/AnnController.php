@@ -9,6 +9,7 @@ use App\Models\Ann;
 use App\Models\Config;
 use App\Models\EmailQueue;
 use App\Models\User;
+use App\Services\I18n;
 use App\Services\Notification;
 use App\Utils\Env;
 use App\Utils\Tools;
@@ -29,12 +30,12 @@ final class AnnController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => 'ID',
-            'status' => '状态',
-            'sort' => '排序',
-            'date' => '日期',
-            'content' => '内容（节选）',
+            'op' => 'admin.announcement.fields.operation',
+            'id' => 'admin.announcement.fields.id',
+            'status' => 'admin.announcement.fields.status',
+            'sort' => 'admin.announcement.fields.sort',
+            'date' => 'admin.announcement.fields.date',
+            'content' => 'admin.announcement.fields.content',
         ],
     ];
 
@@ -51,7 +52,11 @@ final class AnnController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/announcement/index.tpl'));
     }
 
@@ -81,7 +86,7 @@ final class AnnController extends BaseController
         if ($content === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '内容不能为空',
+                'msg' => I18n::trans('admin.announcement.messages.content_required', $this->user->locale),
             ]);
         }
 
@@ -94,7 +99,7 @@ final class AnnController extends BaseController
         if (! $ann->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '公告保存失败',
+                'msg' => I18n::trans('admin.announcement.messages.create_failed', $this->user->locale),
             ]);
         }
 
@@ -102,7 +107,7 @@ final class AnnController extends BaseController
             $users = (new User())->where('class', '>=', $email_notify_class)
                 ->where('is_banned', '=', 0)
                 ->get();
-            $subject = Env::get('appName') . ' - 新公告发布';
+            $subject = Env::get('appName') . ' - ' . I18n::trans('admin.announcement.messages.new_subject', $this->user->locale);
 
             foreach ($users as $user) {
                 (new EmailQueue())->add(
@@ -122,18 +127,22 @@ final class AnnController extends BaseController
             $content = $converter->convert($content);
 
             try {
-                Notification::notifyUserGroup('新公告：' . PHP_EOL . $content);
+                Notification::notifyUserGroup(I18n::trans('admin.announcement.messages.new_notification', $this->user->locale) . PHP_EOL . $content);
             } catch (TelegramSDKException | GuzzleException) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $email_notify === 1 ? '公告添加成功，邮件发送成功，IM Bot 发送失败' : '公告添加成功，IM Bot 发送失败',
+                    'msg' => I18n::trans($email_notify === 1
+                        ? 'admin.announcement.messages.created_email_im_failed'
+                        : 'admin.announcement.messages.created_im_failed', $this->user->locale),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => $email_notify === 1 ? '公告添加成功，邮件发送成功' : '公告添加成功',
+            'msg' => I18n::trans($email_notify === 1
+                ? 'admin.announcement.messages.created_email_sent'
+                : 'admin.announcement.messages.created', $this->user->locale),
         ]);
     }
 
@@ -162,7 +171,7 @@ final class AnnController extends BaseController
         if ($content === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '内容不能为空',
+                'msg' => I18n::trans('admin.announcement.messages.content_required', $this->user->locale),
             ]);
         }
 
@@ -171,7 +180,7 @@ final class AnnController extends BaseController
         if ($ann === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '公告不存在',
+                'msg' => I18n::trans('admin.announcement.messages.not_found', $this->user->locale),
             ]);
         }
 
@@ -183,7 +192,7 @@ final class AnnController extends BaseController
         if (! $ann->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '公告更新失败',
+                'msg' => I18n::trans('admin.announcement.messages.update_failed', $this->user->locale),
             ]);
         }
 
@@ -192,18 +201,18 @@ final class AnnController extends BaseController
             $content = $converter->convert($ann->content);
 
             try {
-                Notification::notifyUserGroup('公告更新：' . PHP_EOL . $content);
+                Notification::notifyUserGroup(I18n::trans('admin.announcement.messages.updated_notification', $this->user->locale) . PHP_EOL . $content);
             } catch (TelegramSDKException | GuzzleException) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => '公告更新成功，IM Bot 发送失败',
+                    'msg' => I18n::trans('admin.announcement.messages.updated_im_failed', $this->user->locale),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '公告更新成功',
+            'msg' => I18n::trans('admin.announcement.messages.updated', $this->user->locale),
         ]);
     }
 
@@ -215,13 +224,13 @@ final class AnnController extends BaseController
         if ((new Ann())->find($args['id'])->delete()) {
             return $response->withJson([
                 'ret' => 1,
-                'msg' => '删除成功',
+                'msg' => I18n::trans('admin.announcement.messages.deleted', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 0,
-            'msg' => '删除失败',
+            'msg' => I18n::trans('admin.announcement.messages.delete_failed', $this->user->locale),
         ]);
     }
 
@@ -234,9 +243,9 @@ final class AnnController extends BaseController
 
         foreach ($anns as $ann) {
             $ann->op = '<button class="btn btn-red" id="delete-announcement-' . $ann->id . '" 
-            onclick="deleteAnn(' . $ann->id . ')">删除</button>
-            <a class="btn btn-primary" href="/admin/announcement/' . $ann->id . '/edit">编辑</a>';
-            $ann->status = $ann->status();
+            onclick="deleteAnn(' . $ann->id . ')">' . I18n::trans('admin.announcement.actions.delete', $this->user->locale) . '</button>
+            <a class="btn btn-primary" href="/admin/announcement/' . $ann->id . '/edit">' . I18n::trans('admin.announcement.actions.edit', $this->user->locale) . '</a>';
+            $ann->status = I18n::trans('admin.announcement.status.' . $ann->status, $this->user->locale);
             $ann->content = strlen($ann->content) > 40 ? mb_substr(strip_tags($ann->content), 0, 40, 'UTF-8') . '...' : $ann->content;
         }
 

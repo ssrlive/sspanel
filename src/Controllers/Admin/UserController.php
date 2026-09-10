@@ -21,45 +21,45 @@ final class UserController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '用户ID',
-            'user_name' => '昵称',
-            'email' => '邮箱',
-            'money' => '余额',
-            'ref_by' => '邀请人',
-            'transfer_enable' => '流量限制',
-            'transfer_used' => '当期用量',
-            'class' => '等级',
-            'is_admin' => '是否管理员',
-            'is_banned' => '是否封禁',
-            'is_inactive' => '是否闲置',
-            'reg_date' => '注册时间',
-            'class_expire' => '等级过期',
+            'op' => 'admin.user.fields.operation',
+            'id' => 'admin.user.fields.id',
+            'user_name' => 'admin.user.fields.nickname',
+            'email' => 'admin.user.fields.email',
+            'money' => 'admin.user.fields.balance',
+            'ref_by' => 'admin.user.fields.referrer',
+            'transfer_enable' => 'admin.user.fields.traffic_limit',
+            'transfer_used' => 'admin.user.fields.current_usage',
+            'class' => 'admin.user.fields.class',
+            'is_admin' => 'admin.user.fields.is_admin',
+            'is_banned' => 'admin.user.fields.is_banned',
+            'is_inactive' => 'admin.user.fields.is_inactive',
+            'reg_date' => 'admin.user.fields.registered_at',
+            'class_expire' => 'admin.user.fields.class_expires',
         ],
         'create_dialog' => [
             [
                 'id' => 'email',
-                'info' => '登录邮箱',
+                'info' => 'admin.user.fields.login_email',
                 'type' => 'input',
                 'placeholder' => '',
             ],
             [
                 'id' => 'password',
-                'info' => '登录密码',
+                'info' => 'admin.user.fields.login_password',
                 'type' => 'input',
-                'placeholder' => '留空则随机生成',
+                'placeholder' => 'admin.user.placeholders.random_password',
             ],
             [
                 'id' => 'ref_by',
-                'info' => '邀请人',
+                'info' => 'admin.user.fields.referrer',
                 'type' => 'input',
-                'placeholder' => '邀请人的用户id，可留空',
+                'placeholder' => 'admin.user.placeholders.referrer',
             ],
             [
                 'id' => 'balance',
-                'info' => '账户余额',
+                'info' => 'admin.user.fields.balance',
                 'type' => 'input',
-                'placeholder' => '-1为按默认设置，其他为指定值',
+                'placeholder' => 'admin.user.placeholders.balance',
             ],
         ],
     ];
@@ -108,7 +108,7 @@ final class UserController extends BaseController
         if ($email === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '邮箱不能为空',
+                'msg' => I18n::trans('admin.user.messages.email_required', $this->user->locale),
             ]);
         }
 
@@ -117,7 +117,7 @@ final class UserController extends BaseController
         if ($exist !== null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '邮箱已存在',
+                'msg' => I18n::trans('admin.user.messages.email_exists', $this->user->locale),
             ]);
         }
 
@@ -150,7 +150,7 @@ final class UserController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功，用户邮箱：' . $email . ' 密码：' . $password,
+            'msg' => I18n::trans('admin.user.messages.created', $this->user->locale, ['email' => $email, 'password' => $password]),
         ]);
     }
 
@@ -192,7 +192,7 @@ final class UserController extends BaseController
         ) {
             $money = (float) $request->getParam('money');
             $diff = $money - $user->money;
-            $remark = ($diff > 0 ? '管理员添加余额' : '管理员扣除余额');
+            $remark = ($diff > 0 ? I18n::trans('admin.user.messages.balance_added', $this->user->locale) : I18n::trans('admin.user.messages.balance_deducted', $this->user->locale));
             (new UserMoneyLog())->add($id, (float) $user->money, $money, $diff, $remark);
             $user->money = $money;
         }
@@ -221,13 +221,13 @@ final class UserController extends BaseController
         if (! $user->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '修改失败',
+                'msg' => I18n::trans('admin.user.messages.update_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '修改成功',
+            'msg' => I18n::trans('admin.user.messages.updated', $this->user->locale),
         ]);
     }
 
@@ -239,13 +239,13 @@ final class UserController extends BaseController
         if (! $user->kill()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '删除失败',
+                'msg' => I18n::trans('admin.user.messages.delete_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.user.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -255,13 +255,13 @@ final class UserController extends BaseController
 
         foreach ($users as $user) {
             $user->op = '<button class="btn btn-red" id="delete-user-' . $user->id . '" 
-            onclick="deleteUser(' . $user->id . ')">删除</button>
-            <a class="btn btn-primary" href="/admin/user/' . $user->id . '/edit">编辑</a>';
+            onclick="deleteUser(' . $user->id . ')">' . I18n::trans('admin.user.delete', $this->user->locale) . '</button>
+            <a class="btn btn-primary" href="/admin/user/' . $user->id . '/edit">' . I18n::trans('admin.user.edit', $this->user->locale) . '</a>';
             $user->transfer_enable = $user->enableTraffic();
             $user->transfer_used = $user->usedTraffic();
-            $user->is_admin = $user->is_admin === 1 ? '是' : '否';
-            $user->is_banned = $user->is_banned === 1 ? '是' : '否';
-            $user->is_inactive = $user->is_inactive === 1 ? '是' : '否';
+            $user->is_admin = $user->is_admin === 1 ? I18n::trans('admin.user.options.yes', $this->user->locale) : I18n::trans('admin.user.options.no', $this->user->locale);
+            $user->is_banned = $user->is_banned === 1 ? I18n::trans('admin.user.options.yes', $this->user->locale) : I18n::trans('admin.user.options.no', $this->user->locale);
+            $user->is_inactive = $user->is_inactive === 1 ? I18n::trans('admin.user.options.yes', $this->user->locale) : I18n::trans('admin.user.options.no', $this->user->locale);
         }
 
         return $response->withJson([

@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\OnlineLog;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use MaxMind\Db\Reader\InvalidDatabaseException;
@@ -18,14 +19,14 @@ final class OnlineLogController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'user_id' => '用户ID',
-            'node_id' => '节点ID',
-            'node_name' => '节点名',
-            'ip' => 'IP',
-            'location' => 'IP归属地',
-            'first_time' => '首次连接',
-            'last_time' => '最后连接',
+            'id' => 'admin.online_log.fields.event_id',
+            'user_id' => 'admin.online_log.fields.user_id',
+            'node_id' => 'admin.online_log.fields.node_id',
+            'node_name' => 'admin.online_log.fields.node_name',
+            'ip' => 'admin.online_log.fields.ip',
+            'location' => 'admin.online_log.fields.location',
+            'first_time' => 'admin.online_log.fields.first_time',
+            'last_time' => 'admin.online_log.fields.last_time',
         ],
     ];
 
@@ -37,7 +38,11 @@ final class OnlineLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/online.tpl'));
     }
 

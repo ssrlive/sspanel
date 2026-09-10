@@ -27,20 +27,20 @@ final class NodeController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '节点ID',
-            'name' => '名称',
-            'server' => '地址',
-            'type' => '状态',
-            'sort' => '类型',
-            'traffic_rate' => '倍率',
-            'is_dynamic_rate' => '动态倍率',
-            'dynamic_rate_type' => '动态倍率计算方式',
-            'node_class' => '等级',
-            'node_group' => '组别',
-            'node_bandwidth_limit' => '流量限制/GB',
-            'node_bandwidth' => '已用流量/GB',
-            'bandwidthlimit_resetday' => '重置日',
+            'op' => 'admin.node.fields.operation',
+            'id' => 'admin.node.fields.id',
+            'name' => 'admin.node.fields.name',
+            'server' => 'admin.node.fields.server',
+            'type' => 'admin.node.fields.status',
+            'sort' => 'admin.node.fields.type',
+            'traffic_rate' => 'admin.node.fields.traffic_rate',
+            'is_dynamic_rate' => 'admin.node.fields.dynamic_rate',
+            'dynamic_rate_type' => 'admin.node.fields.dynamic_rate_type',
+            'node_class' => 'admin.node.fields.class',
+            'node_group' => 'admin.node.fields.group',
+            'node_bandwidth_limit' => 'admin.node.fields.bandwidth_limit',
+            'node_bandwidth' => 'admin.node.fields.bandwidth_used',
+            'bandwidthlimit_resetday' => 'admin.node.fields.reset_day',
         ],
     ];
 
@@ -70,7 +70,11 @@ final class NodeController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/node/index.tpl'));
     }
 
@@ -125,7 +129,7 @@ final class NodeController extends BaseController
         if (! $node->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '添加失败',
+                'msg' => I18n::trans('admin.node.messages.create_failed', $this->user->locale),
             ]);
         }
 
@@ -141,7 +145,7 @@ final class NodeController extends BaseController
             } catch (TelegramSDKException | GuzzleException) {
                 return $response->withJson([
                     'ret' => 1,
-                    'msg' => '添加成功，但 IM Bot 通知失败',
+                    'msg' => I18n::trans('admin.node.messages.created_im_failed', $this->user->locale),
                     'node_id' => $node->id,
                 ]);
             }
@@ -149,7 +153,7 @@ final class NodeController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功',
+            'msg' => I18n::trans('admin.node.messages.created', $this->user->locale),
             'node_id' => $node->id,
         ]);
     }
@@ -216,7 +220,7 @@ final class NodeController extends BaseController
         if (! $node->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '修改失败',
+                'msg' => I18n::trans('admin.node.messages.update_failed', $this->user->locale),
             ]);
         }
 
@@ -232,14 +236,14 @@ final class NodeController extends BaseController
             } catch (TelegramSDKException | GuzzleException) {
                 return $response->withJson([
                     'ret' => 1,
-                    'msg' => '修改成功，但 IM Bot 通知失败',
+                    'msg' => I18n::trans('admin.node.messages.updated_im_failed', $this->user->locale),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '修改成功',
+            'msg' => I18n::trans('admin.node.messages.updated', $this->user->locale),
         ]);
     }
 
@@ -251,7 +255,7 @@ final class NodeController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '重置节点通讯密钥成功',
+            'msg' => I18n::trans('admin.node.messages.password_reset', $this->user->locale),
             'data' => [
                 'password' => $node->password,
             ],
@@ -266,7 +270,7 @@ final class NodeController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '重置节点流量成功',
+            'msg' => I18n::trans('admin.node.messages.bandwidth_reset', $this->user->locale),
             'data' => [
                 'node_bandwidth' => $node->node_bandwidth,
             ],
@@ -283,7 +287,7 @@ final class NodeController extends BaseController
         if (! $node->delete()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '删除失败',
+                'msg' => I18n::trans('admin.node.messages.delete_failed', $this->user->locale),
             ]);
         }
 
@@ -299,14 +303,14 @@ final class NodeController extends BaseController
             } catch (TelegramSDKException | GuzzleException) {
                 return $response->withJson([
                     'ret' => 1,
-                    'msg' => '删除成功，但 IM Bot 通知失败',
+                    'msg' => I18n::trans('admin.node.messages.deleted_im_failed', $this->user->locale),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.node.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -323,13 +327,13 @@ final class NodeController extends BaseController
         if (! $new_node->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '复制失败',
+                'msg' => I18n::trans('admin.node.messages.copy_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '复制成功',
+            'msg' => I18n::trans('admin.node.messages.copied', $this->user->locale),
         ]);
     }
 
@@ -342,13 +346,13 @@ final class NodeController extends BaseController
 
         foreach ($nodes as $node) {
             $node->op = '<button class="btn btn-red" id="delete-node-' . $node->id . '" 
-            onclick="deleteNode(' . $node->id . ')">删除</button>
+            onclick="deleteNode(' . $node->id . ')">' . I18n::trans('admin.node.actions.delete', $this->user->locale) . '</button>
             <button class="btn btn-orange" id="copy-node-' . $node->id . '" 
-            onclick="copyNode(' . $node->id . ')">复制</button>
-            <a class="btn btn-primary" href="/admin/node/' . $node->id . '/edit">编辑</a>';
-            $node->type = $node->type();
+            onclick="copyNode(' . $node->id . ')">' . I18n::trans('admin.node.actions.copy', $this->user->locale) . '</button>
+            <a class="btn btn-primary" href="/admin/node/' . $node->id . '/edit">' . I18n::trans('admin.node.actions.edit', $this->user->locale) . '</a>';
+            $node->type = I18n::trans($node->type ? 'admin.node.options.visible' : 'admin.node.options.hidden', $this->user->locale);
             $node->sort = $node->sort();
-            $node->is_dynamic_rate = $node->isDynamicRate();
+            $node->is_dynamic_rate = I18n::trans($node->is_dynamic_rate ? 'admin.node.options.yes' : 'admin.node.options.no', $this->user->locale);
             $node->dynamic_rate_type = $node->dynamicRateType();
             $node->node_bandwidth = round(Tools::bToGB($node->node_bandwidth), 2);
             $node->node_bandwidth_limit = Tools::bToGB($node->node_bandwidth_limit);

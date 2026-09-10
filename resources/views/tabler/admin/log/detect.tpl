@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">审计碰撞记录</span>
+                                <span class="home-title">{trans key='admin.detect_log.list_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">查看审计碰撞记录的内容</span>
+                                <span class="home-subtitle">{trans key='admin.detect_log.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>

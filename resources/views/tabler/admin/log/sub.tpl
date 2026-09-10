@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title my-3">订阅记录</span>
+                                <span class="home-title my-3">{trans key='admin.sub_log.list_title'}</span>
                             </h2>
                             <div class="page-pretitle">
-                                <span class="home-subtitle">查看用户订阅记录</span>
+                                <span class="home-subtitle">{trans key='admin.sub_log.list_subtitle'}</span>
                             </div>
                         </div>
                     </div>

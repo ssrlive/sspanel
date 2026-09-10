@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\DetectRule;
+use App\Services\I18n;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
@@ -15,39 +16,39 @@ final class DetectRuleController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '规则ID',
-            'name' => '规则名称',
-            'text' => '规则介绍',
-            'regex' => '正则表达式',
-            'type' => '规则类型',
+            'op' => 'admin.detect.fields.operation',
+            'id' => 'admin.detect.fields.id',
+            'name' => 'admin.detect.fields.name',
+            'text' => 'admin.detect.fields.description',
+            'regex' => 'admin.detect.fields.regex',
+            'type' => 'admin.detect.fields.type',
         ],
         'add_dialog' => [
             [
                 'id' => 'name',
-                'info' => '规则名称',
+                'info' => 'admin.detect.fields.name',
                 'type' => 'input',
-                'placeholder' => '审计规则名称',
+                'placeholder' => 'admin.detect.placeholders.name',
             ],
             [
                 'id' => 'text',
-                'info' => '规则介绍',
+                'info' => 'admin.detect.fields.description',
                 'type' => 'input',
-                'placeholder' => '简洁明了地描述审计规则',
+                'placeholder' => 'admin.detect.placeholders.description',
             ],
             [
                 'id' => 'regex',
-                'info' => '正则表达式',
+                'info' => 'admin.detect.fields.regex',
                 'type' => 'input',
-                'placeholder' => '用以匹配审计内容的正则表达式',
+                'placeholder' => 'admin.detect.placeholders.regex',
             ],
             [
                 'id' => 'type',
-                'info' => '规则类型',
+                'info' => 'admin.detect.fields.type',
                 'type' => 'select',
                 'select' => [
-                    '1' => '数据包明文匹配',
-                    '0' => '数据包十六进制匹配',
+                    '1' => 'admin.detect.types.plaintext',
+                    '0' => 'admin.detect.types.hex',
                 ],
             ],
         ],
@@ -59,7 +60,23 @@ final class DetectRuleController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        foreach ($details['add_dialog'] as &$detail) {
+            $detail['info'] = I18n::trans($detail['info'], $this->user->locale);
+            if (isset($detail['placeholder'])) {
+                $detail['placeholder'] = I18n::trans($detail['placeholder'], $this->user->locale);
+            }
+            if (isset($detail['select'])) {
+                foreach ($detail['select'] as $key => $value) {
+                    $detail['select'][$key] = I18n::trans($value, $this->user->locale);
+                }
+            }
+        }
+        unset($detail);
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/detect.tpl'));
     }
 
@@ -74,13 +91,13 @@ final class DetectRuleController extends BaseController
         if (! $rule->save()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '添加失败',
+                'msg' => I18n::trans('admin.detect.messages.create_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '添加成功',
+            'msg' => I18n::trans('admin.detect.messages.created', $this->user->locale),
         ]);
     }
 
@@ -92,13 +109,13 @@ final class DetectRuleController extends BaseController
         if (! $rule->delete()) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '删除失败',
+                'msg' => I18n::trans('admin.detect.messages.delete_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除成功',
+            'msg' => I18n::trans('admin.detect.messages.deleted', $this->user->locale),
         ]);
     }
 
@@ -108,7 +125,7 @@ final class DetectRuleController extends BaseController
 
         foreach ($rules as $rule) {
             $rule->op = '<button class="btn btn-red" id="delete-rule-' . $rule->id .
-                '" onclick="deleteRule(' . $rule->id . ')">删除</button>';
+                '" onclick="deleteRule(' . $rule->id . ')">' . I18n::trans('admin.detect.actions.delete', $this->user->locale) . '</button>';
             $rule->type = $rule->type();
         }
 

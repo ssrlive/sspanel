@@ -16,7 +16,7 @@ final class I18nTest extends TestCase
         // exsisting locale
         $key = 'lang_name';
         $lang = 'en_US';
-        $expectedTranslation = 'English(Simplified)';
+        $expectedTranslation = 'English';
 
         $translation = I18n::trans($key, $lang);
 
@@ -48,7 +48,7 @@ final class I18nTest extends TestCase
         $options = I18n::getLocaleOptions();
 
         $this->assertSame('en_US', $options[0]['code']);
-        $this->assertSame('English(Simplified)', $options[0]['name']);
+        $this->assertSame('English', $options[0]['name']);
     }
 
     public function testGetTranslatorr(): void

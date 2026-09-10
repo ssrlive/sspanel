@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\UserMoneyLog;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -16,13 +17,13 @@ final class MoneyLogController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'user_id' => '用户ID',
-            'before' => '变动前余额',
-            'after' => '变动后余额',
-            'amount' => '变动金额',
-            'remark' => '备注',
-            'create_time' => '变动时间',
+            'id' => 'admin.money_log.fields.event_id',
+            'user_id' => 'admin.money_log.fields.user_id',
+            'before' => 'admin.money_log.fields.before',
+            'after' => 'admin.money_log.fields.after',
+            'amount' => 'admin.money_log.fields.amount',
+            'remark' => 'admin.money_log.fields.remark',
+            'create_time' => 'admin.money_log.fields.create_time',
         ],
     ];
 
@@ -34,7 +35,11 @@ final class MoneyLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/money.tpl'));
     }
 

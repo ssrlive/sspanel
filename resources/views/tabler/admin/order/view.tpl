@@ -14,41 +14,41 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">订单 #{$order->id}</span>
+                                <span class="home-title">{trans key='admin.order.order_number' id=$order->id}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">订单详情</span>
+                                <span class="home-subtitle">{trans key='admin.order.detail_title'}</span>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="btn-list">
                                 <a href="/admin/user/{$order->user_id}/edit" targer="_blank" class="btn btn-primary">
                                     <i class="icon ti ti-user"></i>
-                                    查看关联用户
+                                    {trans key='admin.order.view_user'}
                                 </a>
                                 <a href="/admin/invoice/{$invoice->id}/view" targer="_blank" class="btn btn-primary">
                                     <i class="icon ti ti-file-dollar"></i>
-                                    查看关联账单
+                                    {trans key='admin.order.view_invoice'}
                                 </a>
                                 {if $order->status === 'pending_payment'}
                                     <button href="#" class="btn btn-red" data-bs-toggle="modal"
                                         data-bs-target="#cancel_order_confirm_dialog">
                                         <i class="icon ti ti-x"></i>
-                                        取消订单
+                                        {trans key='admin.order.cancel'}
                                     </button>
                                 {/if}
                                 {if $order->status === 'pending_activation'}
                                     <button href="#" class="btn btn-green" data-bs-toggle="modal"
                                         data-bs-target="#force_activate_order_confirm_dialog">
                                         <i class="icon ti ti-player-play"></i>
-                                        强制激活
+                                        {trans key='admin.order.force_activate'}
                                     </button>
                                 {/if}
                                 {if $order->status === 'pending_payment'}
                                     <button href="#" class="btn btn-green" data-bs-toggle="modal"
                                         data-bs-target="#mark_paid_order_confirm_dialog">
                                         <i class="icon ti ti-check"></i>
-                                        标记为已付款
+                                        {trans key='admin.order.mark_paid'}
                                     </button>
                                 {/if}
                             </div>
@@ -60,44 +60,44 @@
                 <div class="container-xl">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">基本信息</h3>
+                            <h3 class="card-title">{trans key='admin.order.basic_info'}</h3>
                         </div>
                         <div class="card-body">
                             <div class="datagrid">
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">提交用户</div>
+                                    <div class="datagrid-title">{trans key='admin.order.submitting_user'}</div>
                                     <div class="datagrid-content">{$order->user_id}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">商品ID</div>
+                                    <div class="datagrid-title">{trans key='admin.order.product_id'}</div>
                                     <div class="datagrid-content">{$order->product_id}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">商品类型</div>
+                                    <div class="datagrid-title">{trans key='admin.order.product_type'}</div>
                                     <div class="datagrid-content">{$order->product_type_text}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">商品名称</div>
+                                    <div class="datagrid-title">{trans key='admin.order.product_name'}</div>
                                     <div class="datagrid-content">{$order->product_name}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">订单优惠码</div>
+                                    <div class="datagrid-title">{trans key='admin.order.coupon'}</div>
                                     <div class="datagrid-content">{$order->coupon}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">订单金额</div>
+                                    <div class="datagrid-title">{trans key='admin.order.amount'}</div>
                                     <div class="datagrid-content">{$order->price}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">订单状态</div>
+                                    <div class="datagrid-title">{trans key='admin.order.status'}</div>
                                     <div class="datagrid-content">{$order->status_text}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">创建时间</div>
+                                    <div class="datagrid-title">{trans key='admin.order.created_at'}</div>
                                     <div class="datagrid-content">{$order->create_time}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">更新时间</div>
+                                    <div class="datagrid-title">{trans key='admin.order.updated_at'}</div>
                                     <div class="datagrid-content">{$order->update_time}</div>
                                 </div>
                             </div>
@@ -105,50 +105,50 @@
                     </div>
                     <div class="card my-3">
                         <div class="card-header">
-                            <h3 class="card-title">商品内容</h3>
+                            <h3 class="card-title">{trans key='admin.order.product_content'}</h3>
                         </div>
                         <div class="card-body">
                             <div class="datagrid">
                                 {if $order->product_type === 'tabp' || $order->product_type === 'time'}
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">商品时长 (天)</div>
+                                        <div class="datagrid-title">{trans key='admin.order.product_duration_days'}</div>
                                         <div class="datagrid-content">{$order->content->time}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">等级时长 (天)</div>
+                                        <div class="datagrid-title">{trans key='admin.order.class_duration_days'}</div>
                                         <div class="datagrid-content">{$order->content->class_time}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">等级</div>
+                                        <div class="datagrid-title">{trans key='admin.order.class'}</div>
                                         <div class="datagrid-content">{$order->content->class}</div>
                                     </div>
                                 {/if}
                                 {if $order->product_type === 'tabp' || $order->product_type === 'bandwidth'}
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">可用流量 (GB)</div>
+                                        <div class="datagrid-title">{trans key='admin.order.bandwidth_gb'}</div>
                                         <div class="datagrid-content">{$order->content->bandwidth}</div>
                                     </div>
                                 {/if}
                                 {if $order->product_type === 'tabp' || $order->product_type === 'time'}
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">用户分组</div>
+                                        <div class="datagrid-title">{trans key='admin.order.node_group'}</div>
                                         <div class="datagrid-content">{$order->content->node_group}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">速率限制 (Mbps)</div>
+                                        <div class="datagrid-title">{trans key='admin.order.speed_limit_mbps'}</div>
                                         <div class="datagrid-content">
                                             {if $order->content->ip_limit === '0'}
-                                                不限制
+                                                {trans key='admin.order.unlimited'}
                                             {else}
                                                 {$order->content->speed_limit}
                                             {/if}
                                         </div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">同时连接IP限制</div>
+                                        <div class="datagrid-title">{trans key='admin.order.concurrent_ip_limit'}</div>
                                         <div class="datagrid-content">
                                             {if $order->content->ip_limit === '0'}
-                                                不限制
+                                                {trans key='admin.order.unlimited'}
                                             {else}
                                                 {$order->content->ip_limit}
                                             {/if}
@@ -160,19 +160,19 @@
                     </div>
                     <div class="card my-3">
                         <div class="card-header">
-                            <h3 class="card-title">关联账单</h3>
+                            <h3 class="card-title">{trans key='admin.order.related_invoice'}</h3>
                         </div>
                         <div class="card-body">
                             <div class="datagrid">
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">账单内容</div>
+                                    <div class="datagrid-title">{trans key='admin.order.invoice_content'}</div>
                                     <div class="datagrid-content">
                                         <div class="table-responsive">
                                             <table id="invoice_content_table" class="table table-vcenter card-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>名称</th>
-                                                        <th>价格</th>
+                                                        <th>{trans key='admin.order.name'}</th>
+                                                        <th>{trans key='admin.order.price'}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -188,23 +188,23 @@
                                     </div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">账单金额</div>
+                                    <div class="datagrid-title">{trans key='admin.order.invoice_amount'}</div>
                                     <div class="datagrid-content">{$invoice->price}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">账单状态</div>
+                                    <div class="datagrid-title">{trans key='admin.order.invoice_status'}</div>
                                     <div class="datagrid-content">{$invoice->status}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">创建时间</div>
+                                    <div class="datagrid-title">{trans key='admin.order.created_at'}</div>
                                     <div class="datagrid-content">{$invoice->create_time}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">更新时间</div>
+                                    <div class="datagrid-title">{trans key='admin.order.updated_at'}</div>
                                     <div class="datagrid-content">{$invoice->update_time}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">支付时间</div>
+                                    <div class="datagrid-title">{trans key='admin.order.paid_at'}</div>
                                     <div class="datagrid-content">{$invoice->pay_time}</div>
                                 </div>
                             </div>
@@ -218,19 +218,21 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">取消订单</h5>
+                            <h5 class="modal-title">{trans key='admin.order.cancel'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
                                 <p>
-                                    确认取消此订单？
+                                    {trans key='admin.order.confirm_cancel'}
                                 <p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
-                            <button id="confirm_cancel" type="button" class="btn btn-primary" data-bs-dismiss="modal">确认
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='admin.dialog.cancel'}</button>
+                            <button id="confirm_cancel" type="button" class="btn btn-primary"
+                                data-bs-dismiss="modal">{trans key='admin.dialog.confirm'}
                             </button>
                         </div>
                     </div>
@@ -242,16 +244,17 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">强制激活订单</h5>
+                            <h5 class="modal-title">{trans key='admin.order.force_activate_order'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>确认强制激活此订单？当前用户正在使用的时间流量包将被替换。</p>
+                            <p>{trans key='admin.order.confirm_activate'}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='admin.dialog.cancel'}</button>
                             <button id="confirm_force_activate" type="button" class="btn btn-primary"
-                                data-bs-dismiss="modal">确认</button>
+                                data-bs-dismiss="modal">{trans key='admin.dialog.confirm'}</button>
                         </div>
                     </div>
                 </div>
@@ -262,16 +265,17 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">标记订单为已付款</h5>
+                            <h5 class="modal-title">{trans key='admin.order.mark_paid_order'}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>确认将此订单标记为已付款？订单随后进入待激活状态。</p>
+                            <p>{trans key='admin.order.confirm_mark_paid_detail'}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn me-auto" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn me-auto"
+                                data-bs-dismiss="modal">{trans key='admin.dialog.cancel'}</button>
                             <button id="confirm_mark_paid" type="button" class="btn btn-primary"
-                                data-bs-dismiss="modal">确认</button>
+                                data-bs-dismiss="modal">{trans key='admin.dialog.confirm'}</button>
                         </div>
                     </div>
                 </div>

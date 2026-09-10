@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\DetectLog;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -14,15 +15,25 @@ use Slim\Http\ServerRequest;
 
 final class DetectLogController extends BaseController
 {
+    private static array $columns = [
+        'id',
+        'user_id',
+        'node_id',
+        'node_name',
+        'list_id',
+        'rule_name',
+        'datetime',
+    ];
+
     private static array $details = [
         'field' => [
-            'id' => '事件ID',
-            'user_id' => '用户ID',
-            'node_id' => '节点ID',
-            'node_name' => '节点名',
-            'list_id' => '规则ID',
-            'rule_name' => '规则名',
-            'datetime' => '时间',
+            'id' => 'admin.detect_log.fields.event_id',
+            'user_id' => 'admin.detect_log.fields.user_id',
+            'node_id' => 'admin.detect_log.fields.node_id',
+            'node_name' => 'admin.detect_log.fields.node_name',
+            'list_id' => 'admin.detect_log.fields.rule_id',
+            'rule_name' => 'admin.detect_log.fields.rule_name',
+            'datetime' => 'admin.detect_log.fields.datetime',
         ],
     ];
 
@@ -32,7 +43,11 @@ final class DetectLogController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $value) {
+            $details['field'][$key] = I18n::trans($value, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/log/detect.tpl'));
     }
 
@@ -55,7 +70,7 @@ final class DetectLogController extends BaseController
         $order = $request->getParam('order')[0]['dir'];
 
         if ($request->getParam('order')[0]['column'] !== '0') {
-            $order_field = self::$details['field'][$request->getParam('order')[0]['column']];
+            $order_field = self::$columns[(int) $request->getParam('order')[0]['column']] ?? 'id';
 
             $detect_log->orderBy($order_field, $order)->orderBy('id', 'desc');
         } else {

@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">人机验证设置</span>
+                                <span class="home-title">{trans key='admin.captcha.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">设置站点的人机验证系统</span>
+                                <span class="home-subtitle">{trans key='admin.captcha.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.captcha.save'}
                                 </a>
                             </div>
                         </div>
@@ -39,7 +39,8 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#captcha" class="nav-link active" data-bs-toggle="tab">验证设置</a>
+                                            <a href="#captcha" class="nav-link active"
+                                                data-bs-toggle="tab">{trans key='admin.captcha.tabs.general'}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#turnstile" class="nav-link" data-bs-toggle="tab">Turnstile</a>
@@ -62,7 +63,8 @@
                                         <div class="tab-pane active show" id="captcha">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">验证码提供商</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.captcha.fields.provider'}</label>
                                                     <div class="col">
                                                         <select id="captcha_provider" class="col form-select"
                                                             value="{$settings['captcha_provider']}">
@@ -86,62 +88,70 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">注册验证码</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.captcha.fields.registration'}</label>
                                                     <div class="col">
                                                         <select id="enable_reg_captcha" class="col form-select"
                                                             value="{$settings['enable_reg_captcha']}">
                                                             <option value="0"
-                                                                {if ! $settings['enable_reg_captcha']}selected{/if}>关闭
+                                                                {if ! $settings['enable_reg_captcha']}selected{/if}>
+                                                                {trans key='admin.captcha.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_reg_captcha']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.captcha.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">登录验证码</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.captcha.fields.login'}</label>
                                                     <div class="col">
                                                         <select id="enable_login_captcha" class="col form-select"
                                                             value="{$settings['enable_login_captcha']}">
                                                             <option value="0"
-                                                                {if ! $settings['enable_login_captcha']}selected{/if}>关闭
+                                                                {if ! $settings['enable_login_captcha']}selected{/if}>
+                                                                {trans key='admin.captcha.options.disabled'}
                                                             </option>
                                                             <option value="1"
-                                                                {if $settings['enable_login_captcha']}selected{/if}>开启
+                                                                {if $settings['enable_login_captcha']}selected{/if}>
+                                                                {trans key='admin.captcha.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">签到验证码</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.captcha.fields.checkin'}</label>
                                                     <div class="col">
                                                         <select id="enable_checkin_captcha" class="col form-select"
                                                             value="{$settings['enable_checkin_captcha']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_checkin_captcha']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.captcha.options.disabled'}
                                                             </option>
                                                             <option value="1"
-                                                                {if $settings['enable_checkin_captcha']}selected{/if}>开启
+                                                                {if $settings['enable_checkin_captcha']}selected{/if}>
+                                                                {trans key='admin.captcha.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">重置密码验证码</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.captcha.fields.reset_password'}</label>
                                                     <div class="col">
                                                         <select id="enable_reset_password_captcha"
                                                             class="col form-select"
                                                             value="{$settings['enable_reset_password_captcha']}">
                                                             <option value="0"
                                                                 {if ! $settings['enable_reset_password_captcha']}selected{/if}>
-                                                                关闭
+                                                                {trans key='admin.captcha.options.disabled'}
                                                             </option>
                                                             <option value="1"
                                                                 {if $settings['enable_reset_password_captcha']}selected{/if}>
-                                                                开启
+                                                                {trans key='admin.captcha.options.enabled'}
                                                             </option>
                                                         </select>
                                                     </div>

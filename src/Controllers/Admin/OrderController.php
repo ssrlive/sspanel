@@ -8,6 +8,7 @@ use App\Controllers\BaseController;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Services\Cron;
+use App\Services\I18n;
 use App\Utils\Tools;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -21,17 +22,17 @@ final class OrderController extends BaseController
 {
     private static array $details = [
         'field' => [
-            'op' => '操作',
-            'id' => '订单ID',
-            'user_id' => '提交用户',
-            'product_id' => '商品ID',
-            'product_type' => '商品类型',
-            'product_name' => '商品名称',
-            'coupon' => '优惠码',
-            'price' => '金额',
-            'status' => '状态',
-            'create_time' => '创建时间',
-            'update_time' => '更新时间',
+            'op' => 'operation',
+            'id' => 'order_id',
+            'user_id' => 'submitting_user',
+            'product_id' => 'product_id',
+            'product_type' => 'product_type',
+            'product_name' => 'product_name',
+            'coupon' => 'coupon',
+            'price' => 'amount',
+            'status' => 'status',
+            'create_time' => 'created_at',
+            'update_time' => 'updated_at',
         ],
     ];
 
@@ -41,7 +42,11 @@ final class OrderController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
         $view = $this->view();
-        $view->assign('details', self::$details);
+        $details = self::$details;
+        foreach ($details['field'] as $key => $translationKey) {
+            $details['field'][$key] = I18n::trans('admin.order.' . $translationKey, $this->user->locale);
+        }
+        $view->assign('details', $details);
         return $response->write($view->fetch('admin/order/index.tpl'));
     }
 
@@ -84,14 +89,14 @@ final class OrderController extends BaseController
         if ($order === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '订单不存在',
+                'msg' => I18n::trans('admin.order.messages.not_found', $this->user->locale),
             ]);
         }
 
         if (in_array($order->status, ['activated', 'expired', 'cancelled'])) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '无法取消 ' . $order->status() . ' 状态的产品',
+                'msg' => I18n::trans('admin.order.messages.cancel_invalid_status', $this->user->locale, ['status' => $order->status()]),
             ]);
         }
 
@@ -100,14 +105,14 @@ final class OrderController extends BaseController
         if ($invoice === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '关联账单不存在',
+                'msg' => I18n::trans('admin.order.messages.invoice_not_found', $this->user->locale),
             ]);
         }
 
         if ($invoice->status === 'partially_paid') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '无法取消账单已部分支付的订单',
+                'msg' => I18n::trans('admin.order.messages.partially_paid', $this->user->locale),
             ]);
         }
 
@@ -120,7 +125,7 @@ final class OrderController extends BaseController
 
             return $response->withJson([
                 'ret' => 1,
-                'msg' => '订单取消成功，关联账单已退款至余额',
+                'msg' => I18n::trans('admin.order.messages.cancelled_refunded', $this->user->locale),
             ]);
         }
 
@@ -130,7 +135,7 @@ final class OrderController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '订单取消成功',
+            'msg' => I18n::trans('admin.order.messages.cancelled', $this->user->locale),
         ]);
     }
 
@@ -144,27 +149,27 @@ final class OrderController extends BaseController
         if ($order === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '订单不存在',
+                'msg' => I18n::trans('admin.order.messages.not_found', $this->user->locale),
             ]);
         }
 
         if ($order->status !== 'pending_activation') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '只有待激活订单可以强制激活',
+                'msg' => I18n::trans('admin.order.messages.not_pending_activation', $this->user->locale),
             ]);
         }
 
         if (! Cron::activateOrder($order, true, true)) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '订单强制激活失败',
+                'msg' => I18n::trans('admin.order.messages.force_activate_failed', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '订单强制激活成功',
+            'msg' => I18n::trans('admin.order.messages.force_activated', $this->user->locale),
         ]);
     }
 
@@ -175,14 +180,14 @@ final class OrderController extends BaseController
         if ($order === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '订单不存在',
+                'msg' => I18n::trans('admin.order.messages.not_found', $this->user->locale),
             ]);
         }
 
         if (! in_array($order->status, ['pending_payment', 'pending_activation'])) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '只有未付款订单可以标记为已付款',
+                'msg' => I18n::trans('admin.order.messages.not_unpaid', $this->user->locale),
             ]);
         }
 
@@ -190,14 +195,14 @@ final class OrderController extends BaseController
         if ($invoice === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '关联账单不存在',
+                'msg' => I18n::trans('admin.order.messages.invoice_not_found', $this->user->locale),
             ]);
         }
 
         if (in_array($invoice->status, ['paid_gateway', 'paid_balance', 'paid_admin'])) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '账单已经支付',
+                'msg' => I18n::trans('admin.order.messages.invoice_paid', $this->user->locale),
             ]);
         }
 
@@ -212,7 +217,7 @@ final class OrderController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '成功标记订单为已付款，等待激活',
+            'msg' => I18n::trans('admin.order.messages.marked_paid', $this->user->locale),
         ]);
     }
 
@@ -224,7 +229,7 @@ final class OrderController extends BaseController
         if ($order === null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '订单不存在',
+                'msg' => I18n::trans('admin.order.messages.not_found', $this->user->locale),
             ]);
         }
 
@@ -233,13 +238,13 @@ final class OrderController extends BaseController
         if ($order->delete() && $invoice->delete()) {
             return $response->withJson([
                 'ret' => 1,
-                'msg' => '删除成功',
+                'msg' => I18n::trans('admin.order.messages.deleted', $this->user->locale),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '删除失败',
+            'msg' => I18n::trans('admin.order.messages.delete_failed', $this->user->locale),
         ]);
     }
 
@@ -249,30 +254,36 @@ final class OrderController extends BaseController
 
         foreach ($orders as $order) {
             $order->op = '<button class="btn btn-red" id="delete-order-' . $order->id . '"
-             onclick="deleteOrder(' . $order->id . ')">删除</button>';
+             onclick="deleteOrder(' . $order->id . ')">' . I18n::trans('admin.order.delete', $this->user->locale) . '</button>';
 
             if (in_array($order->status, ['pending_payment', 'pending_activation'])) {
                 $order->op .= '
                 <button class="btn btn-orange" id="cancel-order-' . $order->id . '"
-                 onclick="cancelOrder(' . $order->id . ')">取消</button>';
+                 onclick="cancelOrder(' . $order->id . ')">' . I18n::trans('admin.order.cancel', $this->user->locale) . '</button>';
             }
 
             if ($order->status === 'pending_payment') {
                 $order->op .= '
                 <button class="btn btn-green" id="mark-paid-order-' . $order->id . '"
-                 onclick="markPaidOrder(' . $order->id . ')">标记为已付款</button>';
+                 onclick="markPaidOrder(' . $order->id . ')">' . I18n::trans('admin.order.mark_paid', $this->user->locale) . '</button>';
             }
 
             if ($order->status === 'pending_activation') {
                 $order->op .= '
                 <button class="btn btn-green" id="force-activate-order-' . $order->id . '"
-                 onclick="forceActivateOrder(' . $order->id . ')">强制激活</button>';
+                 onclick="forceActivateOrder(' . $order->id . ')">' . I18n::trans('admin.order.force_activate', $this->user->locale) . '</button>';
             }
 
             $order->op .= '
-            <a class="btn btn-primary" href="/admin/order/' . $order->id . '/view">查看</a>';
-            $order->product_type = $order->productType();
-            $order->status = $order->status();
+            <a class="btn btn-primary" href="/admin/order/' . $order->id . '/view">' . I18n::trans('admin.order.view', $this->user->locale) . '</a>';
+            $order->product_type = match ($order->product_type) {
+                'tabp' => I18n::trans('admin.product.type_labels.tabp', $this->user->locale),
+                'time' => I18n::trans('admin.product.type_labels.time', $this->user->locale),
+                'bandwidth' => I18n::trans('admin.product.type_labels.bandwidth', $this->user->locale),
+                'topup' => I18n::trans('admin.product.type_labels.topup', $this->user->locale),
+                default => I18n::trans('admin.product.type_labels.other', $this->user->locale),
+            };
+            $order->status = I18n::trans('user_pages.order_status_' . (in_array($order->status, ['pending_payment', 'pending_activation', 'activated', 'expired', 'cancelled'], true) ? $order->status : 'unknown'), $this->user->locale);
             $order->create_time = Tools::toDateTime($order->create_time);
             $order->update_time = Tools::toDateTime($order->update_time);
         }

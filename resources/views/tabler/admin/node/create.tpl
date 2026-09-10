@@ -18,17 +18,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">创建节点</span>
+                                <span class="home-title">{trans key='admin.node.form.create_title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">创建各类节点</span>
+                                <span class="home-subtitle">{trans key='admin.node.form.create_subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="create-node" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.node.form.save'}
                                 </a>
                             </div>
                         </div>
@@ -41,29 +41,33 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
-                                    <h3 class="card-title">基础信息</h3>
+                                    <h3 class="card-title">{trans key='admin.node.form.basic_info'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">名称</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.name'}</label>
                                         <div class="col">
                                             <input id="name" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">连接地址</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.server'}</label>
                                         <div class="col">
                                             <input id="server" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">流量倍率</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.traffic_rate'}</label>
                                         <div class="col">
                                             <input id="traffic_rate" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">接入类型</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.type'}</label>
                                         <div class="col">
                                             <select id="sort" class="col form-select">
                                                 <option value="14">Trojan</option>
@@ -77,18 +81,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">自定义配置</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.custom_config'}</label>
                                         <div id="custom_config"></div>
                                         <label class="form-label col-form-label">
-                                            请参考
+                                            {trans key='admin.node.form.custom_config_help_before'}
                                             <a href="//wiki.sspanel.org/#/custom-config" target="_blank">
                                                 wiki.sspanel.org/#/custom-config
                                             </a>
-                                            修改节点自定义配置
+                                            {trans key='admin.node.form.custom_config_help_after'}
                                         </label>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <span class="col">显示此节点</span>
+                                        <span class="col">{trans key='admin.node.form.visible'}</span>
                                         <span class="col-auto">
                                             <label class="form-check form-check-single form-switch">
                                                 <input id="type" class="form-check-input" type="checkbox" checked="">
@@ -96,10 +101,10 @@
                                         </span>
                                     </div>
                                     <div class="hr-text">
-                                        <span>动态倍率</span>
+                                        <span>{trans key='admin.node.form.dynamic_rate_section'}</span>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <span class="col">启用动态流量倍率</span>
+                                        <span class="col">{trans key='admin.node.form.enable_dynamic_rate'}</span>
                                         <span class="col-auto">
                                             <label class="form-check form-check-single form-switch">
                                                 <input id="is_dynamic_rate" class="form-check-input" type="checkbox"
@@ -108,7 +113,8 @@
                                         </span>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">动态流量倍率计算方式</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.dynamic_rate_type'}</label>
                                         <div class="col">
                                             <select id="dynamic_rate_type" class="col form-select">
                                                 <option value="0">Logistic</option>
@@ -117,30 +123,34 @@
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">最大倍率</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.max_rate'}</label>
                                         <div class="col">
                                             <input id="max_rate" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">最大倍率时间（时）</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.max_rate_time'}</label>
                                         <div class="col">
                                             <input id="max_rate_time" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">最小倍率</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.min_rate'}</label>
                                         <div class="col">
                                             <input id="min_rate" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label">最小倍率时间（时）</label>
+                                        <label
+                                            class="form-label col-3 col-form-label">{trans key='admin.node.form.min_rate_time'}</label>
                                         <div class="col">
                                             <input id="min_rate_time" type="text" class="form-control" value="">
                                         </div>
                                         <label class="form-label col-form-label">
-                                            最大倍率时间必须大于最小倍率时间，否则将不会生效
+                                            {trans key='admin.node.form.rate_time_help'}
                                         </label>
                                     </div>
                                 </div>
@@ -149,39 +159,44 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="card">
                                 <div class="card-header card-header-light">
-                                    <h3 class="card-title">其他信息</h3>
+                                    <h3 class="card-title">{trans key='admin.node.form.other_info'}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">等级</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.class'}</label>
                                         <div class="col">
                                             <input id="node_class" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">组别</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.group'}</label>
                                         <div class="col">
                                             <input id="node_group" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="hr-text">
-                                        <span>流量设置</span>
+                                        <span>{trans key='admin.node.form.traffic_section'}</span>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">可用流量 (GB)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.bandwidth_limit'}</label>
                                         <div class="col">
                                             <input id="node_bandwidth_limit" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">流量重置日</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.reset_day'}</label>
                                         <div class="col">
                                             <input id="bandwidthlimit_resetday" type="text" class="form-control"
                                                 value="">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 row">
-                                        <label class="form-label col-3 col-form-label required">速率限制 (Mbps)</label>
+                                        <label
+                                            class="form-label col-3 col-form-label required">{trans key='admin.node.form.speed_limit'}</label>
                                         <div class="col">
                                             <input id="node_speedlimit" type="text" class="form-control" value="">
                                         </div>

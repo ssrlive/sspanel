@@ -13,7 +13,7 @@ use const BASE_PATH;
 final class I18n
 {
     // trans() right is human right 🏳️‍⚧️
-    public static function trans(string $key, string $lang = 'en_US', array $parameters = []): string
+    public static function trans(string $key, mixed $lang = 'en_US', array $parameters = []): string
     {
         $translator = self::getTranslator($lang);
 
@@ -46,8 +46,12 @@ final class I18n
         return $options;
     }
 
-    public static function getTranslator($lang = 'en_US'): Translator
+    public static function getTranslator(mixed $lang = 'en_US'): Translator
     {
+        if (! is_string($lang) || ! in_array($lang, self::getLocaleList(), true)) {
+            $lang = 'en_US';
+        }
+
         $translator = new Translator($lang);
         $translator->addLoader('php', new PhpFileLoader());
         $translator->setFallbackLocales(['en_US']);

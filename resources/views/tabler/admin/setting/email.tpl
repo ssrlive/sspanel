@@ -14,17 +14,17 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">邮件设置</span>
+                                <span class="home-title">{trans key='admin.email.title'}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">设置站点的邮件系统</span>
+                                <span class="home-subtitle">{trans key='admin.email.subtitle'}</span>
                             </div>
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a id="save-setting" href="#" class="btn btn-primary">
                                     <i class="icon ti ti-device-floppy"></i>
-                                    保存
+                                    {trans key='admin.email.save'}
                                 </a>
                             </div>
                         </div>
@@ -39,10 +39,12 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                                         <li class="nav-item">
-                                            <a href="#email" class="nav-link active" data-bs-toggle="tab">邮件设置</a>
+                                            <a href="#email" class="nav-link active"
+                                                data-bs-toggle="tab">{trans key='admin.email.tabs.general'}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#limit" class="nav-link" data-bs-toggle="tab">发送限制</a>
+                                            <a href="#limit" class="nav-link"
+                                                data-bs-toggle="tab">{trans key='admin.email.tabs.limits'}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#smtp" class="nav-link" data-bs-toggle="tab">SMTP</a>
@@ -76,7 +78,8 @@
                                         <div class="tab-pane active show" id="email">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">邮件服务提供商</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.provider'}</label>
                                                     <div class="col">
                                                         <select id="email_driver" class="col form-select"
                                                             value="{$settings['email_driver']}">
@@ -120,11 +123,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">测试邮件接收地址</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.test_recipient'}</label>
                                                     <input type="text" class="form-control" id="recipient" value="">
                                                     <div class="row my-3">
                                                         <div class="col">
-                                                            <button id="test-email" class="btn btn-primary">发送测试邮件
+                                                            <button id="test-email"
+                                                                class="btn btn-primary">{trans key='admin.email.actions.test'}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -134,7 +139,8 @@
                                         <div class="tab-pane" id="limit">
                                             <div class="card-body">
                                                 <div class="form-group mb-3 row">
-                                                    <label class="form-label col-3 col-form-label">邮箱验证码有效期（秒）</label>
+                                                    <label
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.verify_ttl'}</label>
                                                     <div class="col">
                                                         <input id="email_verify_code_ttl" type="text"
                                                             class="form-control"
@@ -143,7 +149,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label
-                                                        class="form-label col-3 col-form-label">邮箱重设密码链接有效期（秒）</label>
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.reset_ttl'}</label>
                                                     <div class="col">
                                                         <input id="email_password_reset_ttl" type="text"
                                                             class="form-control"
@@ -152,7 +158,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label
-                                                        class="form-label col-3 col-form-label">单个IP每小时可请求的发信次数</label>
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.ip_limit'}</label>
                                                     <div class="col">
                                                         <input id="email_request_ip_limit" type="text"
                                                             class="form-control"
@@ -161,7 +167,7 @@
                                                 </div>
                                                 <div class="form-group mb-3 row">
                                                     <label
-                                                        class="form-label col-3 col-form-label">单个邮箱地址每小时可请求的发信次数</label>
+                                                        class="form-label col-3 col-form-label">{trans key='admin.email.fields.address_limit'}</label>
                                                     <div class="col">
                                                         <input id="email_request_address_limit" type="text"
                                                             class="form-control"

@@ -14,10 +14,10 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <span class="home-title">系统日志 #{$syslog->id}</span>
+                                <span class="home-title">{trans key='admin.syslog.detail_title'} #{$syslog->id}</span>
                             </h2>
                             <div class="page-pretitle my-3">
-                                <span class="home-subtitle">日志详情</span>
+                                <span class="home-subtitle">{trans key='admin.syslog.detail_subtitle'}</span>
                             </div>
                         </div>
                     </div>
@@ -29,23 +29,23 @@
                         <div class="card-body">
                             <div class="datagrid">
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">触发用户</div>
+                                    <div class="datagrid-title">{trans key='admin.syslog.fields.trigger_user'}</div>
                                     <div class="datagrid-content">{$syslog->user_id}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">触发IP</div>
+                                    <div class="datagrid-title">{trans key='admin.syslog.fields.trigger_ip'}</div>
                                     <div class="datagrid-content">{$syslog->ip}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">日志内容</div>
+                                    <div class="datagrid-title">{trans key='admin.syslog.fields.message'}</div>
                                     <div class="datagrid-content">{$syslog->message}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">日志等级</div>
+                                    <div class="datagrid-title">{trans key='admin.syslog.fields.level'}</div>
                                     <div class="datagrid-content">{$syslog->level_text}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">日志类别</div>
+                                    <div class="datagrid-title">{trans key='admin.syslog.fields.channel'}</div>
                                     <div class="datagrid-content">{$syslog->channel_text}</div>
                                 </div>
                             </div>

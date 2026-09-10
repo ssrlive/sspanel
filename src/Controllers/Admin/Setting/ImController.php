@@ -22,8 +22,8 @@ use Telegram\Bot\Exceptions\TelegramSDKException;
 
 final class ImController extends BaseController
 {
-    private static string $success_msg = '测试信息发送成功';
-    private static string $err_msg = '测试信息发送失败';
+    private static string $success_msg = 'admin.im.messages.test_success';
+    private static string $err_msg = 'admin.im.messages.test_failed';
     private array $update_field;
     private array $settings;
 
@@ -51,14 +51,14 @@ final class ImController extends BaseController
             if (! Config::set($item, $request->getParam($item))) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => '保存 ' . $item . ' 时出错',
+                    'msg' => I18n::trans('admin.im.messages.save_failed', $this->user->locale, ['field' => $item]),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => '保存成功',
+            'msg' => I18n::trans('admin.im.messages.saved', $this->user->locale),
         ]);
     }
 
@@ -71,7 +71,7 @@ final class ImController extends BaseController
 
             return $response->withJson([
                 'ret' => 1,
-                'msg' => 'Successfully reset webhook token',
+                'msg' => I18n::trans('admin.im.messages.webhook_reset', $this->user->locale),
                 'data' => [
                     'telegram_webhook_token' => Config::obtain('telegram_webhook_token'),
                 ],
@@ -80,7 +80,7 @@ final class ImController extends BaseController
 
         return $response->withJson([
             'ret' => 0,
-            'msg' => 'Unknown webhook type',
+            'msg' => I18n::trans('admin.im.messages.unknown_webhook', $this->user->locale),
         ]);
     }
 
@@ -98,19 +98,19 @@ final class ImController extends BaseController
 
                 return $response->withJson([
                     'ret' => 1,
-                    'msg' => 'Successfully set telegram bot @' . $telegram->getMe()->getUsername(),
+                    'msg' => I18n::trans('admin.im.messages.webhook_set', $this->user->locale, ['username' => $telegram->getMe()->getUsername()]),
                 ]);
             } catch (TelegramSDKException) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => 'Failed to set telegram bot',
+                    'msg' => I18n::trans('admin.im.messages.webhook_set_failed', $this->user->locale),
                 ]);
             }
         }
 
         return $response->withJson([
             'ret' => 0,
-            'msg' => 'Unknown webhook type',
+            'msg' => I18n::trans('admin.im.messages.unknown_webhook', $this->user->locale),
         ]);
     }
 
@@ -124,13 +124,13 @@ final class ImController extends BaseController
         } catch (TelegramSDKException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $this::$err_msg . ' ' . $e->getMessage(),
+                'msg' => I18n::trans($this::$err_msg, $this->user->locale) . ' ' . $e->getMessage(),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => $this::$success_msg,
+            'msg' => I18n::trans($this::$success_msg, $this->user->locale),
         ]);
     }
 
@@ -144,13 +144,13 @@ final class ImController extends BaseController
         } catch (GuzzleException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $this::$err_msg . ' ' . $e->getMessage(),
+                'msg' => I18n::trans($this::$err_msg, $this->user->locale) . ' ' . $e->getMessage(),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => $this::$success_msg,
+            'msg' => I18n::trans($this::$success_msg, $this->user->locale),
         ]);
     }
 
@@ -164,13 +164,13 @@ final class ImController extends BaseController
         } catch (GuzzleException | \Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $this::$err_msg . ' ' . $e->getMessage(),
+                'msg' => I18n::trans($this::$err_msg, $this->user->locale) . ' ' . $e->getMessage(),
             ]);
         }
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => $this::$success_msg,
+            'msg' => I18n::trans($this::$success_msg, $this->user->locale),
         ]);
     }
 }
