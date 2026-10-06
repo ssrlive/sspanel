@@ -410,6 +410,13 @@ return new class() implements MigrationInterface {
                 `create_time` int(11) unsigned NOT NULL DEFAULT 0 COMMENT '创建时间',
                 PRIMARY KEY (`id`),
                 KEY `user_id` (`user_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            CREATE TABLE `panel_traffic_report` (
+                `node_id` bigint(20) unsigned NOT NULL,
+                `reporter_id` char(36) NOT NULL,
+                `last_sequence` bigint(20) unsigned NOT NULL DEFAULT 0,
+                PRIMARY KEY (`node_id`, `reporter_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;"
         );
 

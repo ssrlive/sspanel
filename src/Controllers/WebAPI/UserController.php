@@ -11,17 +11,22 @@ use App\Models\HourlyUsage;
 use App\Models\Node;
 use App\Models\OnlineLog;
 use App\Models\User;
+use App\Services\DB;
 use App\Services\DynamicRate;
 use App\Utils\Env;
 use App\Utils\ResponseHelper;
 use App\Utils\Tools;
 use Psr\Http\Message\ResponseInterface;
+use Ramsey\Uuid\Uuid;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use function count;
 use function date;
 use function is_array;
+use function is_int;
+use function is_string;
 use function json_decode;
+use function strtolower;
 use function time;
 
 final class UserController extends BaseController
@@ -140,13 +145,35 @@ final class UserController extends BaseController
      */
     public function addTraffic(ServerRequest $request, Response $response, array $args): ResponseInterface
     {
-        $data = json_decode($request->getBody()->__toString());
+        $report = json_decode($request->getBody()->__toString());
 
-        if (! $data || ! is_array($data->data)) {
+        if (! $report || ! isset($report->data) || ! is_array($report->data)) {
             return ResponseHelper::error($response, 'Invalid data.');
         }
 
-        $data = $data->data;
+        $has_reporter_id = property_exists($report, 'reporter_id');
+        $has_sequence = property_exists($report, 'sequence');
+        if ($has_reporter_id !== $has_sequence) {
+            return ResponseHelper::error($response, 'Invalid report id.');
+        }
+
+        $reporter_id = null;
+        $sequence = null;
+        if ($has_reporter_id) {
+            if (
+                ! is_string($report->reporter_id)
+                || ! Uuid::isValid($report->reporter_id)
+                || ! is_int($report->sequence)
+                || $report->sequence < 1
+            ) {
+                return ResponseHelper::error($response, 'Invalid report id.');
+            }
+
+            $reporter_id = strtolower($report->reporter_id);
+            $sequence = $report->sequence;
+        }
+
+        $data = $report->data;
         $node_id = $request->getQueryParam('node_id');
         /** @var Node $node */
         $node = (new Node())->find($node_id);
@@ -181,53 +208,77 @@ final class UserController extends BaseController
             $rate = $node->traffic_rate;
         }
 
-        $sum = 0;
-        $is_traffic_log = Config::obtain('traffic_log');
+        DB::connection()->transaction(static function () use ($data, $node_id, $reporter_id, $sequence, $rate): void {
+            if ($reporter_id !== null && $sequence !== null) {
+                DB::table('panel_traffic_report')->insertOrIgnore([
+                    'node_id' => $node_id,
+                    'reporter_id' => $reporter_id,
+                    'last_sequence' => 0,
+                ]);
 
-        foreach ($data as $log) {
-            $u = $log?->u;
-            $d = $log?->d;
-            $user_id = property_exists($log, 'user_id') ? $log->user_id : null;
-            $client_uuid = property_exists($log, 'client_id') ? $log->client_id : null;
-            $user = null;
+                $report_state = DB::table('panel_traffic_report')
+                    ->where('node_id', $node_id)
+                    ->where('reporter_id', $reporter_id)
+                    ->lockForUpdate()
+                    ->first();
 
-            if (! $user_id && $client_uuid !== null) {
-                $user = (new User())->where('uuid', $client_uuid)->first();
-                if ($user !== null) {
-                    $user_id = $user->id;
-                }
-            }
-
-            if ($user_id) {
-                $billed_u = $u * $rate;
-                $billed_d = $d * $rate;
-
-                if ($user === null) {
-                    $user = (new User())->find($user_id);
+                if ($report_state === null || (int) $report_state->last_sequence >= $sequence) {
+                    return;
                 }
 
-                if ($user !== null) {
-                    $user->update([
-                        'last_use_time' => time(),
-                        'u' => $user->u + $billed_u,
-                        'd' => $user->d + $billed_d,
-                        'transfer_total' => $user->transfer_total + $u + $d,
-                        'transfer_today' => $user->transfer_today + $billed_u + $billed_d,
-                    ]);
+                DB::table('panel_traffic_report')
+                    ->where('node_id', $node_id)
+                    ->where('reporter_id', $reporter_id)
+                    ->update(['last_sequence' => $sequence]);
+            }
+
+            $sum = 0;
+            $is_traffic_log = Config::obtain('traffic_log');
+
+            foreach ($data as $log) {
+                $u = $log?->u;
+                $d = $log?->d;
+                $user_id = property_exists($log, 'user_id') ? $log->user_id : null;
+                $client_uuid = property_exists($log, 'client_id') ? $log->client_id : null;
+                $user = null;
+
+                if (! $user_id && $client_uuid !== null) {
+                    $user = (new User())->where('uuid', $client_uuid)->first();
+                    if ($user !== null) {
+                        $user_id = $user->id;
+                    }
                 }
+
+                if ($user_id) {
+                    $billed_u = $u * $rate;
+                    $billed_d = $d * $rate;
+
+                    if ($user === null) {
+                        $user = (new User())->find($user_id);
+                    }
+
+                    if ($user !== null) {
+                        $user->update([
+                            'last_use_time' => time(),
+                            'u' => $user->u + $billed_u,
+                            'd' => $user->d + $billed_d,
+                            'transfer_total' => $user->transfer_total + $u + $d,
+                            'transfer_today' => $user->transfer_today + $billed_u + $billed_d,
+                        ]);
+                    }
+                }
+
+                if ($is_traffic_log) {
+                    (new HourlyUsage())->add((int) $user_id, (int) ($u + $d));
+                }
+
+                $sum += $u + $d;
             }
 
-            if ($is_traffic_log) {
-                (new HourlyUsage())->add((int) $user_id, (int) ($u + $d));
-            }
-
-            $sum += $u + $d;
-        }
-
-        $node->update([
-            'node_bandwidth' => $node->node_bandwidth + $sum,
-            'online_user' => count($data) - 1,
-        ]);
+            DB::table('node')
+                ->where('id', $node_id)
+                ->increment('node_bandwidth', $sum, ['online_user' => count($data)]);
+        });
 
         return ResponseHelper::success($response, 'ok');
     }
